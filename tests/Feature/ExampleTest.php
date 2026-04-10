@@ -9,7 +9,16 @@ class ExampleTest extends TestCase
 {
     public function test_the_home_page_requires_basic_authentication(): void
     {
-        $response = $this->get('/');
+        $response = $this
+            ->withServerVariables([
+                'PHP_AUTH_USER' => '',
+                'PHP_AUTH_PW' => '',
+                'HTTP_AUTHORIZATION' => '',
+            ])
+            ->withHeaders([
+                'Authorization' => '',
+            ])
+            ->get('/');
 
         $response->assertStatus(401);
         $response->assertHeader('WWW-Authenticate', 'Basic realm="Adsvopen Demo"');

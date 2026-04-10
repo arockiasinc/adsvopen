@@ -13,7 +13,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="@yield('body_class', 'bg-gradient-primary')">
+    <body class="@yield('body_class', '')">
         <div class="container">
             <div class="row justify-content-center align-items-center min-vh-100 py-5">
                 <div class="col-xl-10 col-lg-12 col-md-10">
@@ -22,7 +22,7 @@
                             <div class="row no-gutters">
                                 <div class="col-lg-6 d-none d-lg-flex auth-panel">
                                     <div class="auth-panel__inner">
-                                        <span class="badge badge-light text-primary px-3 py-2 text-uppercase font-weight-bold">SB Admin 2</span>
+                                        <span class="badge badge-light text-primary px-3 py-2 text-uppercase font-weight-bold">Vopen Market</span>
                                         <h1 class="h2 text-white font-weight-bold mt-4 mb-3">A cleaner backend experience for your project.</h1>
                                         <p class="text-white-50 mb-0">
                                             Sign in to manage menus, review dashboard activity, and keep your admin area organized with the new Bootstrap layout.

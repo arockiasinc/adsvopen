@@ -3,6 +3,12 @@
 
 body {
     font-family: "Nunito", sans-serif;
+    background-color: #ffffff;
+}
+
+body.bg-gradient-primary {
+    background-color: #ffffff;
+    background-image: none;
 }
 
 .sidebar.bg-gradient-primary {
@@ -44,7 +50,8 @@ body {
 
 .auth-panel {
     min-height: 100%;
-    background: linear-gradient(160deg, rgba(78, 115, 223, 1) 0%, rgba(36, 74, 190, 1) 52%, rgba(28, 200, 138, 0.88) 100%);
+    background-color: #ff4d06;
+    background-image: none;
 }
 
 .auth-panel__inner {

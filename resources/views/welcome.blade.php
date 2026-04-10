@@ -12,7 +12,7 @@
                 <div class="col-lg-8">
                     <div class="card shadow-lg border-0">
                         <div class="card-body p-5 text-center">
-                            <div class="text-uppercase text-primary font-weight-bold small mb-3">SB Admin 2</div>
+                            <div class="text-uppercase text-primary font-weight-bold small mb-3">Vopen Market</div>
                             <h1 class="h2 text-gray-900 font-weight-bold mb-3">{{ config('app.name', 'Laravel') }}</h1>
                             <p class="text-muted mb-4">This project now uses an SB Admin 2 powered backend instead of the old starter dashboard scaffold.</p>
 

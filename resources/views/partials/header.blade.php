@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  @php
+    $stylePath = public_path('css/style.css');
+    $styleVersion = file_exists($stylePath) ? filemtime($stylePath) : null;
+  @endphp
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sponsored Brands</title>
-  <meta name="description" content="Sponsored Brands landing page template with a clean editorial layout inspired by the supplied reference design.">
+  <title>{{ $pageTitle ?? 'Banner Ads' }}</title>
+  <meta name="description" content="{{ $pageDescription ?? 'Banner Ads landing page template with a clean editorial layout inspired by the supplied reference design.' }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="{{ asset('css/style.css') }}{{ $styleVersion ? '?v='.$styleVersion : '' }}">
 </head>
-<body class="bg-canvas font-sans text-copy antialiased heading-spaced">
+<body class="font-sans text-copy antialiased heading-spaced">
   <header class="site-header">
     <div class="site-header-inner" data-mobile-menu data-mobile-menu-open="false">
       <a class="site-brand" href="{{ route('home') }}" aria-label="Home">
-        <img class="site-brand-image" src="images/logo.webp" alt="Site logo">
+        <img class="site-brand-image" src="{{ asset('images/logo.webp') }}" alt="Site logo">
       </a>
 
       <button

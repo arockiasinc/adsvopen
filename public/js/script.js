@@ -64,9 +64,9 @@ mobileMenus.forEach((menu) => {
   });
 });
 
-const carousel = document.querySelector("[data-carousel]");
+const carousels = Array.from(document.querySelectorAll("[data-carousel]"));
 
-if (carousel) {
+carousels.forEach((carousel) => {
   const slides = Array.from(carousel.querySelectorAll("[data-slide]"));
   const dots = Array.from(carousel.querySelectorAll("[data-dot]"));
   const controls = Array.from(carousel.querySelectorAll("[data-direction]"));
@@ -78,11 +78,16 @@ if (carousel) {
   let activeIndex = 0;
   let autoAdvanceId = null;
 
+  if (!slides.length) {
+    return;
+  }
+
   const renderSlide = (nextIndex) => {
     slides.forEach((slide, index) => {
       const isActive = index === nextIndex;
       slide.classList.remove(...(isActive ? inactiveSlideClasses : activeSlideClasses));
       slide.classList.add(...(isActive ? activeSlideClasses : inactiveSlideClasses));
+      slide.setAttribute("aria-hidden", String(!isActive));
     });
 
     dots.forEach((dot, index) => {
@@ -156,7 +161,7 @@ if (carousel) {
 
   renderSlide(activeIndex);
   startAutoAdvance();
-}
+});
 
 const faqItems = Array.from(document.querySelectorAll("[data-faq-item]"));
 

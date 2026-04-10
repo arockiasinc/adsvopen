@@ -140,6 +140,13 @@
     </li>
 
     @if (auth()->user()->isAdmin())
+        <li class="nav-item {{ request()->routeIs('banners.*') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('banners.index') }}">
+                <i class="fas fa-fw fa-images"></i>
+                <span>Banners</span>
+            </a>
+        </li>
+
         <li class="nav-item {{ request()->routeIs('menus.*') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('menus.index') }}">
                 <i class="fas fa-fw fa-bars"></i>

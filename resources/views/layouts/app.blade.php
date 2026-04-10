@@ -58,6 +58,10 @@
                                         Profile
                                     </a>
                                     @if (auth()->user()->isAdmin())
+                                        <a class="dropdown-item" href="{{ route('banners.index') }}">
+                                            <i class="fas fa-images fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Banners
+                                        </a>
                                         <a class="dropdown-item" href="{{ route('menus.index') }}">
                                             <i class="fas fa-bars fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Menus

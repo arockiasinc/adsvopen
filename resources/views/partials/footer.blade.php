@@ -1,5 +1,10 @@
  </main>
 
+  @php
+    $scriptPath = public_path('js/script.js');
+    $scriptVersion = file_exists($scriptPath) ? filemtime($scriptPath) : null;
+  @endphp
+
   <footer class="bg-ink py-16 text-white md:py-[76px]" aria-label="Site footer">
     <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
       <div class="grid gap-9 md:grid-cols-2 xl:grid-cols-4" aria-label="Footer navigation">
@@ -20,7 +25,7 @@
             <ul class="grid gap-3 text-[0.9rem]">
               <li><a href="#hero">Sponsored ads</a></li>
               <li><a href="#benefits">Sponsored Products</a></li>
-              <li><a href="#hero">Sponsored Brands</a></li>
+              <li><a href="#hero">Banner Ads</a></li>
               <li><a href="#placements">Display ads</a></li>
               <li><a href="#video-campaign">Video ads</a></li>
               <li><a href="#creative-support">Audio ads</a></li>
@@ -167,7 +172,7 @@
 
       <div class="flex flex-wrap items-center justify-center gap-5 border-t border-white/15 pt-6 text-center lg:justify-between">
         <a class="grid justify-items-center" href="#top" aria-label="Home">
-          <img class="footer-logo-image rounded-lg bg-white/95 p-2 shadow-[0_12px_30px_rgba(0,0,0,0.16)]" src="images/logo.webp" alt="Site logo">
+          <img class="footer-logo-image rounded-lg bg-white/95 p-2 shadow-[0_12px_30px_rgba(0,0,0,0.16)]" src="{{ asset('images/logo.webp') }}" alt="Site logo">
         </a>
 
         <p class="text-[0.82rem] font-bold uppercase tracking-[0.08em]">&copy; Copyright 2015-2026. All rights reserved.</p>
@@ -175,6 +180,6 @@
     </div>
   </footer>
 
-  <script src="js/script.js"></script>
+  <script src="{{ asset('js/script.js') }}{{ $scriptVersion ? '?v='.$scriptVersion : '' }}"></script>
 </body>
 </html>
