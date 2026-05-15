@@ -1,6 +1,9 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # Don't double-rewrite requests already pointing inside public/
     RewriteRule ^public/ - [L]
+
+    # Send everything else into public/ (Laravel's document root)
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>

@@ -269,7 +269,7 @@
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 01</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Your complete guide to Banner Ads with Amazon Ads</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Your complete guide to Banner Ads with AdsVOpen</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Understand campaign formats, placements, and how to structure a stronger branded discovery experience.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#guides">
               Read guide
@@ -342,9 +342,9 @@
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-copy">Partner directory</p>
           <h2 class="text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em] text-copy">Get support from a <span class="text-accentDeep">partner that specializes in Banner Ads campaigns</span></h2>
           <p class="text-[0.98rem] leading-[1.7] text-muted">
-            Amazon Ads partners are a global community of technology partners and agencies that offer a variety of
-            services at different price points. Partners can help you launch, manage and optimize your ad campaigns,
-            which can save you time and help you get the most from your advertising.
+            AdsVOpen partners are a community of Canadian agencies and technology providers that offer a variety of
+            services at different price points. Partners can help you launch, manage and optimize your banner ad campaigns,
+            which can save you time and help you get the most from your placements across the Canadian Open Market.
           </p>
           <div>
             <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-[0.94rem] font-bold text-white transition hover:-translate-y-0.5 hover:bg-accent focus-visible:-translate-y-0.5 focus-visible:bg-accent" href="#partner-support">View all partners</a>
@@ -358,8 +358,8 @@
             </div>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">AiHello AutoPilo</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
-              Grow revenues and reduce work hours spent on Amazon ads management with automated keyword discovery and
-              continuous bid modifications from AiHello.
+              Grow revenues and reduce work hours spent on banner ad management with automated placement discovery and
+              continuous campaign optimization from AiHello.
             </p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#partner-support">
               Contact partner
@@ -397,8 +397,8 @@
         </div>
 
         <p class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">
-          Sellers observed a <strong class="text-accentDeep">18% increase</strong> in gross merchandise sales 6 months after
-          <span class="text-accentDeep">working with an Amazon Ads Partner</span>
+          Advertisers observed a <strong class="text-accentDeep">18% increase</strong> in brand reach 6 months after
+          <span class="text-accentDeep">working with an AdsVOpen Partner</span>
         </p>
       </div>
     </section>

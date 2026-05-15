@@ -56,9 +56,9 @@
           <section class="grid gap-3" aria-labelledby="footer-analytics">
             <h2 class="text-base font-extrabold leading-[1.2] tracking-[-0.04em]" id="footer-analytics">Measurement and analytics</h2>
             <ul class="grid gap-3 text-[0.9rem]">
-              <li><a href="#campaign-setup">Amazon Attribution</a></li>
-              <li><a href="#case-studies">Amazon Brand Lift</a></li>
-              <li><a href="#latest-news">Amazon Marketing Stream</a></li>
+              <li><a href="#campaign-setup">Attribution reporting</a></li>
+              <li><a href="#case-studies">Brand lift studies</a></li>
+              <li><a href="#latest-news">Marketing insights stream</a></li>
               <li><a href="#guides">Campaign reporting</a></li>
               <li><a href="#benefits">Omnichannel Metrics</a></li>
               <li><a href="#partner-support">Rapid retail analytics</a></li>
@@ -68,11 +68,11 @@
           <section class="grid gap-3" aria-labelledby="footer-tech">
             <h2 class="text-base font-extrabold leading-[1.2] tracking-[-0.04em]" id="footer-tech">Technology and services</h2>
             <ul class="grid gap-3 text-[0.9rem]">
-              <li><a href="#partner-support">Amazon DSP</a></li>
-              <li><a href="#latest-news">Amazon Marketing Cloud</a></li>
-              <li><a href="#campaign-setup">Amazon Ads API</a></li>
-              <li><a href="#partner-support">Amazon Publisher Services</a></li>
-              <li><a href="#placements">Amazon Retail Ad Service</a></li>
+              <li><a href="#partner-support">Programmatic DSP</a></li>
+              <li><a href="#latest-news">Marketing cloud</a></li>
+              <li><a href="#campaign-setup">Ads API</a></li>
+              <li><a href="#partner-support">Publisher services</a></li>
+              <li><a href="#placements">Retail ad service</a></li>
               <li><a href="#latest-news">New Product Campaigns</a></li>
               <li><a href="#partner-support">Ads Agent</a></li>
             </ul>
@@ -109,7 +109,7 @@
           <section class="grid gap-3" aria-labelledby="footer-learn">
             <h2 class="text-base font-extrabold leading-[1.2] tracking-[-0.04em]" id="footer-learn">Learn</h2>
             <ul class="grid gap-3 text-[0.9rem]">
-              <li><a href="#courses">Amazon Ads Academy</a></li>
+              <li><a href="#courses">Ads Academy</a></li>
               <li><a href="#latest-news">Product announcements</a></li>
               <li><a href="#guides">Resources</a></li>
               <li><a href="#faq">Ad specs and policies</a></li>
@@ -134,7 +134,7 @@
           <a href="#faq">Privacy Notice</a>
           <a href="#benefits">Interest-Based Ads</a>
           <a href="#faq">Cookie Notice</a>
-          <a href="#latest-news">Amazon Ads Status</a>
+          <a href="#latest-news">Ad platform status</a>
           <a href="#partner-support">Careers</a>
         </nav>
 
