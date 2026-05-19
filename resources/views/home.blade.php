@@ -1,7 +1,12 @@
 @include('partials.header')
 
 @php
-    $primaryCta = auth()->check() ? route('dashboard') : route('register');
+    $authUser = auth()->user();
+    $primaryCta = $authUser
+        ? ($authUser->isAdmin()
+            ? route('filament.admin.pages.dashboard')
+            : route('filament.advertiser.pages.dashboard'))
+        : route('filament.advertiser.auth.register');
 @endphp
 
 @if ($heroSlides->isNotEmpty())

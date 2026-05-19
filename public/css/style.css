@@ -2260,6 +2260,7 @@ footer nav[aria-label="Legal"] a {
   font-weight: 800;
   line-height: 1;
   text-decoration: none;
+  margin-right: 1.5rem;
   transition: background-color 150ms ease;
 }
 

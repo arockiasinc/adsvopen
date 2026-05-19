@@ -1,13 +1,21 @@
 <?php
 
-use App\Http\Controllers\AdvertiserPortalController;
 use App\Http\Controllers\BannerController;
-use App\Http\Controllers\MenuController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\StartAdvertisingController;
 use App\Models\Banner;
 use App\Models\Menu;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
+
+/*
+|--------------------------------------------------------------------------
+| Public marketing site
+|--------------------------------------------------------------------------
+| All authenticated/admin functionality now lives in the Filament panel
+| at /admin (see app/Providers/Filament/AdminPanelProvider.php). These
+| routes only serve the public-facing pages.
+*/
 
 $resolveMenus = function () {
     $menus = Schema::hasTable('menus')
@@ -107,33 +115,11 @@ Route::get('/banner-ads', function () use ($resolveMenus) {
     ]);
 })->name('banner.ads');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [AdvertiserPortalController::class, 'dashboard'])->name('dashboard');
-    Route::get('/account-details', [AdvertiserPortalController::class, 'accountDetails'])->name('account.details');
-    Route::get('/advertisement-info', [AdvertiserPortalController::class, 'advertisementInfo'])->name('advertisement.info');
-    Route::get('/my-ad-campaigns', [AdvertiserPortalController::class, 'campaigns'])->name('campaigns.index');
-    Route::get('/my-ad-campaigns/{campaign}', [AdvertiserPortalController::class, 'showCampaign'])->name('campaigns.show');
-    Route::get('/my-ad-campaigns/{campaign}/edit', [AdvertiserPortalController::class, 'editCampaign'])->name('campaigns.edit');
-    Route::patch('/my-ad-campaigns/{campaign}', [AdvertiserPortalController::class, 'updateCampaign'])->name('campaigns.update');
-    Route::get('/payment-history', [AdvertiserPortalController::class, 'payments'])->name('payments.index');
-    Route::get('/payment-history/receipts/{receipt}', [AdvertiserPortalController::class, 'downloadReceipt'])->name('payments.receipts.download');
-});
+// Public "Start Advertising" questionnaire. The page is public; submitting
+// requires a logged-in advertiser (guests are sent to the advertiser login).
+Route::get('/start-advertising', [StartAdvertisingController::class, 'show'])->name('start.advertising');
+Route::post('/start-advertising', [StartAdvertisingController::class, 'store'])
+    ->name('start.advertising.store');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');
-    Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
-    Route::patch('/menus/reorder', [MenuController::class, 'reorder'])->name('menus.reorder');
-    Route::patch('/menus/{menu}', [MenuController::class, 'update'])->name('menus.update');
-    Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
-
-    Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
-    Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
-    Route::patch('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
-    Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
-});
-
-require __DIR__.'/auth.php';
+// Kept outside the /advertiser Filament panel path to avoid route collisions.
+Route::get('/receipts/{payment}', [ReceiptController::class, 'show'])->name('advertiser.receipt');

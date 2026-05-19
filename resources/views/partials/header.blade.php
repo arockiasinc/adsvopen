@@ -51,15 +51,24 @@
             </svg>
           </button>
           @auth
-            <a class="site-auth-link" href="{{ route('profile.edit') }}">{{ auth()->user()->name }}</a>
+            @php
+              $isAdminUser = auth()->user()->isAdmin();
+              $panelHome = $isAdminUser
+                ? route('filament.admin.pages.dashboard')
+                : route('filament.advertiser.pages.dashboard');
+              $logoutRoute = $isAdminUser
+                ? route('filament.admin.auth.logout')
+                : route('filament.advertiser.auth.logout');
+            @endphp
+            <a class="site-auth-link" href="{{ $panelHome }}">{{ auth()->user()->name }}</a>
 
-            <form action="{{ route('logout') }}" class="site-auth-form" method="POST">
+            <form action="{{ $logoutRoute }}" class="site-auth-form" method="POST">
               @csrf
               <button class="site-logout-button" type="submit">Logout</button>
             </form>
           @else
-            <a class="site-auth-link" href="{{ route('login') }}">Login</a>
-            <a class="site-register-link" href="{{ route('register') }}">Register</a>
+            <a class="site-auth-link" href="{{ route('filament.advertiser.auth.login') }}">Login</a>
+            <a class="site-register-link" href="{{ route('filament.advertiser.auth.register') }}">Register</a>
           @endauth
         </div>
       </div>
