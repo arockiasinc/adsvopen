@@ -53,22 +53,30 @@
           @auth
             @php
               $isAdminUser = auth()->user()->isAdmin();
-              $panelHome = $isAdminUser
-                ? route('filament.admin.pages.dashboard')
-                : route('filament.advertiser.pages.dashboard');
-              $logoutRoute = $isAdminUser
-                ? route('filament.admin.auth.logout')
-                : route('filament.advertiser.auth.logout');
+              $panelRoute = $isAdminUser
+                ? 'filament.admin.pages.dashboard'
+                : 'filament.advertiser.pages.dashboard';
+              $logoutRouteName = $isAdminUser
+                ? 'filament.admin.auth.logout'
+                : 'filament.advertiser.auth.logout';
+              $panelHome = Route::has($panelRoute) ? route($panelRoute) : route('home');
+              $logoutRoute = Route::has($logoutRouteName) ? route($logoutRouteName) : null;
             @endphp
             <a class="site-auth-link" href="{{ $panelHome }}">{{ auth()->user()->name }}</a>
 
-            <form action="{{ $logoutRoute }}" class="site-auth-form" method="POST">
-              @csrf
-              <button class="site-logout-button" type="submit">Logout</button>
-            </form>
+            @if ($logoutRoute)
+              <form action="{{ $logoutRoute }}" class="site-auth-form" method="POST">
+                @csrf
+                <button class="site-logout-button" type="submit">Logout</button>
+              </form>
+            @endif
           @else
-            <a class="site-auth-link" href="{{ route('filament.advertiser.auth.login') }}">Login</a>
-            <a class="site-register-link" href="{{ route('filament.advertiser.auth.register') }}">Register</a>
+            @if (Route::has('filament.advertiser.auth.login'))
+              <a class="site-auth-link" href="{{ route('filament.advertiser.auth.login') }}">Login</a>
+            @endif
+            @if (Route::has('filament.advertiser.auth.register'))
+              <a class="site-register-link" href="{{ route('filament.advertiser.auth.register') }}">Register</a>
+            @endif
           @endauth
         </div>
       </div>

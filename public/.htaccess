@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    # If the host exposes this folder directly, remove /public from the URL.
+    RewriteCond %{THE_REQUEST} \s/+(.*/)?public/?([^\s?]*) [NC]
+    RewriteRule ^ /%1%2 [L,R=301,NE]
+
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
