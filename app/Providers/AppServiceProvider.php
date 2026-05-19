@@ -39,7 +39,11 @@ class AppServiceProvider extends ServiceProvider
         // be configured at boot time — Livewire registers these routes during its
         // own service-provider boot, so doing it from per-request middleware is too
         // late and leaves Livewire/Filament pages unable to resolve the update route.
-        $basePath = rtrim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/');
+        $configuredBasePath = rtrim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/');
+        $requestBasePath = rtrim(str_replace('\\', '/', dirname((string) ($_SERVER['SCRIPT_NAME'] ?? ''))), '/');
+        $basePath = $configuredBasePath !== '' && $configuredBasePath !== '/'
+            ? $configuredBasePath
+            : ($requestBasePath === '/' || $requestBasePath === '.' ? '' : $requestBasePath);
 
         if ($basePath !== '') {
             $script = config('app.debug') ? 'livewire.js' : 'livewire.min.js';

@@ -132,8 +132,7 @@ class AdvertisingInquiryResource extends Resource
                                     return '—';
                                 }
 
-                                // Root-relative so it works on any host/port (e.g. localhost:8000).
-                                $url = '/storage/'.ltrim((string) $state, '/');
+                                $url = asset('storage/'.ltrim((string) $state, '/'));
                                 $ext = strtolower(pathinfo((string) $state, PATHINFO_EXTENSION));
 
                                 if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'], true)) {

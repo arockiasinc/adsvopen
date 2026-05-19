@@ -10,8 +10,6 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CampaignResource extends Resource
 {
@@ -29,9 +27,14 @@ class CampaignResource extends Resource
                 Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'Draft' => 'Draft',
+                        'Pending Review' => 'Pending Review',
+                        'Active' => 'Active',
+                        'Paused' => 'Paused',
+                    ])
                     ->required()
-                    ->maxLength(255)
                     ->default('Draft'),
                 Forms\Components\TextInput::make('format')
                     ->required()
@@ -56,9 +59,10 @@ class CampaignResource extends Resource
                     ->required(),
                 Forms\Components\DatePicker::make('end_date')
                     ->required(),
-                Forms\Components\Textarea::make('placements')
+                Forms\Components\TagsInput::make('placements')
+                    ->placeholder('Add a placement')
                     ->columnSpanFull(),
-                Forms\Components\Textarea::make('metrics')
+                Forms\Components\KeyValue::make('metrics')
                     ->columnSpanFull(),
             ]);
     }
@@ -68,7 +72,7 @@ class CampaignResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
+                    ->label('Advertiser')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
