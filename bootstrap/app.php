@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\ConfigureLivewireAssetPath;
 use App\Http\Middleware\TemporaryBasicAuth;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,7 +13,6 @@ $app = Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(prepend: [
-            ConfigureLivewireAssetPath::class,
             TemporaryBasicAuth::class,
         ]);
     })
