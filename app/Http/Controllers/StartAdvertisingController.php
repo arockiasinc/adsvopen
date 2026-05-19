@@ -6,8 +6,10 @@ use App\Models\AdvertisingInquiry;
 use App\Models\Menu;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\View\View;
+use Throwable;
 
 class StartAdvertisingController extends Controller
 {
@@ -16,12 +18,23 @@ class StartAdvertisingController extends Controller
      */
     protected function menus()
     {
-        $menus = Schema::hasTable('menus')
-            ? Menu::query()->ordered()->get()
-            : collect([
+        try {
+            $menus = Schema::hasTable('menus')
+                ? Menu::query()->ordered()->get()
+                : collect([
+                    (object) ['label' => 'Banner Ads', 'target' => route('banner.ads')],
+                    (object) ['label' => 'Start Advertising', 'target' => route('start.advertising')],
+                ]);
+        } catch (Throwable $exception) {
+            Log::warning('Falling back to default start advertising menus.', [
+                'exception' => $exception->getMessage(),
+            ]);
+
+            $menus = collect([
                 (object) ['label' => 'Banner Ads', 'target' => route('banner.ads')],
                 (object) ['label' => 'Start Advertising', 'target' => route('start.advertising')],
             ]);
+        }
 
         return $menus->map(function ($menu) {
             if (trim(strtolower((string) $menu->label)) === 'banner ads') {

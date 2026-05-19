@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'temporary_basic_auth' => env('TEMPORARY_BASIC_AUTH', false),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

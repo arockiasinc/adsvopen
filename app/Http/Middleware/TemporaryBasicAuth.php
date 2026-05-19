@@ -14,6 +14,10 @@ class TemporaryBasicAuth
 
     public function handle(Request $request, Closure $next): Response
     {
+        if (! (bool) config('app.temporary_basic_auth', false)) {
+            return $next($request);
+        }
+
         [$username, $password] = $this->extractCredentials($request);
 
         if (
