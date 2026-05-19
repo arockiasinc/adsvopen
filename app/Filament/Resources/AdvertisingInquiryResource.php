@@ -110,10 +110,10 @@ class AdvertisingInquiryResource extends Resource
                         Infolists\Components\TextEntry::make('display_schedule'),
                         Infolists\Components\TextEntry::make('daily_budget_band')->label('Daily budget'),
                         Infolists\Components\TextEntry::make('daily_budget_other')
-                            ->money('USD')
+                            ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                             ->placeholder('—'),
                         Infolists\Components\TextEntry::make('yearly_marketing_budget')
-                            ->money('USD')
+                            ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                             ->placeholder('—'),
                     ]),
                 Infolists\Components\Section::make('Flags & creative')

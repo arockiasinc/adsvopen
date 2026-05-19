@@ -84,7 +84,6 @@ class BannerResource extends Resource
                     ->searchable()
                     ->wrap(),
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

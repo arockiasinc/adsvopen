@@ -53,17 +53,15 @@ class PaymentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('campaign.title')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('invoice_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('campaign_title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('amount')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('issued_on')
                     ->date()

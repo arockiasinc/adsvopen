@@ -45,7 +45,6 @@ class MenuResource extends Resource
                 Tables\Columns\TextColumn::make('target')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('sort_order')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

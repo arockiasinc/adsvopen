@@ -110,7 +110,8 @@ class CampaignResource extends Resource
                         Infolists\Components\TextEntry::make('status')->badge(),
                         Infolists\Components\TextEntry::make('format'),
                         Infolists\Components\TextEntry::make('objective'),
-                        Infolists\Components\TextEntry::make('daily_budget')->money('USD'),
+                        Infolists\Components\TextEntry::make('daily_budget')
+                            ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state),
                         Infolists\Components\TextEntry::make('cta')->label('Call to action'),
                     ]),
                 Infolists\Components\Section::make('Creative')
@@ -147,7 +148,7 @@ class CampaignResource extends Resource
                 Tables\Columns\TextColumn::make('format')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('daily_budget')
-                    ->money('USD')
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->date()

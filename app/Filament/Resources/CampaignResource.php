@@ -83,7 +83,7 @@ class CampaignResource extends Resource
                 Tables\Columns\TextColumn::make('objective')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('daily_budget')
-                    ->numeric()
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('headline')
                     ->searchable(),
