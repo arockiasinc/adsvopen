@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Banner extends Model
@@ -50,11 +49,46 @@ class Banner extends Model
             return asset(ltrim($imagePath, '/'));
         }
 
-        return Storage::disk('public')->url($imagePath);
+        if ($this->usesManagedUpload() && $this->exists) {
+            return $this->managedImageUrl();
+        }
+
+        return asset(ltrim($imagePath, '/'));
     }
 
     public function usesManagedUpload(): bool
     {
         return Str::startsWith((string) $this->image_path, 'banners/');
+    }
+
+    private function managedImageUrl(): string
+    {
+        $basePath = $this->appBasePath();
+        $imageRoute = route('banners.image', $this, false);
+
+        return ($basePath === '' ? '' : "/{$basePath}").$imageRoute;
+    }
+
+    private function appBasePath(): string
+    {
+        if (! app()->runningInConsole()) {
+            return trim((string) request()->getBasePath(), '/');
+        }
+
+        $path = (string) parse_url((string) config('app.url'), PHP_URL_PATH);
+        $segments = array_values(array_filter(
+            explode('/', trim(str_replace('\\', '/', $path), '/')),
+            fn (string $segment): bool => $segment !== '' && $segment !== '.',
+        ));
+
+        if (end($segments) === 'index.php') {
+            array_pop($segments);
+        }
+
+        if (end($segments) === 'public') {
+            array_pop($segments);
+        }
+
+        return implode('/', $segments);
     }
 }

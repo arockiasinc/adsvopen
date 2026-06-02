@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\BannerResource\Pages;
-use App\Filament\Resources\BannerResource\RelationManagers;
 use App\Models\Banner;
 use Filament\Forms;
+use Filament\Forms\Components\BaseFileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class BannerResource extends Resource
 {
@@ -61,6 +60,27 @@ class BannerResource extends Resource
                     ->disk('public')
                     ->directory('banners')
                     ->visibility('public')
+                    ->fetchFileInformation(false)
+                    ->getUploadedFileUsing(function (BaseFileUpload $component, string $file, ?Banner $record): ?array {
+                        if (! $record?->exists || $record->image_path !== $file) {
+                            return null;
+                        }
+
+                        $fileExists = Storage::disk($component->getDiskName())->exists($file)
+                            || Storage::disk('local')->exists($file)
+                            || file_exists(public_path(ltrim($file, '/')));
+
+                        if (! $fileExists) {
+                            return null;
+                        }
+
+                        return [
+                            'name' => basename($file),
+                            'size' => 0,
+                            'type' => null,
+                            'url' => $record->image_url,
+                        ];
+                    })
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('sort_order')

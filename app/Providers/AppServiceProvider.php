@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\BannerController;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -81,6 +82,7 @@ class AppServiceProvider extends ServiceProvider
             // when the shared host doesn't strip the app base path.
             Route::post("{$basePath}/livewire/upload-file", [FileUploadController::class, 'handle']);
             Route::get("{$basePath}/livewire/preview-file/{filename}", [FilePreviewController::class, 'handle']);
+            Route::get("{$basePath}/banners/{banner}/image", [BannerController::class, 'image']);
         }
     }
 
