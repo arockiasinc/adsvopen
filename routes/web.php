@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdvertiserLoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ReceiptController;
@@ -152,6 +153,10 @@ Route::post('/start-advertising', [StartAdvertisingController::class, 'store'])
 Route::post('/advertiser/login', AdvertiserLoginController::class)
     ->middleware(SetUpPanel::class.':advertiser')
     ->name('advertiser.login.store');
+
+Route::post('/admin/login', AdminLoginController::class)
+    ->middleware(SetUpPanel::class.':admin')
+    ->name('admin.login.store');
 
 // Kept outside the /advertiser Filament panel path to avoid route collisions.
 Route::get('/receipts/{payment}', [ReceiptController::class, 'show'])->name('advertiser.receipt');
