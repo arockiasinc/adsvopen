@@ -1,26 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    Options -MultiViews -Indexes
 
-    DirectoryIndex index.php
-
-    # If /public appears in the request, redirect to the clean URL.
+    # Redirect any request that explicitly contains /public to the clean URL.
     RewriteCond %{THE_REQUEST} \s/+(.*/)?public/([^\s?]*) [NC]
-    RewriteRule ^public/?(.*)$ $1 [R=301,L,NE]
+    RewriteRule ^public/?(.*)$ /$1 [R=301,L,NE]
 
-    # Existing files/folders in the project root are served directly.
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-
-    # Static assets that really exist inside public/ are served directly.
-    RewriteCond %{DOCUMENT_ROOT}/adsvopen/public/$1 -f
-    RewriteRule ^(.+)$ public/$1 [L]
-
-    # Shared-hosting layout: use root index.php when public/ was merged upward.
-    RewriteCond %{DOCUMENT_ROOT}/adsvopen/index.php -f
-    RewriteRule ^ index.php [L]
-
-    # Standard Laravel layout fallback.
-    RewriteRule ^ public/index.php [L]
+    # Forward every request into the public/ folder (once only — the
+    # condition stops it re-prefixing public/public/... into a loop).
+    # public/.htaccess + public/index.php take it from there.
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
