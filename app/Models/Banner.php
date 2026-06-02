@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Banner extends Model
@@ -49,7 +50,7 @@ class Banner extends Model
             return asset(ltrim($imagePath, '/'));
         }
 
-        return route('banners.image', $this);
+        return Storage::disk('public')->url($imagePath);
     }
 
     public function usesManagedUpload(): bool

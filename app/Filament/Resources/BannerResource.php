@@ -58,9 +58,9 @@ class BannerResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image_path')
                     ->image()
-                    ->disk('local')
+                    ->disk('public')
                     ->directory('banners')
-                    ->visibility('private')
+                    ->visibility('public')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('sort_order')
