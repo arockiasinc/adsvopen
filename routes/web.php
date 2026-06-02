@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdvertiserLoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\StartAdvertisingController;
 use App\Models\Banner;
 use App\Models\Menu;
+use Filament\Http\Middleware\SetUpPanel;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
@@ -146,6 +148,10 @@ Route::get('/banner-ads', function () use ($resolveMenus) {
 Route::get('/start-advertising', [StartAdvertisingController::class, 'show'])->name('start.advertising');
 Route::post('/start-advertising', [StartAdvertisingController::class, 'store'])
     ->name('start.advertising.store');
+
+Route::post('/advertiser/login', AdvertiserLoginController::class)
+    ->middleware(SetUpPanel::class.':advertiser')
+    ->name('advertiser.login.store');
 
 // Kept outside the /advertiser Filament panel path to avoid route collisions.
 Route::get('/receipts/{payment}', [ReceiptController::class, 'show'])->name('advertiser.receipt');
