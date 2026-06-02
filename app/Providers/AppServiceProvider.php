@@ -7,6 +7,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Features\SupportFileUploads\FilePreviewController;
+use Livewire\Features\SupportFileUploads\FileUploadController;
 use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
@@ -73,6 +75,12 @@ class AppServiceProvider extends ServiceProvider
             Livewire::setUpdateRoute(
                 fn ($handle) => Route::post("{$basePath}/livewire/update", $handle)->middleware('web')
             );
+
+            // Livewire's file-upload URLs are signed against the original named
+            // routes. Add subfolder-aware aliases so those signed URLs resolve
+            // when the shared host doesn't strip the app base path.
+            Route::post("{$basePath}/livewire/upload-file", [FileUploadController::class, 'handle']);
+            Route::get("{$basePath}/livewire/preview-file/{filename}", [FilePreviewController::class, 'handle']);
         }
     }
 
