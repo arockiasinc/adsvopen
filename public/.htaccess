@@ -5,6 +5,10 @@
 
     RewriteEngine On
 
+    <IfModule mod_setenvif.c>
+        SetEnvIfNoCase Authorization "(.+)" HTTP_AUTHORIZATION=$1
+    </IfModule>
+
     # If the host exposes this folder directly, remove /public from the URL.
     RewriteCond %{THE_REQUEST} \s/+(.*/)?public/?([^\s?]*) [NC]
     RewriteRule ^ /%1%2 [L,R=301,NE]

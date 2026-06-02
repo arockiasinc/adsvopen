@@ -43,22 +43,46 @@ class TemporaryBasicAuth
         $username = (string) ($request->getUser() ?? '');
         $password = (string) ($request->getPassword() ?? '');
 
-        if ($username !== '' || $password !== '') {
+        if ($username !== '' && $password !== '') {
             return [$username, $password];
         }
 
-        $authorization = $request->header('Authorization', $request->server('HTTP_AUTHORIZATION'));
+        foreach ($this->authorizationHeaders($request) as $authorization) {
+            if (! is_string($authorization)) {
+                continue;
+            }
 
-        if (! is_string($authorization) || ! str_starts_with($authorization, 'Basic ')) {
-            return ['', ''];
+            if (! preg_match('/^\s*Basic\s+(.+)$/i', $authorization, $matches)) {
+                continue;
+            }
+
+            $decoded = base64_decode($matches[1], true);
+
+            if ($decoded === false || ! str_contains($decoded, ':')) {
+                continue;
+            }
+
+            return explode(':', $decoded, 2);
         }
 
-        $decoded = base64_decode(substr($authorization, 6), true);
+        return ['', ''];
+    }
 
-        if ($decoded === false || ! str_contains($decoded, ':')) {
-            return ['', ''];
-        }
-
-        return explode(':', $decoded, 2);
+    /**
+     * Shared hosts may expose the Authorization header under different server
+     * variables after the request is internally rewritten into public/.
+     *
+     * @return array<int, mixed>
+     */
+    private function authorizationHeaders(Request $request): array
+    {
+        return [
+            $request->header('Authorization'),
+            $request->server('HTTP_AUTHORIZATION'),
+            $request->server('REDIRECT_HTTP_AUTHORIZATION'),
+            $request->server('Authorization'),
+            getenv('HTTP_AUTHORIZATION') ?: null,
+            getenv('REDIRECT_HTTP_AUTHORIZATION') ?: null,
+        ];
     }
 }
