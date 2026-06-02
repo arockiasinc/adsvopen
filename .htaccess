@@ -13,9 +13,10 @@
     RewriteCond %{THE_REQUEST} \s/+(.*/)?public/([^\s?]*) [NC]
     RewriteRule ^public/?(.*)$ /$1 [R=301,L,NE]
 
-    # Forward every request into the public/ folder (once only — the
-    # condition stops it re-prefixing public/public/... into a loop).
-    # public/.htaccess + public/index.php take it from there.
-    RewriteCond %{REQUEST_URI} !^/public/
-    RewriteRule ^(.*)$ public/$1 [L]
+    # Serve public assets, but let Laravel routes hit the project-root front
+    # controller so subfolder installs keep the correct base path.
+    RewriteRule ^(build|css|images|js|storage|vendor)/(.*)$ public/$1/$2 [L]
+    RewriteRule ^(favicon\.ico|robots\.txt)$ public/$1 [L]
+
+    RewriteRule ^ index.php [L]
 </IfModule>
