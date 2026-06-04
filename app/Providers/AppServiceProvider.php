@@ -38,6 +38,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // When the public URL is HTTPS, force every generated URL/asset to use
+        // the https scheme. Shared hosts often terminate SSL at a proxy, so the
+        // PHP request can look like http and asset() would emit http:// scripts
+        // — which the browser then blocks as mixed content on the https page.
+        // Guarding on app.url keeps http://localhost working in local dev.
+        if (str_starts_with((string) config('app.url'), 'https://')) {
+            URL::forceScheme('https');
+        }
+
         // When the app is served from a subfolder (e.g. https://winnipage.ca/adsvopen),
         // Livewire's update/script routes must be prefixed with that path. This MUST
         // be configured at boot time — Livewire registers these routes during its
