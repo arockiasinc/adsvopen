@@ -18,6 +18,17 @@ class TemporaryBasicAuth
             return $next($request);
         }
 
+        // Livewire/Filament drive file uploads and component updates over AJAX
+        // requests that the browser fires *after* the gated page has already
+        // loaded. Those XHRs don't reliably carry the cached Basic-Auth
+        // credentials (and the Authorization header is often dropped once the
+        // request is rewritten into public/), so the gate would 401 them and
+        // surface a second login popup that breaks uploads. The page itself is
+        // still gated, so exempting these sub-requests is safe.
+        if ($request->is('livewire/*', '*/livewire/*')) {
+            return $next($request);
+        }
+
         [$username, $password] = $this->extractCredentials($request);
 
         if (
