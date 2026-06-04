@@ -5,11 +5,14 @@ namespace App\Providers;
 use App\Http\Controllers\BannerController;
 use Filament\Http\Responses\Auth\Contracts\LogoutResponse as LogoutResponseContract;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
 use Livewire\Features\SupportFileUploads\FilePreviewController;
 use Livewire\Features\SupportFileUploads\FileUploadController;
+use Livewire\Features\SupportFileUploads\GenerateSignedUploadUrl;
 use Livewire\Livewire;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +34,28 @@ class AppServiceProvider extends ServiceProvider
                 }
             };
         });
+
+        $this->app->singleton(GenerateSignedUploadUrl::class, function () {
+            return new class extends GenerateSignedUploadUrl
+            {
+                public function forLocal()
+                {
+                    $host = parse_url((string) config('app.url'), PHP_URL_HOST);
+                    $path = trim((string) parse_url((string) config('app.url'), PHP_URL_PATH), '/');
+
+                    if ($path !== '' || in_array($host, ['localhost', '127.0.0.1'], true)) {
+                        return parent::forLocal();
+                    }
+
+                    return URL::temporarySignedRoute(
+                        'livewire.upload-file',
+                        now()->addMinutes(FileUploadConfiguration::maxUploadTime()),
+                        [],
+                        false,
+                    );
+                }
+            };
+        });
     }
 
     /**
@@ -38,6 +63,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->supportRelativeLivewireUploadSignatures();
+
         // When the public URL is HTTPS, force every generated URL/asset to use
         // the https scheme. Shared hosts often terminate SSL at a proxy, so the
         // PHP request can look like http and asset() would emit http:// scripts
@@ -142,8 +169,9 @@ class AppServiceProvider extends ServiceProvider
             (string) parse_url((string) config('app.url'), PHP_URL_PATH),
             $request->getBasePath(),
         );
+        $host = $this->publicRequestHost();
 
-        URL::forceRootUrl($scheme.'://'.$request->getHttpHost().$basePath);
+        URL::forceRootUrl($scheme.'://'.$host.$basePath);
 
         if ($scheme === 'https') {
             URL::forceScheme('https');
@@ -184,6 +212,40 @@ class AppServiceProvider extends ServiceProvider
         return in_array($configuredScheme, ['http', 'https'], true)
             ? $configuredScheme
             : $request->getScheme();
+    }
+
+    private function publicRequestHost(): string
+    {
+        $configuredUrl = (string) config('app.url');
+        $configuredHost = parse_url($configuredUrl, PHP_URL_HOST);
+
+        if (is_string($configuredHost) && $configuredHost !== '' && ! in_array($configuredHost, ['localhost', '127.0.0.1'], true)) {
+            $configuredPort = parse_url($configuredUrl, PHP_URL_PORT);
+
+            return $configuredHost.($configuredPort ? ":{$configuredPort}" : '');
+        }
+
+        return request()->getHttpHost();
+    }
+
+    private function supportRelativeLivewireUploadSignatures(): void
+    {
+        Request::macro('hasValidSignature', function ($absolute = true) {
+            if (URL::hasValidSignature($this, $absolute)) {
+                return true;
+            }
+
+            if (! $this->is(
+                'livewire/upload-file',
+                '*/livewire/upload-file',
+                'livewire/preview-file/*',
+                '*/livewire/preview-file/*',
+            )) {
+                return false;
+            }
+
+            return URL::hasValidSignature($this, false);
+        });
     }
 
     private function publicAssetOrigin(string $basePath): ?string
