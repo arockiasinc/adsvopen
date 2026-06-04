@@ -78,7 +78,7 @@ class ExampleTest extends TestCase
             ])
             ->post($url, [
                 'files' => [
-                    UploadedFile::fake()->image('banner.jpg', 1200, 500),
+                    UploadedFile::fake()->image('two-tone-kitchen-cabinets-winnipeg.webp', 1200, 500),
                 ],
             ]);
 

@@ -5,6 +5,22 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
+$temporaryDirectory = __DIR__.'/../storage/framework/tmp';
+
+if (! is_dir($temporaryDirectory)) {
+    @mkdir($temporaryDirectory, 0775, true);
+}
+
+if (is_dir($temporaryDirectory) && is_writable($temporaryDirectory)) {
+    $temporaryDirectory = realpath($temporaryDirectory) ?: $temporaryDirectory;
+
+    foreach (['TMPDIR', 'TMP', 'TEMP'] as $environmentVariable) {
+        putenv("{$environmentVariable}={$temporaryDirectory}");
+        $_ENV[$environmentVariable] = $temporaryDirectory;
+        $_SERVER[$environmentVariable] = $temporaryDirectory;
+    }
+}
+
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
