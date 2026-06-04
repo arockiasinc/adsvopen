@@ -58,6 +58,52 @@ $resolveMenus = function () {
 };
 
 $resolveHeroSlides = function () {
+    $normalizeTextList = function ($items): array {
+        if (! is_array($items)) {
+            return [];
+        }
+
+        return collect($items)
+            ->map(function ($item): ?string {
+                if (is_string($item) || is_numeric($item)) {
+                    return trim((string) $item);
+                }
+
+                if (! is_array($item)) {
+                    return null;
+                }
+
+                foreach (['label', 'name', 'value', 'title'] as $key) {
+                    if (isset($item[$key]) && (is_string($item[$key]) || is_numeric($item[$key]))) {
+                        return trim((string) $item[$key]);
+                    }
+                }
+
+                return null;
+            })
+            ->filter(fn (?string $item): bool => filled($item))
+            ->values()
+            ->all();
+    };
+
+    $normalizeButtonRows = function ($rows) use ($normalizeTextList): array {
+        if (! is_array($rows)) {
+            return [];
+        }
+
+        return collect($rows)
+            ->map(function ($row) use ($normalizeTextList): array {
+                if (is_array($row) && array_key_exists('buttons', $row)) {
+                    return $normalizeTextList((array) $row['buttons']);
+                }
+
+                return $normalizeTextList(is_array($row) ? $row : [$row]);
+            })
+            ->filter(fn (array $row): bool => $row !== [])
+            ->values()
+            ->all();
+    };
+
     $defaultSlides = collect([
         [
             'image_url' => asset('images/case-study-photo-1.jpg'),
@@ -105,14 +151,14 @@ $resolveHeroSlides = function () {
         return Banner::query()
             ->ordered()
             ->get()
-            ->map(function (Banner $banner) {
+            ->map(function (Banner $banner) use ($normalizeTextList, $normalizeButtonRows) {
                 return [
                     'image_url' => $banner->image_url,
                     'title' => $banner->title,
                     'copy' => $banner->copy,
                     'detail' => $banner->detail,
-                    'highlights' => $banner->highlights ?? [],
-                    'buttonRows' => $banner->button_rows ?? [],
+                    'highlights' => $normalizeTextList($banner->highlights ?? []),
+                    'buttonRows' => $normalizeButtonRows($banner->button_rows ?? []),
                     'footer' => $banner->footer,
                 ];
             });
