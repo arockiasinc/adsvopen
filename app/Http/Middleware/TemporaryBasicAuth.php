@@ -25,7 +25,7 @@ class TemporaryBasicAuth
         // request is rewritten into public/), so the gate would 401 them and
         // surface a second login popup that breaks uploads. The page itself is
         // still gated, so exempting these sub-requests is safe.
-        if ($request->is('livewire/*', '*/livewire/*')) {
+        if ($this->isLivewireRequest($request)) {
             return $next($request);
         }
 
@@ -77,6 +77,29 @@ class TemporaryBasicAuth
         }
 
         return ['', ''];
+    }
+
+    private function isLivewireRequest(Request $request): bool
+    {
+        if ($request->is('livewire/*', '*/livewire/*')) {
+            return true;
+        }
+
+        $route = $request->route();
+
+        if (! $route) {
+            return false;
+        }
+
+        $routeName = (string) $route->getName();
+
+        if ($routeName !== '' && str_contains($routeName, 'livewire')) {
+            return true;
+        }
+
+        $controller = (string) $route->getAction('controller');
+
+        return str_contains($controller, 'Livewire\\');
     }
 
     /**
