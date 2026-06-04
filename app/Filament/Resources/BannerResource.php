@@ -98,6 +98,24 @@ class BannerResource extends Resource
                     ->label('Image')
                     ->height(56)
                     ->width(96)
+                    // image_url is a root-relative path (e.g. /adsvopen/banners/1/image).
+                    // Filament's ImageColumn only uses the state verbatim when it passes
+                    // FILTER_VALIDATE_URL; otherwise it treats it as a storage path and
+                    // falls back to the default image. Return an absolute URL so the real
+                    // banner preview is rendered.
+                    ->getStateUsing(function (Banner $record): ?string {
+                        $url = (string) $record->image_url;
+
+                        if ($url === '') {
+                            return null;
+                        }
+
+                        if (\Illuminate\Support\Str::startsWith($url, ['http://', 'https://'])) {
+                            return $url;
+                        }
+
+                        return request()->getSchemeAndHttpHost().'/'.ltrim($url, '/');
+                    })
                     ->extraImgAttributes(['class' => 'object-cover rounded'])
                     ->defaultImageUrl(asset('images/hero-scene.svg')),
                 Tables\Columns\TextColumn::make('title')
