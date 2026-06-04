@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\TemporaryBasicAuth;
+use App\Http\Middleware\LogLivewireUploadFailures;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -30,6 +31,7 @@ $app = Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->web(prepend: [
             TemporaryBasicAuth::class,
+            LogLivewireUploadFailures::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

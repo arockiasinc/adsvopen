@@ -47,6 +47,8 @@ class AppServiceProvider extends ServiceProvider
             URL::forceScheme('https');
         }
 
+        $this->forceRuntimeRequestRoot();
+
         // When the app is served from a subfolder (e.g. https://winnipage.ca/adsvopen),
         // Livewire's update/script routes must be prefixed with that path. This MUST
         // be configured at boot time — Livewire registers these routes during its
@@ -114,6 +116,65 @@ class AppServiceProvider extends ServiceProvider
         }
 
         return $segments === [] ? '' : '/'.implode('/', $segments);
+    }
+
+    private function forceRuntimeRequestRoot(): void
+    {
+        if (app()->runningInConsole()) {
+            return;
+        }
+
+        $request = request();
+        $host = $request->getHost();
+
+        if ($host === '' || in_array($host, ['localhost', '127.0.0.1'], true)) {
+            return;
+        }
+
+        $scheme = $this->publicRequestScheme();
+        $basePath = rtrim($request->getBasePath(), '/');
+
+        URL::forceRootUrl($scheme.'://'.$request->getHttpHost().$basePath);
+
+        if ($scheme === 'https') {
+            URL::forceScheme('https');
+        }
+    }
+
+    private function publicRequestScheme(): string
+    {
+        $request = request();
+        $forwardedProto = strtolower((string) $request->headers->get('X-Forwarded-Proto'));
+
+        if (str_contains($forwardedProto, 'https')) {
+            return 'https';
+        }
+
+        $forwardedSsl = strtolower((string) $request->headers->get('X-Forwarded-Ssl'));
+
+        if ($forwardedSsl === 'on') {
+            return 'https';
+        }
+
+        if (str_contains(strtolower((string) $request->headers->get('CF-Visitor')), '"scheme":"https"')) {
+            return 'https';
+        }
+
+        $https = strtolower((string) $request->server('HTTPS'));
+
+        if ($https !== '' && $https !== 'off') {
+            return 'https';
+        }
+
+        if ((string) $request->server('SERVER_PORT') === '443' || $request->isSecure()) {
+            return 'https';
+        }
+
+        $configuredScheme = parse_url((string) config('app.url'), PHP_URL_SCHEME);
+
+        return in_array($configuredScheme, ['http', 'https'], true)
+            ? $configuredScheme
+            : $request->getScheme();
     }
 
     private function publicAssetOrigin(string $basePath): ?string
