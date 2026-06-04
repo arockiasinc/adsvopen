@@ -57,11 +57,7 @@ class AppServiceProvider extends ServiceProvider
         $rawConfiguredBasePath = (string) parse_url((string) config('app.url'), PHP_URL_PATH);
         $rawRequestBasePath = str_replace('\\', '/', dirname((string) ($_SERVER['SCRIPT_NAME'] ?? '')));
 
-        $configuredBasePath = $this->normalizePublicUrlBasePath($rawConfiguredBasePath);
-        $requestBasePath = $this->normalizePublicUrlBasePath($rawRequestBasePath);
-        $basePath = $configuredBasePath !== '' && $configuredBasePath !== '/'
-            ? $configuredBasePath
-            : ($requestBasePath === '/' || $requestBasePath === '.' ? '' : $requestBasePath);
+        $basePath = $this->resolvePublicBasePath($rawConfiguredBasePath, $rawRequestBasePath);
 
         if (
             $this->normalizePublicUrlBasePath($rawConfiguredBasePath) !== rtrim($rawConfiguredBasePath, '/')
@@ -118,6 +114,16 @@ class AppServiceProvider extends ServiceProvider
         return $segments === [] ? '' : '/'.implode('/', $segments);
     }
 
+    private function resolvePublicBasePath(string $configuredPath, string $requestPath): string
+    {
+        $configuredBasePath = $this->normalizePublicUrlBasePath($configuredPath);
+        $requestBasePath = $this->normalizePublicUrlBasePath($requestPath);
+
+        return $configuredBasePath !== ''
+            ? $configuredBasePath
+            : ($requestBasePath === '/' || $requestBasePath === '.' ? '' : $requestBasePath);
+    }
+
     private function forceRuntimeRequestRoot(): void
     {
         if (app()->runningInConsole()) {
@@ -132,7 +138,10 @@ class AppServiceProvider extends ServiceProvider
         }
 
         $scheme = $this->publicRequestScheme();
-        $basePath = rtrim($request->getBasePath(), '/');
+        $basePath = $this->resolvePublicBasePath(
+            (string) parse_url((string) config('app.url'), PHP_URL_PATH),
+            $request->getBasePath(),
+        );
 
         URL::forceRootUrl($scheme.'://'.$request->getHttpHost().$basePath);
 
