@@ -6,13 +6,24 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-$temporaryDirectory = __DIR__.'/../storage/framework/tmp';
+$applicationTemporaryDirectory = __DIR__.'/../storage/framework/tmp';
 
-if (! is_dir($temporaryDirectory)) {
-    @mkdir($temporaryDirectory, 0775, true);
+if (! is_dir($applicationTemporaryDirectory)) {
+    @mkdir($applicationTemporaryDirectory, 0777, true);
 }
 
-if (is_dir($temporaryDirectory) && is_writable($temporaryDirectory)) {
+@chmod($applicationTemporaryDirectory, 0777);
+
+$temporaryDirectories = array_filter([
+    $applicationTemporaryDirectory,
+    ini_get('upload_tmp_dir') ?: null,
+]);
+
+foreach ($temporaryDirectories as $temporaryDirectory) {
+    if (! is_dir($temporaryDirectory) || ! is_writable($temporaryDirectory)) {
+        continue;
+    }
+
     $temporaryDirectory = realpath($temporaryDirectory) ?: $temporaryDirectory;
 
     foreach (['TMPDIR', 'TMP', 'TEMP'] as $environmentVariable) {
@@ -20,6 +31,8 @@ if (is_dir($temporaryDirectory) && is_writable($temporaryDirectory)) {
         $_ENV[$environmentVariable] = $temporaryDirectory;
         $_SERVER[$environmentVariable] = $temporaryDirectory;
     }
+
+    break;
 }
 
 $app = Application::configure(basePath: dirname(__DIR__))
