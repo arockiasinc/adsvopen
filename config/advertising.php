@@ -145,7 +145,9 @@ return [
         ],
     ],
 
-    'province_region_categories' => [
+    // Manitoba is defined inline below; all other provinces/territories are
+    // merged in from config/regions/<province>.php (one file per province).
+    'province_region_categories' => array_merge([
         'Manitoba' => [
             'city_wide' => [
                 'places' => [
@@ -421,7 +423,7 @@ return [
                 ],
             ],
         ],
-    ],
+    ], ...array_map(fn ($f) => require $f, glob(__DIR__.'/regions/*.php'))),
 
     'company_sizes' => [
         'micro' => 'Micro — 1-4 employees',

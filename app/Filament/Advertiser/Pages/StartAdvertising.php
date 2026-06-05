@@ -170,6 +170,15 @@ class StartAdvertising extends Page implements HasForms
                                             );
 
                                             return collect($categories)
+                                                // Hide categories with no data for this province,
+                                                // but always keep "Across the Province".
+                                                ->filter(function ($category, $key): bool {
+                                                    if ($key === 'across_province') {
+                                                        return true;
+                                                    }
+
+                                                    return ($category['display_count'] ?? count($category['places'] ?? [])) > 0;
+                                                })
                                                 ->mapWithKeys(function ($category, $key) {
                                                     $count = $category['display_count'] ?? count($category['places'] ?? []);
                                                     $label = $category['label'].($count ? " ({$count})" : '');

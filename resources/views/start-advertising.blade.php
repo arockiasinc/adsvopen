@@ -193,8 +193,10 @@
               <p class="sa-q" style="margin-bottom:.75rem">Select the region(s) you would like to advertise in {{ $province }}</p>
               <div class="sa-region-list">
                 @foreach ($provinceRegions as $catKey => $cat)
+                  @php $places = $cat['places'] ?? []; @endphp
+                  {{-- Hide categories with no data for this province, but always keep "Across the Province". --}}
+                  @continue($catKey !== 'across_province' && ($cat['display_count'] ?? count($places)) < 1)
                   @php
-                    $places = $cat['places'] ?? [];
                     $selectedRegions = $oldRegions[$province][$catKey] ?? [];
                     $categoryChecked = in_array('__category', $selectedRegions, true) || count(array_intersect($places, $selectedRegions)) > 0;
                     $count = $cat['display_count'] ?? count($places);
