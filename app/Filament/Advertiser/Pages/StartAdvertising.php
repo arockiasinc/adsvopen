@@ -40,7 +40,12 @@ class StartAdvertising extends Page implements HasForms
         // Contact and business info are pre-filled from the account/profile
         // (entered while registering) and remain editable.
         $this->form->fill([
-            'business_name' => $user->name,
+            'business_name' => $profile?->business_name ?? $user->name,
+            'industry' => $profile?->industry,
+            'business_province' => $profile?->business_province,
+            'company_size' => $profile?->company_size,
+            'wants_website_link' => filled($profile?->website) ? true : null,
+            'website_link' => $profile?->website,
             'contact_name' => $profile?->contact_name ?? $user->name,
             'contact_email' => $profile?->contact_email ?? $user->email,
             'contact_phone' => $profile?->contact_phone,
