@@ -22,35 +22,46 @@ use Illuminate\Support\Facades\Schema;
 */
 
 $resolveMenus = function () {
+    $defaultMenuItems = [
+        (object) ['label' => 'Home', 'target' => ''],
+        (object) ['label' => 'Panoramic Banner Ads', 'target' => 'panoramic-banner-ads'],
+        (object) ['label' => 'Leaderboard Ads', 'target' => 'leaderboard-ads'],
+        (object) ['label' => 'Product Sponsored ads', 'target' => 'product-sponsored-ads'],
+        (object) ['label' => 'Product Carousel', 'target' => 'product-carousel'],
+        (object) ['label' => 'Start Advertising', 'target' => 'start-advertising'],
+        (object) ['label' => 'Contact', 'target' => 'contact'],
+    ];
+
     try {
         $menus = Schema::hasTable('menus')
             ? Menu::query()->ordered()->get()
-            : collect([
-                (object) ['label' => 'Banner Ads', 'target' => '#placements'],
-                (object) ['label' => 'Home page display Ads', 'target' => '#importance'],
-                (object) ['label' => 'Product Sponsored ads', 'target' => '#case-studies'],
-                (object) ['label' => 'Contractor Listing Ads', 'target' => '#partner-support'],
-                (object) ['label' => 'Contractor Display ads', 'target' => '#creative-support'],
-                (object) ['label' => 'Start Advertising', 'target' => '#campaign-setup'],
-            ]);
+            : collect($defaultMenuItems);
     } catch (Throwable $exception) {
         Log::warning('Falling back to default public menus.', [
             'exception' => $exception->getMessage(),
         ]);
 
-        $menus = collect([
-            (object) ['label' => 'Banner Ads', 'target' => '#placements'],
-            (object) ['label' => 'Home page display Ads', 'target' => '#importance'],
-            (object) ['label' => 'Product Sponsored ads', 'target' => '#case-studies'],
-            (object) ['label' => 'Contractor Listing Ads', 'target' => '#partner-support'],
-            (object) ['label' => 'Contractor Display ads', 'target' => '#creative-support'],
-            (object) ['label' => 'Start Advertising', 'target' => '#campaign-setup'],
-        ]);
+        $menus = collect($defaultMenuItems);
     }
 
-    return $menus->map(function ($menu) {
-        if (trim(strtolower((string) $menu->label)) === 'banner ads') {
-            $menu->target = route('banner.ads');
+    // Resolve each menu item's href. Named pages map to their route; anything
+    // else is treated as an in-page anchor on the home page so links stay valid
+    // even when the app is served from a sub-path (e.g. XAMPP /adsvopen/).
+    $routedLabels = [
+        'home' => route('home'),
+        'panoramic banner ads' => route('banner.ads'),
+        'leaderboard ads' => route('leaderboard.ads'),
+        'start advertising' => route('start.advertising'),
+    ];
+
+    return $menus->map(function ($menu) use ($routedLabels) {
+        $label = trim(strtolower((string) $menu->label));
+
+        if (isset($routedLabels[$label])) {
+            $menu->target = $routedLabels[$label];
+        } else {
+            $anchor = ltrim((string) $menu->target, '#');
+            $menu->target = route('home').'#'.$anchor;
         }
 
         return $menu;
@@ -185,10 +196,18 @@ Route::get('/banners/{banner}/image', [BannerController::class, 'image'])->name(
 Route::get('/banner-ads', function () use ($resolveMenus) {
     return view('banner-ads', [
         'menus' => $resolveMenus(),
-        'pageTitle' => 'Banner Ads',
-        'pageDescription' => 'Banner Ads information page for Canada\'s Only VOpen Market.',
+        'pageTitle' => 'Panoramic Ads',
+        'pageDescription' => 'Panoramic Ads information page for Canada\'s Only VOpen Market.',
     ]);
 })->name('banner.ads');
+
+Route::get('/leaderboard-ads', function () use ($resolveMenus) {
+    return view('leaderboard-ads', [
+        'menus' => $resolveMenus(),
+        'pageTitle' => 'Leaderboard Ads',
+        'pageDescription' => 'Homepage Leaderboard Ad placements serving local ads across Canada with VOpen Market.',
+    ]);
+})->name('leaderboard.ads');
 
 // Public "Start Advertising" questionnaire. The page is public; submitting
 // requires a logged-in advertiser (guests are sent to the advertiser login).

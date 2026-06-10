@@ -6,7 +6,7 @@
         
           <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Command the Canadian click!</h2>
           <p class="text-[0.98rem] leading-[1.7] text-muted">
-            Own the first impression. Our Premium Banner Placement is impossible to ignore, placing your brand front-and-center with Canada&rsquo;s #1 Open Market.
+            Own the first impression. Our Premium Panoramic Placement is impossible to ignore, placing your brand front-and-center with Canada&rsquo;s #1 Open Market.
           </p>
           <p class="text-[0.98rem] leading-[1.7] text-muted">
             <b>City wide, Region wide, District wide, County wide, Province wide or Coast to coast,</b> choose your market!
@@ -23,7 +23,7 @@
               <img class="h-6 w-6" src="images/stars-icon.svg" alt="">
             </span>
           </div>
-          <h1 class="mb-[18px] whitespace-nowrap text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em]">Banner Ads</h1>
+          <h1 class="mb-[18px] whitespace-nowrap text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em]">Panoramic Ads</h1>
           <p class="mb-7 max-w-[36ch] text-[0.98rem] leading-[1.7] text-muted">
             <b>Massive Reach and Brand Awareness</b><br/>
 
@@ -34,9 +34,84 @@
         </div>
 
         <div class="flex justify-center lg:justify-end">
-          <div class="w-full max-w-[620px] rounded-[18px] bg-gradient-to-b from-[#2d3548] to-[#20293b] p-[14px_14px_18px] shadow-soft sm:p-[18px_22px_26px]">
-            <img class="w-full rounded-xl bg-white" src="images/placement-desktop.svg" alt="Banner Ads placement shown on a laptop screen">
-          </div>
+          {{-- VOpen Market website mock with the Panoramic Ad placed at the top of the homepage --}}
+          <figure class="vm-mock w-full max-w-[620px]" aria-label="Panoramic Ad shown at the top of the VOpen Market homepage">
+            <div class="vm-mock-window">
+              <div class="vm-mock-chrome" aria-hidden="true">
+                <span class="vm-mock-dot vm-mock-dot--red"></span>
+                <span class="vm-mock-dot vm-mock-dot--amber"></span>
+                <span class="vm-mock-dot vm-mock-dot--green"></span>
+                <span class="vm-mock-address">vopenmarket.com</span>
+              </div>
+
+              <div class="vm-mock-page">
+                <div class="vm-mock-siteheader" aria-hidden="true">
+                  <img class="vm-mock-sitelogo" src="images/logo.webp" alt="VOpen Market">
+                  <nav class="vm-mock-sitenav">
+                    <span></span><span></span><span></span><span></span>
+                  </nav>
+                  <span class="vm-mock-searchpill"></span>
+                </div>
+
+                {{-- The Panoramic Advertisement: logo top-left, message center, website bottom-right --}}
+                <div class="vm-mock-ad" role="img" aria-label="Your panoramic advertisement: your logo top left, your message in the center, your website bottom right">
+                  <span class="vm-mock-ad-tag">Ad</span>
+                  <span class="vm-mock-ad-logo">YOUR&nbsp;LOGO</span>
+                  <span class="vm-mock-ad-message">Your Message Here</span>
+                  <span class="vm-mock-ad-site">www.yourwebsite.com</span>
+                </div>
+
+                <div class="vm-mock-grid" aria-hidden="true">
+                  <span></span><span></span><span></span>
+                  <span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+            <figcaption class="vm-mock-caption">Your Panoramic Ad dominates the top of the VOpen Market homepage.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="pp-section" id="prominent-placement">
+      <div class="pp-shell">
+        <div class="pp-head">
+          <span class="pp-eyebrow">
+            <span class="pp-eyebrow-dot" aria-hidden="true"></span>
+            Prominent placement
+          </span>
+          <h2 class="pp-title">Dominate the Homepage: <span class="pp-title-accent">The Panoramic Advertisement</span></h2>
+          <p class="pp-intro">
+            Conquer your territory with absolute visibility. Our premium Panoramic Advertisement is a cinematic,
+            wide-format canvas engineered to sit at the absolute apex of our homepage. It is the very first thing
+            every visitor sees, ensuring your brand controls the narrative from the millisecond the page loads.
+          </p>
+        </div>
+
+        <div class="pp-grid">
+          <article class="pp-card">
+            <span class="pp-card-icon"><img src="images/icon-placement.svg" alt=""></span>
+            <h3 class="pp-card-title">Exclusive Digital Real Estate</h3>
+            <p class="pp-card-text">We strictly limit the number of available slots. Your brand will never be buried in a crowded sea of competing tiles or sidebars.</p>
+          </article>
+
+          <article class="pp-card">
+            <span class="pp-card-icon"><img src="images/fixed-icon.png" alt=""></span>
+            <h3 class="pp-card-title">Predictable, Fixed Pricing</h3>
+            <p class="pp-card-text">Say goodbye to volatile auction environments and unpredictable bidding. Lock in the flat rate to completely control your marketing budget with zero financial surprises.</p>
+          </article>
+
+          <article class="pp-card">
+            <span class="pp-card-icon"><img src="images/icon-visuals.svg" alt=""></span>
+            <h3 class="pp-card-title">High-Impact Wide Canvas</h3>
+            <p class="pp-card-text">The ultra-wide banner proportions give your design team massive creative freedom to deliver bold imagery, sharp messaging, and undeniable calls-to-action.</p>
+          </article>
+
+          <article class="pp-card">
+            <span class="pp-card-icon"><img src="images/icon-targeting.svg" alt=""></span>
+            <h3 class="pp-card-title">Territorial Ownership</h3>
+            <p class="pp-card-text">Select your target zone and command full authority over that demographic. This is your chance to block out competitors and establish complete market dominance.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -53,9 +128,9 @@
         </div>
 
         <div class="w-full">
-          <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">How does Banner Ads work?</h2>
+          <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">How does Panoramic Ads work?</h2>
           <p class="max-w-[520px] text-[0.98rem] leading-[1.7] text-muted">
-            Banner Ads ads combine a headline, brand identity, and featured products in a single ad experience.
+            Panoramic Ads combine a headline, brand identity, and featured products in a single ad experience.
             Shoppers can discover several products at once and continue on to a product page or curated brand destination.
           </p>
         </div>
@@ -65,7 +140,7 @@
     <section class="border-t border-black/10 py-10 md:py-14" id="importance">
       <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,380px)] lg:gap-16 lg:px-8">
         <div class="w-full">
-          <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">Why is Banner Ads important?</h2>
+          <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">Why is Panoramic Ads important?</h2>
           <p class="max-w-[520px] text-[0.98rem] leading-[1.7] text-muted">
             This format gives brands stronger control over how they show up during discovery. It helps build awareness,
             encourages product exploration, and supports a more memorable brand presence than single-product ads alone.
@@ -150,87 +225,17 @@
       </div>
     </section>
 
-    <section class="border-t border-black/10 bg-white py-16 md:py-[72px]" id="case-studies">
-      <div class="sb-case-studies mx-auto max-w-7xl px-6 lg:px-8">
-        <div class="sb-case-studies-heading">
-          <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Case studies</p>
-          <h2 class="max-w-[520px] text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Banner Ads case studies</h2>
-          <a class="inline-flex min-h-[46px] items-center justify-center rounded-[10px] bg-ink px-[22px] text-[0.94rem] font-bold text-white transition hover:-translate-y-0.5 hover:bg-accent focus-visible:-translate-y-0.5 focus-visible:bg-accent" href="#guides">View all case studies</a>
-        </div>
-
-        <div class="sb-case-studies-list">
-          <article class="sb-case-study-row">
-            <div class="sb-case-study-media">
-              <img class="sb-case-study-image" src="images/case-study-one.svg" alt="Sample Banner Ads case study illustration with performance highlights">
-            </div>
-
-            <div class="sb-case-study-copy">
-              <div class="grid content-start gap-4 text-left">
-                <h3 class="sb-case-study-title">Brand in Japan stays top of mind using Banner Ads</h3>
-                <p class="text-[0.98rem] leading-[1.7] text-muted">After launching a sponsored ads campaign in 2015, NF Imports has amplified their brand using Banner Ads. See how they&rsquo;re championing advertising best practices.</p>
-                <a class="sb-case-study-link inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition" href="#benefits">
-                  Learn more
-                  <span aria-hidden="true">&#8594;</span>
-                </a>
-              </div>
-            </div>
-
-            <aside class="sb-case-study-metrics" aria-label="Key learnings">
-              <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Key learnings</p>
-              <div class="sb-case-study-stat">
-                <strong class="sb-case-study-stat-value">80%</strong>
-                <p class="mt-4 text-[0.9rem] leading-[1.55] text-muted">Observed that 80% of sales from new customers between March 2018 and December 2022.</p>
-              </div>
-              <div class="sb-case-study-stat">
-                <strong class="sb-case-study-stat-value">30%</strong>
-                <p class="mt-4 text-[0.9rem] leading-[1.55] text-muted">Steady growth of 30% in sales between December 2019 and November 2022.</p>
-              </div>
-            </aside>
-          </article>
-
-          <article class="sb-case-study-row">
-            <div class="sb-case-study-media">
-              <img class="sb-case-study-image" src="images/case-study-two.svg" alt="Sample Banner Ads video case study illustration with campaign growth highlights">
-            </div>
-
-            <div class="sb-case-study-copy">
-              <div class="grid content-start gap-4 text-left">
-                <h3 class="sb-case-study-title">HP finds success with Banner Ads video</h3>
-                <p class="text-[0.98rem] leading-[1.7] text-muted">Using Banner Ads video, Banner Ads, Sponsored Products, and display ads, HP expands their reach globally.</p>
-                <a class="sb-case-study-link inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition" href="#video-campaign">
-                  Learn more
-                  <span aria-hidden="true">&#8594;</span>
-                </a>
-              </div>
-            </div>
-
-            <aside class="sb-case-study-metrics" aria-label="Key learnings">
-              <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Key learnings</p>
-              <div class="sb-case-study-stat">
-                <strong class="sb-case-study-stat-value">224%</strong>
-                <p class="mt-4 text-[0.9rem] leading-[1.55] text-muted">Impressions grew 224% YoY, extending HP&rsquo;s reach across all product categories.</p>
-              </div>
-              <div class="sb-case-study-stat">
-                <strong class="sb-case-study-stat-value">142%</strong>
-                <p class="mt-4 text-[0.9rem] leading-[1.55] text-muted">142% YoY increase in clicks, yielding a 42% increase in clicks for Banner Ads video placements.</p>
-              </div>
-            </aside>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="border-t border-black/10 bg-ink py-16 md:py-[76px]" id="courses">
       <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
         <div class="w-full text-center">
           <p class="mb-4 text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Learning path</p>
-          <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-white">Banner Ads courses</h2>
+          <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-white">Panoramic Ads courses</h2>
         </div>
 
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-panel p-7 shadow-soft">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Course 01</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Get started with Banner Ads</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Get started with Panoramic Ads</h3>
             <p class="text-[0.98rem] leading-[1.7] text-white">Build a foundational understanding of campaign setup, creative choices, and measurement.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-white transition" href="#courses">
               Start learning
@@ -239,7 +244,7 @@
           </article>
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-panel p-7 shadow-soft">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Course 02</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Drive discoverability with Banner Ads</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Drive discoverability with Panoramic Ads</h3>
             <p class="text-[0.98rem] leading-[1.7] text-white">Explore tactics that help more shoppers find your brand across key browsing and search moments.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-white transition" href="#courses">
               View course
@@ -248,7 +253,7 @@
           </article>
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-panel p-7 shadow-soft">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Course 03</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Adopt Banner Ads reporting</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-white">Adopt Panoramic Ads reporting</h3>
             <p class="text-[0.98rem] leading-[1.7] text-white">Learn which metrics matter most when you want to optimize visibility and campaign quality over time.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-white transition" href="#courses">
               Read overview
@@ -263,13 +268,13 @@
       <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
         <div class="w-full text-center">
           <p class="mb-4 text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Practical reads</p>
-          <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Banner Ads guides</h2>
+          <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Panoramic Ads guides</h2>
         </div>
 
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 01</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Your complete guide to Banner Ads with AdsVOpen</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Your complete guide to Panoramic Ads with AdsVOpen</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Understand campaign formats, placements, and how to structure a stronger branded discovery experience.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#guides">
               Read guide
@@ -278,7 +283,7 @@
           </article>
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 02</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">How to get started with Banner Ads video ads</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">How to get started with Panoramic Ads video ads</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Use a simple framework to launch creative that is focused, easy to digest, and ready for mobile shoppers.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#video-campaign">
               Learn more
@@ -287,7 +292,7 @@
           </article>
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 03</span>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">A guide to setting up Banner Ads video creative</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">A guide to setting up Panoramic Ads video creative</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Follow a checklist for preparing assets, selecting products, and refining campaign targeting choices.</p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#partner-support">
               Open guide
@@ -302,19 +307,19 @@
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-8">
         <div class="flex justify-center">
           <div class="w-full max-w-[260px] rounded-[22px] border border-black/10 bg-white p-[18px] shadow-soft">
-            <img class="w-full rounded-xl bg-white" src="images/placement-mobile.svg" alt="Banner Ads mobile video placement">
+            <img class="w-full rounded-xl bg-white" src="images/placement-mobile.svg" alt="Panoramic Ads mobile video placement">
           </div>
         </div>
 
         <div class="grid gap-5">
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Creative formats</p>
-          <h2 class="max-w-[560px] text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Use video in your Banner Ads campaign</h2>
+          <h2 class="max-w-[560px] text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Use video in your Panoramic Ads campaign</h2>
           <p class="max-w-[560px] text-[0.98rem] leading-[1.7] text-muted">
-            Banner Ads video helps visually highlight key product benefits directly in shopping results,
+            Panoramic Ads video helps visually highlight key product benefits directly in shopping results,
             giving your campaign a more dynamic and memorable presence.
           </p>
           <p class="max-w-[560px] text-[0.98rem] leading-[1.7] text-muted">
-            Use your Banner Ads video asset to stand out from nearby placements, showcase product value quickly,
+            Use your Panoramic Ads video asset to stand out from nearby placements, showcase product value quickly,
             and move shoppers closer to purchase intent.
           </p>
           <div>
@@ -340,10 +345,10 @@
       <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
         <div class="grid gap-5">
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-copy">Partner directory</p>
-          <h2 class="text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em] text-copy">Get support from a <span class="text-accentDeep">partner that specializes in Banner Ads campaigns</span></h2>
+          <h2 class="text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em] text-copy">Get support from a <span class="text-accentDeep">partner that specializes in Panoramic Ads campaigns</span></h2>
           <p class="text-[0.98rem] leading-[1.7] text-muted">
             AdsVOpen partners are a community of Canadian agencies and technology providers that offer a variety of
-            services at different price points. Partners can help you launch, manage and optimize your banner ad campaigns,
+            services at different price points. Partners can help you launch, manage and optimize your panoramic ad campaigns,
             which can save you time and help you get the most from your placements across the Canadian Open Market.
           </p>
           <div>
@@ -358,7 +363,7 @@
             </div>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">AiHello AutoPilo</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
-              Grow revenues and reduce work hours spent on banner ad management with automated placement discovery and
+              Grow revenues and reduce work hours spent on panoramic ad management with automated placement discovery and
               continuous campaign optimization from AiHello.
             </p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#partner-support">
@@ -407,9 +412,9 @@
       <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:px-8">
         <div class="grid w-full gap-5">
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Product announcements</p>
-          <h2 class="text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em] text-copy">What&apos;s new with Banner Ads</h2>
+          <h2 class="text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em] text-copy">What&apos;s new with Panoramic Ads</h2>
           <p class="max-w-[520px] text-[0.98rem] leading-[1.7] text-muted">
-            Browse the latest Banner Ads feature releases and enhancements designed to help advertisers build
+            Browse the latest Panoramic Ads feature releases and enhancements designed to help advertisers build
             stronger visibility, sharper measurement, and more relevant shopper journeys.
           </p>
           <div>
@@ -420,9 +425,9 @@
         <div class="grid gap-5 md:grid-cols-2">
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 01</p>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Secure branded visibility with Banner Ads reserve share of voice</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Secure branded visibility with Panoramic Ads reserve share of voice</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
-              Advertisers can now reserve Banner Ads top-of-search placements for branded keywords at a fixed,
+              Advertisers can now reserve Panoramic Ads top-of-search placements for branded keywords at a fixed,
               upfront price, helping maintain consistent visibility when shoppers search for your brand.
             </p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#latest-news">
@@ -446,9 +451,9 @@
 
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 03</p>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">New audiences for bid adjustment for Banner Ads worldwide</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">New audiences for bid adjustment for Panoramic Ads worldwide</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
-              Banner Ads adds two new audiences, purchased brand products and clicked or added to cart, to help
+              Panoramic Ads adds two new audiences, purchased brand products and clicked or added to cart, to help
               advertisers re-engage high-value shoppers and drive repeat purchases worldwide.
             </p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#latest-news">
@@ -459,10 +464,10 @@
 
           <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 04</p>
-            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Banner Ads is now available for single-book authors</h3>
+            <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Panoramic Ads is now available for single-book authors</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
               Single-book authors can now create eye-catching video and custom image ads to showcase a single book to
-              their audience in prominent Banner Ads placements.
+              their audience in prominent Panoramic Ads placements.
             </p>
             <a class="inline-flex items-center gap-3 text-[0.94rem] font-bold text-copy transition hover:text-copy focus-visible:text-copy" href="#latest-news">
               Learn more
@@ -479,18 +484,18 @@
         
 
           <div class="sb-campaign-intro">
-            <h2>How do I create a Banner Ads campaign?</h2>
+            <h2>How do I create a Panoramic Ads campaign?</h2>
             <a class="sb-campaign-cta" href="#top">Register</a>
           </div>
 
-          <ol class="sb-campaign-grid" aria-label="Steps to create a Banner Ads campaign">
+          <ol class="sb-campaign-grid" aria-label="Steps to create a Panoramic Ads campaign">
             <li class="sb-campaign-step">
               <span class="sb-campaign-step-number">1</span>
               <p>Register for <a href="#top">sponsored ads</a>.</p>
             </li>
             <li class="sb-campaign-step">
               <span class="sb-campaign-step-number">2</span>
-              <p>Sign in to your account, click &ldquo;Create campaign,&rdquo; and choose Banner Ads. Give your campaign a name and choose your settings.</p>
+              <p>Sign in to your account, click &ldquo;Create campaign,&rdquo; and choose Panoramic Ads. Give your campaign a name and choose your settings.</p>
             </li>
             <li class="sb-campaign-step">
               <span class="sb-campaign-step-number">3</span>
@@ -532,19 +537,19 @@
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-1" id="faq-trigger-1" data-faq-trigger>
-                <span class="w-full">How much does Banner Ads cost?</span>
+                <span class="w-full">How much does Panoramic Ads cost?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>
             <div class="px-5 py-4" id="faq-panel-1" role="region" aria-labelledby="faq-trigger-1" hidden data-faq-panel>
-              <p class="text-[0.94rem] leading-[1.7] text-muted">Banner Ads uses a cost-per-click model, so you decide how much to bid and set the budget that fits your goals. You only pay when shoppers click your ad.</p>
+              <p class="text-[0.94rem] leading-[1.7] text-muted">Panoramic Ads uses a cost-per-click model, so you decide how much to bid and set the budget that fits your goals. You only pay when shoppers click your ad.</p>
             </div>
           </article>
 
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2" data-faq-trigger>
-                <span class="w-full">How can I measure results from my Banner Ads campaign?</span>
+                <span class="w-full">How can I measure results from my Panoramic Ads campaign?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>
@@ -556,19 +561,19 @@
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3" data-faq-trigger>
-                <span class="w-full">Who can use Banner Ads?</span>
+                <span class="w-full">Who can use Panoramic Ads?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>
             <div class="px-5 py-4" id="faq-panel-3" role="region" aria-labelledby="faq-trigger-3" hidden data-faq-panel>
-              <p class="text-[0.94rem] leading-[1.7] text-muted">Banner Ads is available to eligible sellers, vendors, book vendors, and agencies with enrolled brands and products that meet marketplace requirements.</p>
+              <p class="text-[0.94rem] leading-[1.7] text-muted">Panoramic Ads is available to eligible sellers, vendors, book vendors, and agencies with enrolled brands and products that meet marketplace requirements.</p>
             </div>
           </article>
 
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4" data-faq-trigger>
-                <span class="w-full">What categories are not eligible for Banner Ads?</span>
+                <span class="w-full">What categories are not eligible for Panoramic Ads?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>
@@ -592,19 +597,19 @@
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6" data-faq-trigger>
-                <span class="w-full">What are the different goals I can achieve with Banner Ads?</span>
+                <span class="w-full">What are the different goals I can achieve with Panoramic Ads?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>
             <div class="px-5 py-4" id="faq-panel-6" role="region" aria-labelledby="faq-trigger-6" hidden data-faq-panel>
-              <p class="text-[0.94rem] leading-[1.7] text-muted">You can use Banner Ads to build awareness, drive consideration, grow Store visits, promote product discovery, and support sales across a collection of products or a featured video creative.</p>
+              <p class="text-[0.94rem] leading-[1.7] text-muted">You can use Panoramic Ads to build awareness, drive consideration, grow Store visits, promote product discovery, and support sales across a collection of products or a featured video creative.</p>
             </div>
           </article>
 
           <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-7" id="faq-trigger-7" data-faq-trigger>
-                <span class="w-full">What are the video specification requirements for Banner Ads video?</span>
+                <span class="w-full">What are the video specification requirements for Panoramic Ads video?</span>
                 <span class="inline-grid h-10 w-10 place-items-center rounded-full border border-black/10 bg-canvas text-base font-semibold text-copy" aria-hidden="true" data-faq-symbol>+</span>
               </button>
             </h3>

@@ -163,6 +163,83 @@ carousels.forEach((carousel) => {
   startAutoAdvance();
 });
 
+const wordRotators = Array.from(document.querySelectorAll("[data-word-rotator]"));
+
+wordRotators.forEach((rotator) => {
+  const output = rotator.querySelector("[data-typed-output]");
+
+  let words = [];
+  try {
+    words = JSON.parse(rotator.dataset.words || "[]");
+  } catch (error) {
+    words = [];
+  }
+
+  if (!output || !words.length) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Reduced motion: swap whole words on an interval instead of per-character typing.
+  if (prefersReducedMotion) {
+    let index = 0;
+    output.textContent = words[0];
+
+    if (words.length > 1) {
+      window.setInterval(() => {
+        index = (index + 1) % words.length;
+        output.textContent = words[index];
+      }, 1900);
+    }
+
+    return;
+  }
+
+  const typeSpeed = 90;
+  const deleteSpeed = 45;
+  const holdAfterType = 1200;
+  const holdAfterDelete = 350;
+
+  let wordIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  output.textContent = "";
+
+  const tick = () => {
+    const word = words[wordIndex];
+
+    if (!deleting) {
+      charIndex += 1;
+      output.textContent = word.slice(0, charIndex);
+
+      if (charIndex === word.length) {
+        deleting = true;
+        window.setTimeout(tick, holdAfterType);
+        return;
+      }
+
+      window.setTimeout(tick, typeSpeed);
+      return;
+    }
+
+    charIndex -= 1;
+    output.textContent = word.slice(0, charIndex);
+
+    if (charIndex === 0) {
+      deleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      window.setTimeout(tick, holdAfterDelete);
+      return;
+    }
+
+    window.setTimeout(tick, deleteSpeed);
+  };
+
+  window.setTimeout(tick, 400);
+});
+
 const faqItems = Array.from(document.querySelectorAll("[data-faq-item]"));
 
 faqItems.forEach((item) => {
