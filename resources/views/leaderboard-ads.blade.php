@@ -3,10 +3,12 @@
   <section class="border-t border-black/10 py-10">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
       <div class="grid gap-4 text-center lg:text-left">
-        <span class="inline-flex items-center gap-2 justify-self-center rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 text-[0.72rem] font-black uppercase tracking-[0.12em] text-accentDeep lg:justify-self-start">
-          <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-          Local ads serving across Canada
-        </span>
+        <div>
+          <span class="lb-chip">
+            <span class="lb-chip-dot" aria-hidden="true"></span>
+            Local ads serving across Canada
+          </span>
+        </div>
         <h2 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Premium Homepage Placements</h2>
         <p class="text-[0.98rem] leading-[1.7] text-muted">
           <b>Maximum Visibility, Zero Wasted Ad Spend.</b> Put your brand front and center where it cannot be missed.
@@ -29,7 +31,7 @@
           </span>
         </div>
         <h1 class="mb-[18px] whitespace-nowrap text-[clamp(3rem,8vw,4.7rem)] font-black leading-[0.94] tracking-[-0.07em]">Leaderboard Ads</h1>
-        <p class="mb-7 max-w-[40ch] text-[0.98rem] leading-[1.7] text-muted">
+        <p class="mb-7 max-w-[36ch] text-[0.98rem] leading-[1.7] text-muted">
           <b>Dual-Placement Exposure: High Traffic &amp; Contextual Relevancy.</b><br/>
           Your campaign doesn&rsquo;t just sit in one spot. To maximize your frequency and conversion rates, your brand is
           integrated into the two most active zones on our homepage.
@@ -58,10 +60,10 @@
               </div>
 
               {{-- The Master Leaderboard: above-the-fold banner --}}
-              <div class="vm-mock-ad" style="min-height:90px;" role="img" aria-label="Your master leaderboard advertisement: your logo left, your message center, your website right">
+              <div class="vm-mock-ad" style="min-height:92px;" role="img" aria-label="Your master leaderboard advertisement: your logo left, your message center, your website right">
                 <span class="vm-mock-ad-tag">Ad</span>
                 <span class="vm-mock-ad-logo" style="top:50%;transform:translateY(-50%);">YOUR&nbsp;LOGO</span>
-                <span class="vm-mock-ad-message" style="margin-top:18px;font-size:clamp(0.95rem,2.6vw,1.3rem);">Master Leaderboard</span>
+                <span class="vm-mock-ad-message" style="margin-top:20px;font-size:clamp(0.95rem,2.6vw,1.3rem);">Master Leaderboard</span>
                 <span class="vm-mock-ad-site">www.yourwebsite.com</span>
               </div>
 
@@ -112,55 +114,47 @@
     </div>
   </section>
 
-  <section class="border-t border-black/10 py-10 md:py-[72px]" id="geotargeting">
+  <section class="border-t border-black/10 py-16 md:py-[76px]" id="geotargeting">
     <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
-      <div class="mx-auto max-w-[760px] text-center">
+      <div class="w-full text-center">
         <p class="mb-4 text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Advanced geotargeting</p>
         <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">Engineered for location-based businesses</h2>
-        <p class="text-[0.98rem] leading-[1.7] text-muted">
+        <p class="mx-auto max-w-[560px] text-[0.98rem] leading-[1.7] text-muted">
           If your business relies on local clients, national ad networks waste your budget on clicks from across the country.
           Our platform lets you scale your market boundaries dynamically&mdash;so you only pay for local impressions.
         </p>
       </div>
 
-      <div class="grid gap-[14px] md:grid-cols-2">
-        <article class="flex gap-4 border border-black/10 bg-white px-5 py-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-          <span class="inline-grid h-[52px] w-[52px] flex-none place-items-center rounded-xl bg-accent/10 shadow-[inset_0_0_0_1px_rgba(247,90,6,0.15)]">
-            <img class="h-6 w-6" src="{{ asset('images/icon-targeting.svg') }}" alt="">
-          </span>
+      <div class="lb-geo-grid">
+        <article class="lb-geo-card">
+          <span class="lb-geo-icon"><img src="{{ asset('images/icon-targeting.svg') }}" alt=""></span>
           <div>
-            <h3 class="mb-1.5 text-base font-extrabold leading-[1.2]">Realtors &amp; Brokers</h3>
-            <p class="text-[0.9rem] leading-[1.55] text-muted">Dominate specific neighborhoods, cities, or districts to ensure home buyers and sellers see your face and active listings first.</p>
+            <h3>Realtors &amp; Brokers</h3>
+            <p>Dominate specific neighborhoods, cities, or districts to ensure home buyers and sellers see your face and active listings first.</p>
           </div>
         </article>
 
-        <article class="flex gap-4 border border-black/10 bg-white px-5 py-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-          <span class="inline-grid h-[52px] w-[52px] flex-none place-items-center rounded-xl bg-accent/10 shadow-[inset_0_0_0_1px_rgba(247,90,6,0.15)]">
-            <img class="h-6 w-6" src="{{ asset('images/icon-brand.svg') }}" alt="">
-          </span>
+        <article class="lb-geo-card">
+          <span class="lb-geo-icon"><img src="{{ asset('images/icon-brand.svg') }}" alt=""></span>
           <div>
-            <h3 class="mb-1.5 text-base font-extrabold leading-[1.2]">Dental Clinics &amp; Medical Practices</h3>
-            <p class="text-[0.9rem] leading-[1.55] text-muted">Target exact municipal zones or counties to consistently capture new patient acquisitions within driving distance.</p>
+            <h3>Dental Clinics &amp; Medical Practices</h3>
+            <p>Target exact municipal zones or counties to consistently capture new patient acquisitions within driving distance.</p>
           </div>
         </article>
 
-        <article class="flex gap-4 border border-black/10 bg-white px-5 py-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-          <span class="inline-grid h-[52px] w-[52px] flex-none place-items-center rounded-xl bg-accent/10 shadow-[inset_0_0_0_1px_rgba(247,90,6,0.15)]">
-            <img class="h-6 w-6" src="{{ asset('images/icon-measure.svg') }}" alt="">
-          </span>
+        <article class="lb-geo-card">
+          <span class="lb-geo-icon"><img src="{{ asset('images/icon-measure.svg') }}" alt=""></span>
           <div>
-            <h3 class="mb-1.5 text-base font-extrabold leading-[1.2]">Law Firms &amp; Legal Services</h3>
-            <p class="text-[0.9rem] leading-[1.55] text-muted">Establish local authority across city, region, or province-wide boundaries where your practice holds jurisdiction.</p>
+            <h3>Law Firms &amp; Legal Services</h3>
+            <p>Establish local authority across city, region, or province-wide boundaries where your practice holds jurisdiction.</p>
           </div>
         </article>
 
-        <article class="flex gap-4 border border-black/10 bg-white px-5 py-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-          <span class="inline-grid h-[52px] w-[52px] flex-none place-items-center rounded-xl bg-accent/10 shadow-[inset_0_0_0_1px_rgba(247,90,6,0.15)]">
-            <img class="h-6 w-6" src="{{ asset('images/icon-visuals.svg') }}" alt="">
-          </span>
+        <article class="lb-geo-card">
+          <span class="lb-geo-icon"><img src="{{ asset('images/icon-visuals.svg') }}" alt=""></span>
           <div>
-            <h3 class="mb-1.5 text-base font-extrabold leading-[1.2]">Insurance Agencies &amp; Local Contractors</h3>
-            <p class="text-[0.9rem] leading-[1.55] text-muted">Lock down your precise fleet dispatch radii&mdash;whether city-wide or region-wide&mdash;to capture high-intent inquiries.</p>
+            <h3>Insurance Agencies &amp; Local Contractors</h3>
+            <p>Lock down your precise fleet dispatch radii&mdash;whether city-wide or region-wide&mdash;to capture high-intent inquiries.</p>
           </div>
         </article>
       </div>
@@ -168,40 +162,40 @@
   </section>
 
   <section class="border-t border-black/10 py-10 md:py-14" id="exclusive">
-    <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,420px)] lg:gap-16 lg:px-8">
+    <div class="mx-auto grid max-w-7xl items-center gap-10 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,380px)] lg:gap-16 lg:px-8">
       <div class="w-full">
         <p class="mb-4 text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Hyper-exclusive ad space</p>
         <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em]">Claim your territory before competitors do</h2>
-        <p class="mb-4 max-w-[560px] text-[0.98rem] leading-[1.7] text-muted">
+        <p class="mb-4 max-w-[520px] text-[0.98rem] leading-[1.7] text-muted">
           To prevent banner fatigue and maintain a premium user experience, ad inventory is strictly capped per location.
         </p>
-        <p class="max-w-[560px] text-[0.98rem] leading-[1.7] text-muted">
+        <p class="max-w-[520px] text-[0.98rem] leading-[1.7] text-muted">
           Because spaces are highly limited for each city, region, and province, your business gets uncrowded exposure.
           Securing a territory means locking out your immediate competitors and ensuring your brand remains the dominant
           choice in your target market.
         </p>
-        <ul class="mt-6 grid gap-3">
-          <li class="flex items-center gap-3 text-[0.94rem] font-bold text-copy">
-            <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-accent text-white" aria-hidden="true">&#10003;</span>
+        <ul class="lb-checklist">
+          <li class="lb-check-item">
+            <span class="lb-check-mark" aria-hidden="true">&#10003;</span>
             Strictly capped inventory per location
           </li>
-          <li class="flex items-center gap-3 text-[0.94rem] font-bold text-copy">
-            <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-accent text-white" aria-hidden="true">&#10003;</span>
+          <li class="lb-check-item">
+            <span class="lb-check-mark" aria-hidden="true">&#10003;</span>
             Uncrowded, premium exposure
           </li>
-          <li class="flex items-center gap-3 text-[0.94rem] font-bold text-copy">
-            <span class="inline-grid h-6 w-6 flex-none place-items-center rounded-full bg-accent text-white" aria-hidden="true">&#10003;</span>
+          <li class="lb-check-item">
+            <span class="lb-check-mark" aria-hidden="true">&#10003;</span>
             Lock out your direct competitors
           </li>
         </ul>
       </div>
 
-      <div class="flex min-h-[240px] items-center justify-center overflow-hidden rounded-sm bg-accent p-6">
+      <div class="flex min-h-[220px] items-center justify-center overflow-hidden rounded-sm bg-accent p-6 sm:min-h-[260px]">
         <div class="relative flex h-full w-full items-center justify-center">
           <div class="absolute right-[18px] top-[18px] inline-grid h-[34px] w-[34px] place-items-center rounded-lg bg-white">
             <img class="h-5 w-5" src="{{ asset('images/stars-icon.svg') }}" alt="">
           </div>
-          <img class="w-full max-w-[300px]" src="{{ asset('images/workflow-illustration.svg') }}" alt="Illustration of limited ad inventory mapped across locations">
+          <img class="w-full max-w-[270px]" src="{{ asset('images/faq-icon.svg') }}" alt="Illustration of limited ad inventory reserved per location">
         </div>
       </div>
     </div>
@@ -209,15 +203,16 @@
 
   <section class="bg-accent py-10 md:py-[76px]" id="creative-swaps">
     <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
-      <div class="mx-auto max-w-[760px] text-center">
+      <div class="w-full text-center">
         <h2 class="mb-4 text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-[#141922]">Infinite creative swaps</h2>
-        <p class="text-[0.98rem] leading-[1.7] text-[#141922]/80">
-          Total agility, zero extra fees. Traditional platforms lock your creative in place or charge premium fees for
-          revisions. Our self-managed dashboard grants you <b>infinite real-time ad swaps</b> for your entire campaign window.
+        <div class="mx-auto h-px w-full max-w-[260px] bg-black/10" aria-hidden="true"></div>
+        <p class="mx-auto mt-5 max-w-[560px] text-[0.98rem] leading-[1.7] text-[#141922]">
+          Total agility, zero extra fees. Our self-managed dashboard grants you <b>infinite real-time ad swaps</b> for
+          your entire campaign window.
         </p>
       </div>
 
-      <div class="grid gap-[14px] md:grid-cols-3">
+      <div class="ad-solutions-grid">
         <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
           <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-visuals.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Pivot Instantly</h3>
