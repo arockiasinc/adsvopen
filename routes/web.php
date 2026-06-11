@@ -51,6 +51,8 @@ $resolveMenus = function () {
         'home' => route('home'),
         'panoramic banner ads' => route('banner.ads'),
         'leaderboard ads' => route('leaderboard.ads'),
+        'product sponsored ads' => route('product.sponsored.ads'),
+        'product carousel' => route('product.carousel'),
         'start advertising' => route('start.advertising'),
     ];
 
@@ -201,13 +203,29 @@ Route::get('/banner-ads', function () use ($resolveMenus) {
     ]);
 })->name('banner.ads');
 
-Route::get('/leaderboard-ads', function () use ($resolveMenus) {
+Route::get('/local-ads-Serving-across-Canada', function () use ($resolveMenus) {
     return view('leaderboard-ads', [
         'menus' => $resolveMenus(),
         'pageTitle' => 'Leaderboard Ads',
         'pageDescription' => 'Homepage Leaderboard Ad placements serving local ads across Canada with VOpen Market.',
     ]);
 })->name('leaderboard.ads');
+
+Route::get('/Canadian-Products-Ads', function () use ($resolveMenus) {
+    return view('product-sponsored-ads', [
+        'menus' => $resolveMenus(),
+        'pageTitle' => 'Product Sponsored Ads',
+        'pageDescription' => 'Product Sponsored Ads for VOpen Market sellers: organically boost your listings to premium homepage, top search, and category catalog slots with geo-targeted exposure across Canada.',
+    ]);
+})->name('product.sponsored.ads');
+
+Route::get('/best-place-to-advertise-across-Canada', function () use ($resolveMenus) {
+    return view('product-carousel', [
+        'menus' => $resolveMenus(),
+        'pageTitle' => 'Product Details Page Ads',
+        'pageDescription' => 'Product Details Page Premium Ads on VOpen Market: an exclusive, forced-view ad placement that gives one business per category a visual monopoly at the moment of purchase, anywhere in Canada.',
+    ]);
+})->name('product.carousel');
 
 // Public "Start Advertising" questionnaire. The page is public; submitting
 // requires a logged-in advertiser (guests are sent to the advertiser login).

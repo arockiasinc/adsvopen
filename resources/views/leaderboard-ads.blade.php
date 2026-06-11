@@ -15,9 +15,14 @@
           Our prime homepage placements capture maximum audience attention the moment visitors land on our site,
           positioning your business as the market leader.
         </p>
-        <p class="text-[0.98rem] leading-[1.7] text-muted">
-          <b>City wide, Region wide, District wide, County wide, Province wide or Coast to coast,</b> claim your territory!
-        </p>
+        @php
+          $audienceWords = ['City wide', 'Region wide', 'District wide', 'County wide', 'Province wide', 'Coast to coast'];
+        @endphp
+        <p class="text-[0.98rem] font-extrabold leading-[1.7] text-copy">Claim your territory!</p>
+        <div class="hp-audience-rotator hp-audience-rotator--start" data-word-rotator data-words='@json($audienceWords)'>
+          <span class="hp-audience-word" data-typed-output aria-hidden="true">{{ $audienceWords[0] }}</span><span class="hp-audience-cursor" aria-hidden="true"></span>
+          <span class="sr-only">Claim your territory: {{ implode(', ', $audienceWords) }}.</span>
+        </div>
       </div>
     </div>
   </section>

@@ -433,6 +433,11 @@
   }
 }
 
+/* Keep the rotator centered across breakpoints on the ad pages. */
+.hp-audience-rotator--start {
+  justify-content: center;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1846,6 +1851,25 @@ footer nav[aria-label="Legal"] a {
     @media (width >= 48rem) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+  }
+  .md\:grid-cols-3 {
+    @media (width >= 48rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .sm\:grid-cols-2 {
+    @media (width >= 40rem) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  .min-h-\[52px\] {
+    min-height: 52px;
+  }
+  .rounded-\[12px\] {
+    border-radius: 12px;
+  }
+  .px-8 {
+    padding-inline: calc(var(--spacing) * 8);
   }
   .md\:py-14 {
     @media (width >= 48rem) {

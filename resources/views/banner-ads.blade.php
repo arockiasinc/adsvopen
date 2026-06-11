@@ -8,9 +8,14 @@
           <p class="text-[0.98rem] leading-[1.7] text-muted">
             Own the first impression. Our Premium Panoramic Placement is impossible to ignore, placing your brand front-and-center with Canada&rsquo;s #1 Open Market.
           </p>
-          <p class="text-[0.98rem] leading-[1.7] text-muted">
-            <b>City wide, Region wide, District wide, County wide, Province wide or Coast to coast,</b> choose your market!
-          </p>
+          @php
+            $audienceWords = ['City wide', 'Region wide', 'District wide', 'County wide', 'Province wide', 'Coast to coast'];
+          @endphp
+          <p class="text-[0.98rem] font-extrabold leading-[1.7] text-copy">Choose your market!</p>
+          <div class="hp-audience-rotator hp-audience-rotator--start" data-word-rotator data-words='@json($audienceWords)'>
+            <span class="hp-audience-word" data-typed-output aria-hidden="true">{{ $audienceWords[0] }}</span><span class="hp-audience-cursor" aria-hidden="true"></span>
+            <span class="sr-only">Choose your market: {{ implode(', ', $audienceWords) }}.</span>
+          </div>
         </div>
       </div>
     </section>
