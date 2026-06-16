@@ -28,14 +28,9 @@ class CampaignResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('status')
-                    ->options([
-                        'Draft' => 'Draft',
-                        'Pending Review' => 'Pending Review',
-                        'Active' => 'Active',
-                        'Paused' => 'Paused',
-                    ])
+                    ->options(Campaign::statusOptions())
                     ->required()
-                    ->default('Draft'),
+                    ->default(Campaign::STATUS_DRAFT),
                 Forms\Components\TextInput::make('format')
                     ->required()
                     ->maxLength(255),
@@ -56,9 +51,12 @@ class CampaignResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('start_date')
+                    ->label('From')
                     ->required(),
                 Forms\Components\DatePicker::make('end_date')
-                    ->required(),
+                    ->label('To')
+                    ->required()
+                    ->afterOrEqual('start_date'),
                 Forms\Components\TagsInput::make('placements')
                     ->placeholder('Add a placement')
                     ->columnSpanFull(),
@@ -90,9 +88,11 @@ class CampaignResource extends Resource
                 Tables\Columns\TextColumn::make('cta')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('start_date')
+                    ->label('From')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
+                    ->label('To')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

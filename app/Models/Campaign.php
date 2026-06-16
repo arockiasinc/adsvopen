@@ -11,6 +11,28 @@ class Campaign extends Model
 {
     use HasFactory;
 
+    public const STATUS_DRAFT = 'Draft';
+    public const STATUS_PENDING_REVIEW = 'Pending Review';
+    public const STATUS_SCHEDULED = 'Scheduled';
+    public const STATUS_ACTIVE = 'Active';
+    public const STATUS_PAUSED = 'Paused';
+    public const STATUS_ENDED = 'Ended';
+
+    /**
+     * Status options for select inputs (value => label).
+     */
+    public static function statusOptions(): array
+    {
+        return [
+            self::STATUS_DRAFT => self::STATUS_DRAFT,
+            self::STATUS_PENDING_REVIEW => self::STATUS_PENDING_REVIEW,
+            self::STATUS_SCHEDULED => self::STATUS_SCHEDULED,
+            self::STATUS_ACTIVE => self::STATUS_ACTIVE,
+            self::STATUS_PAUSED => self::STATUS_PAUSED,
+            self::STATUS_ENDED => self::STATUS_ENDED,
+        ];
+    }
+
     protected $fillable = [
         'user_id',
         'title',

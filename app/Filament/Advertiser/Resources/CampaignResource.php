@@ -39,13 +39,9 @@ class CampaignResource extends Resource
                             ->required()
                             ->maxLength(255),
                         Forms\Components\Select::make('status')
-                            ->options([
-                                'Draft' => 'Draft',
-                                'Pending Review' => 'Pending Review',
-                                'Active' => 'Active',
-                                'Paused' => 'Paused',
-                            ])
-                            ->default('Draft')
+                            ->options(Campaign::statusOptions())
+                            ->default(Campaign::STATUS_DRAFT)
+                            ->helperText('Choose "Scheduled" to have the campaign go live automatically on the From date and end on the To date.')
                             ->required(),
                         Forms\Components\Select::make('format')
                             ->options([
@@ -88,11 +84,14 @@ class CampaignResource extends Resource
                             ->columnSpanFull(),
                     ]),
                 Forms\Components\Section::make('Schedule')
+                    ->description('Set the date range the campaign should run.')
                     ->columns(2)
                     ->schema([
                         Forms\Components\DatePicker::make('start_date')
+                            ->label('From')
                             ->required(),
                         Forms\Components\DatePicker::make('end_date')
+                            ->label('To')
                             ->required()
                             ->afterOrEqual('start_date'),
                     ]),
@@ -123,8 +122,8 @@ class CampaignResource extends Resource
                 Infolists\Components\Section::make('Schedule')
                     ->columns(2)
                     ->schema([
-                        Infolists\Components\TextEntry::make('start_date')->date(),
-                        Infolists\Components\TextEntry::make('end_date')->date(),
+                        Infolists\Components\TextEntry::make('start_date')->label('From')->date(),
+                        Infolists\Components\TextEntry::make('end_date')->label('To')->date(),
                     ]),
             ]);
     }
@@ -140,8 +139,10 @@ class CampaignResource extends Resource
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'Active' => 'success',
+                        'Scheduled' => 'info',
                         'Paused' => 'warning',
                         'Pending Review' => 'info',
+                        'Ended' => 'danger',
                         default => 'gray',
                     })
                     ->sortable(),
@@ -151,9 +152,11 @@ class CampaignResource extends Resource
                     ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
                     ->sortable(),
                 Tables\Columns\TextColumn::make('start_date')
+                    ->label('From')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('end_date')
+                    ->label('To')
                     ->date()
                     ->sortable(),
             ])
