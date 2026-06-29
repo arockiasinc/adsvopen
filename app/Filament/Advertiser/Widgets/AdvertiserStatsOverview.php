@@ -9,6 +9,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class AdvertiserStatsOverview extends BaseWidget
 {
+    public static function canView(): bool
+    {
+        return (bool) auth()->user()?->isApprovedAdvertiser();
+    }
+
     protected function getStats(): array
     {
         $userId = auth()->id();

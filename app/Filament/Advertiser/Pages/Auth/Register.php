@@ -118,13 +118,17 @@ class Register extends BaseRegister
 
         Notification::make()
             ->title('Registration received')
-            ->body('Thanks for registering as an advertiser. Your account is awaiting admin approval — you will be able to sign in once it has been approved.')
+            ->body('Thanks for registering as an advertiser. Your account is pending admin approval — you can review the details you entered while you wait.')
             ->success()
             ->persistent()
             ->send();
 
-        $this->redirect(Filament::getLoginUrl());
+        // Sign the new advertiser in so they land on the restricted dashboard
+        // (profile/business info + pending-approval notice). Campaign and
+        // payment features stay gated until an admin approves the account.
+        Filament::auth()->login($user);
+        session()->regenerate();
 
-        return null;
+        return app(RegistrationResponse::class);
     }
 }

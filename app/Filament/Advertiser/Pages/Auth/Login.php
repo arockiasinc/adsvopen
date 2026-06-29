@@ -2,14 +2,12 @@
 
 namespace App\Filament\Advertiser\Pages\Auth;
 
-use App\Models\User;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\Component;
 use Filament\Http\Responses\Auth\Contracts\LoginResponse;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Pages\Auth\Login as BaseLogin;
-use Illuminate\Validation\ValidationException;
 
 class Login extends BaseLogin
 {
@@ -33,14 +31,9 @@ class Login extends BaseLogin
 
         $user = Filament::auth()->user();
 
-        if ($user instanceof User && $user->isAdvertiser() && ! $user->is_approved) {
-            Filament::auth()->logout();
-
-            throw ValidationException::withMessages([
-                'data.email' => 'Your advertiser account is awaiting admin approval. Please try again once it has been approved.',
-            ]);
-        }
-
+        // Unapproved advertisers are allowed to sign in; they land on a
+        // restricted dashboard (profile/business info + pending notice) and
+        // cannot reach campaign/payment features until an admin approves them.
         if (($user instanceof FilamentUser) && (! $user->canAccessPanel(Filament::getCurrentPanel()))) {
             Filament::auth()->logout();
 

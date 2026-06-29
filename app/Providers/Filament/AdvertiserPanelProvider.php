@@ -45,6 +45,7 @@ class AdvertiserPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Advertiser/Widgets'), for: 'App\\Filament\\Advertiser\\Widgets')
             ->widgets([
+                \App\Filament\Advertiser\Widgets\PendingApprovalNotice::class,
                 Widgets\AccountWidget::class,
             ])
             ->middleware([

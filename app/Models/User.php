@@ -58,10 +58,18 @@ class User extends Authenticatable implements FilamentUser
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() === 'advertiser') {
-            return $this->isAdvertiser() && $this->is_approved;
+            // Advertisers may sign in before approval so they can see their
+            // profile/business info and the pending-approval notice. Campaign
+            // and payment features are gated separately on isApprovedAdvertiser().
+            return $this->isAdvertiser();
         }
 
         return $this->isAdmin();
+    }
+
+    public function isApprovedAdvertiser(): bool
+    {
+        return $this->isAdvertiser() && $this->is_approved;
     }
 
     public function advertiserProfile(): HasOne

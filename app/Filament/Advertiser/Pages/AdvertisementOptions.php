@@ -16,6 +16,11 @@ class AdvertisementOptions extends Page
 
     protected static string $view = 'filament.advertiser.pages.advertisement-options';
 
+    public static function canAccess(): bool
+    {
+        return (bool) auth()->user()?->isApprovedAdvertiser();
+    }
+
     /**
      * @return array<int, array{name: string, description: string}>
      */

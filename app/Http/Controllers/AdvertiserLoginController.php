@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Filament\Facades\Filament;
 use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Http\RedirectResponse;
@@ -35,15 +34,8 @@ class AdvertiserLoginController extends Controller
         $user = Filament::auth()->user();
         $panel = Filament::getCurrentPanel() ?? Filament::getPanel('advertiser');
 
-        if ($user instanceof User && $user->isAdvertiser() && ! $user->is_approved) {
-            Filament::auth()->logout();
-            RateLimiter::hit($throttleKey);
-
-            throw ValidationException::withMessages([
-                'data.email' => 'Your advertiser account is awaiting admin approval. Please try again once it has been approved.',
-            ]);
-        }
-
+        // Unapproved advertisers may sign in; they reach a restricted dashboard
+        // and campaign/payment features stay gated until an admin approves them.
         if (! ($user instanceof FilamentUser) || ! $user->canAccessPanel($panel)) {
             Filament::auth()->logout();
             RateLimiter::hit($throttleKey);

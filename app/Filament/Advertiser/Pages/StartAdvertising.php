@@ -32,6 +32,11 @@ class StartAdvertising extends Page implements HasForms
     /** @var array<int, string>|null Recommendations shown after submission. */
     public ?array $recommendations = null;
 
+    public static function canAccess(): bool
+    {
+        return (bool) auth()->user()?->isApprovedAdvertiser();
+    }
+
     public function mount(): void
     {
         $user = auth()->user();

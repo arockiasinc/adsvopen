@@ -19,6 +19,11 @@ class PaymentResource extends Resource
 
     protected static ?string $modelLabel = 'payment';
 
+    public static function canAccess(): bool
+    {
+        return (bool) auth()->user()?->isApprovedAdvertiser();
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()->where('user_id', auth()->id());

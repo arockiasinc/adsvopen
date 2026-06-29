@@ -2379,13 +2379,33 @@ footer nav[aria-label="Legal"] a {
   line-height: 1;
   text-decoration: none;
   margin-right: 1.5rem;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  animation: site-register-pulse 1.8s ease-in-out infinite;
 }
 
 .site-register-link:hover,
 .site-register-link:focus-visible {
   background: #e45800;
   color: #fff;
+  transform: translateY(-1px);
+  animation-play-state: paused;
+}
+
+@keyframes site-register-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 98, 0, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 0.55rem rgba(255, 98, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-register-link {
+    animation: none;
+    box-shadow: 0 0 0 0.18rem rgba(255, 98, 0, 0.35);
+  }
 }
 
 .site-auth-form {
