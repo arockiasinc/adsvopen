@@ -3,9 +3,14 @@
 namespace App\Filament\Advertiser\Resources;
 
 use App\Filament\Advertiser\Resources\CampaignResource\Pages;
+use App\Models\AdType;
 use App\Models\Campaign;
+use App\Support\AdQuotePreview;
+use App\Support\AdTargeting;
+use App\Support\CampaignPricing;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
@@ -48,18 +53,12 @@ class CampaignResource extends Resource
                             ->default(Campaign::STATUS_DRAFT)
                             ->helperText('Choose "Scheduled" to have the campaign go live automatically on the From date and end on the To date.')
                             ->required(),
-                        Forms\Components\Select::make('format')
-                            ->options([
-                                'Banner Ads' => 'Banner Ads',
-                                'Home Page Display Ads' => 'Home Page Display Ads',
-                                'Product Sponsored Ads' => 'Product Sponsored Ads',
-                                'Contractor Listing Ads' => 'Contractor Listing Ads',
-                                'Contractor Display Ads' => 'Contractor Display Ads',
-                                'Native Ads' => 'Native Ads',
-                                'Shoppable Ads' => 'Shoppable Ads',
-                                'GIF Ads' => 'GIF Ads',
-                            ])
-                            ->required(),
+                        Forms\Components\Select::make('ad_type_id')
+                            ->label('Ad type')
+                            ->options(fn (): array => AdType::options())
+                            ->searchable()
+                            ->required()
+                            ->live(),
                         Forms\Components\TextInput::make('objective')
                             ->required()
                             ->maxLength(255),
@@ -69,6 +68,16 @@ class CampaignResource extends Resource
                             ->prefix('$')
                             ->default(0)
                             ->required(),
+                    ]),
+                Forms\Components\Section::make('Targeting')
+                    ->description('Choose where this campaign runs. The price comes from our published rate card for that ad type and location.')
+                    ->columns(2)
+                    ->schema([
+                        ...AdTargeting::formSchema(),
+                        AdQuotePreview::field(fn (Get $get): ?int => CampaignPricing::daysBetween(
+                            $get('start_date'),
+                            $get('end_date'),
+                        )),
                     ]),
                 Forms\Components\Section::make('Creative')
                     ->columns(2)
@@ -94,14 +103,17 @@ class CampaignResource extends Resource
                     ->schema([
                         Forms\Components\DatePicker::make('start_date')
                             ->label('From')
-                            ->required(),
+                            ->required()
+                            ->live(),
                         Forms\Components\DatePicker::make('end_date')
                             ->label('To')
                             ->required()
-                            ->afterOrEqual('start_date'),
+                            ->afterOrEqual('start_date')
+                            ->live(),
                     ]),
             ]);
     }
+
 
     public static function infolist(Infolist $infolist): Infolist
     {
@@ -112,11 +124,31 @@ class CampaignResource extends Resource
                     ->schema([
                         Infolists\Components\TextEntry::make('title'),
                         Infolists\Components\TextEntry::make('status')->badge(),
-                        Infolists\Components\TextEntry::make('format'),
+                        Infolists\Components\TextEntry::make('adType.name')->label('Ad type')->placeholder('—'),
                         Infolists\Components\TextEntry::make('objective'),
                         Infolists\Components\TextEntry::make('daily_budget')
                             ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state),
                         Infolists\Components\TextEntry::make('cta')->label('Call to action'),
+                    ]),
+                Infolists\Components\Section::make('Targeting & price')
+                    ->columns(2)
+                    ->schema([
+                        Infolists\Components\TextEntry::make('target_scope')
+                            ->label('Scope')
+                            ->formatStateUsing(fn (?string $state): string => AdTargeting::scopeLabel($state))
+                            ->placeholder('—'),
+                        Infolists\Components\TextEntry::make('quoted_price')
+                            ->label('Quoted price')
+                            ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : '—')
+                            ->helperText('Based on our rate card for this ad type, location and date range.')
+                            ->placeholder('—'),
+                        Infolists\Components\TextEntry::make('targets')
+                            ->label('Locations')
+                            ->getStateUsing(fn (Campaign $record): array => $record->targetSummary())
+                            ->listWithLineBreaks()
+                            ->bulleted()
+                            ->placeholder('—')
+                            ->columnSpanFull(),
                     ]),
                 Infolists\Components\Section::make('Creative')
                     ->schema([
@@ -151,11 +183,23 @@ class CampaignResource extends Resource
                         default => 'gray',
                     })
                     ->sortable(),
-                Tables\Columns\TextColumn::make('format')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('adType.name')
+                    ->label('Ad type')
+                    ->searchable()
+                    ->placeholder('—'),
+                Tables\Columns\TextColumn::make('target_scope')
+                    ->label('Targeting')
+                    ->formatStateUsing(fn (?string $state): string => AdTargeting::scopeLabel($state))
+                    ->placeholder('—')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('quoted_price')
+                    ->label('Quoted price')
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : '—')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('daily_budget')
                     ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('start_date')
                     ->label('From')
                     ->date()

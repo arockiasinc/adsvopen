@@ -2,6 +2,7 @@
 
 namespace App\Filament\Advertiser\Pages;
 
+use App\Support\AdTargeting;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -83,9 +84,9 @@ class AccountSettings extends Page implements HasForms
                             ->searchable(),
                         Forms\Components\Select::make('business_province')
                             ->label('Province')
-                            ->options(array_combine(
-                                config('advertising.provinces'),
-                                config('advertising.provinces'),
+                            ->options(fn (): array => array_combine(
+                                $names = array_values(AdTargeting::provinceOptions()),
+                                $names,
                             ))
                             ->searchable(),
                         Forms\Components\Select::make('company_size')

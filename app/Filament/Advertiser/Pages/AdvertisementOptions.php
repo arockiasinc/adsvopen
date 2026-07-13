@@ -2,6 +2,7 @@
 
 namespace App\Filament\Advertiser\Pages;
 
+use App\Models\AdType;
 use Filament\Pages\Page;
 
 class AdvertisementOptions extends Page
@@ -22,19 +23,30 @@ class AdvertisementOptions extends Page
     }
 
     /**
+     * The ad formats the admin currently sells, with the cheapest published rate
+     * for each so advertisers can see where pricing starts.
+     *
      * @return array<int, array{name: string, description: string}>
      */
     public function getOptions(): array
     {
-        return [
-            ['name' => 'Banner Ads', 'description' => 'High-visibility banner placements across the marketplace.'],
-            ['name' => 'Home Page Display Ads', 'description' => 'Premium display units on the homepage hero and feed.'],
-            ['name' => 'Product Sponsored Ads', 'description' => 'Promote individual products in relevant search and category results.'],
-            ['name' => 'Contractor Listing Ads', 'description' => 'Priority placement within contractor and partner listings.'],
-            ['name' => 'Contractor Display Ads', 'description' => 'Rich display creative targeted to contractor audiences.'],
-            ['name' => 'Native Ads', 'description' => 'Editorial-style placements that blend into the content feed.'],
-            ['name' => 'Shoppable Ads', 'description' => 'Interactive ads that let buyers act without leaving the page.'],
-            ['name' => 'GIF Ads', 'description' => 'Lightweight animated creative for time-sensitive campaigns.'],
-        ];
+        return AdType::query()
+            ->where('is_active', true)
+            ->with(['prices' => fn ($query) => $query->where('is_active', true)])
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get()
+            ->map(function (AdType $adType): array {
+                $cheapest = $adType->prices->sortBy('price')->first();
+
+                return [
+                    'name' => $adType->name,
+                    'description' => trim(
+                        (string) $adType->description
+                        .($cheapest ? ' From '.$cheapest->formattedPrice().'.' : '')
+                    ),
+                ];
+            })
+            ->all();
     }
 }

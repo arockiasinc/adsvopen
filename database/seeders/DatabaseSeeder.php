@@ -16,6 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call([
+            LocationSeeder::class,
+            AdTypeSeeder::class,
+        ]);
+
         User::updateOrCreate(
             ['username' => 'admin'],
             [

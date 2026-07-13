@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\AdTargeting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -14,6 +15,12 @@ class AdvertisingInquiry extends Model
         'industry',
         'business_province',
         'company_size',
+        'ad_type_id',
+        'target_scope',
+        'target_province_ids',
+        'target_region_ids',
+        'target_city_ids',
+        'quote',
         'target_provinces',
         'target_regions',
         'sells_on_vopen',
@@ -49,11 +56,35 @@ class AdvertisingInquiry extends Model
         'is_government_agency' => 'boolean',
         'target_provinces' => 'array',
         'target_regions' => 'array',
+        'target_province_ids' => 'array',
+        'target_region_ids' => 'array',
+        'target_city_ids' => 'array',
+        'quote' => 'array',
         'recommendations' => 'array',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function adType(): BelongsTo
+    {
+        return $this->belongsTo(AdType::class);
+    }
+
+    /**
+     * Plain-English list of the places this inquiry targets.
+     *
+     * @return array<int, string>
+     */
+    public function targetSummary(): array
+    {
+        return AdTargeting::summarise($this->only([
+            'target_scope',
+            'target_province_ids',
+            'target_region_ids',
+            'target_city_ids',
+        ]));
     }
 }

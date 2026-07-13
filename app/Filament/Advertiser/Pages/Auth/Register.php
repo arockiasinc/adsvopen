@@ -3,6 +3,7 @@
 namespace App\Filament\Advertiser\Pages\Auth;
 
 use App\Notifications\AccountRegistered;
+use App\Support\AdTargeting;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Forms;
@@ -40,9 +41,9 @@ class Register extends BaseRegister
                             ->required(),
                         Forms\Components\Select::make('business_province')
                             ->label('Business location (province)')
-                            ->options(array_combine(
-                                config('advertising.provinces'),
-                                config('advertising.provinces'),
+                            ->options(fn (): array => array_combine(
+                                $names = array_values(AdTargeting::provinceOptions()),
+                                $names,
                             ))
                             ->searchable()
                             ->required(),

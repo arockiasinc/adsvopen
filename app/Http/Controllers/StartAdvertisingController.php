@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\AdvertisingInquiry;
 use App\Models\Menu;
+use App\Services\AdPricingService;
+use App\Support\AdTargeting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Throwable;
 
@@ -79,21 +82,46 @@ class StartAdvertisingController extends Controller
         $adAbout = array_keys(config('advertising.ad_about'));
         $schedules = array_keys(config('advertising.display_schedules'));
         $bands = array_keys(config('advertising.daily_budget_bands'));
-        $provinces = config('advertising.provinces');
-        $targetable = array_merge([config('advertising.country_wide_label')], $provinces);
+        $provinceNames = array_values(AdTargeting::provinceOptions());
+        $scopes = array_keys(AdTargeting::scopeOptions());
 
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'accepts_terms' => ['required', 'in:yes,no'],
             'business_name' => ['required', 'string', 'max:255'],
             'industry' => ['required', 'string', 'in:'.implode(',', config('advertising.industries'))],
-            'business_province' => ['required', 'string', 'in:'.implode(',', $provinces)],
+            'business_province' => ['required', 'string', 'in:'.implode(',', $provinceNames)],
             'company_size' => ['required', 'in:'.implode(',', $sizes)],
-            'target_provinces' => ['required', 'array', 'min:1'],
-            'target_provinces.*' => ['in:'.implode(',', $targetable)],
-            'target_regions' => ['nullable', 'array'],
-            'target_regions.*' => ['array'],
-            'target_regions.*.*' => ['array'],
-            'target_regions.*.*.*' => ['string', 'max:255'],
+
+            'ad_type_id' => ['required', 'integer', 'exists:ad_types,id'],
+            'target_scope' => ['required', 'in:'.implode(',', $scopes)],
+            'target_province_id' => [
+                'nullable',
+                'required_if:target_scope,'.AdTargeting::SCOPE_PROVINCE.','.AdTargeting::SCOPE_REGION.','.AdTargeting::SCOPE_CITY,
+                'integer',
+                'exists:provinces,id',
+            ],
+            'target_province_ids' => [
+                'nullable',
+                'required_if:target_scope,'.AdTargeting::SCOPE_MULTI_PROVINCE,
+                'array',
+                'min:2',
+            ],
+            'target_province_ids.*' => ['integer', 'exists:provinces,id'],
+            'target_region_ids' => [
+                'nullable',
+                'required_if:target_scope,'.AdTargeting::SCOPE_REGION,
+                'array',
+                'min:1',
+            ],
+            'target_region_ids.*' => ['integer', 'exists:regions,id'],
+            'target_city_ids' => [
+                'nullable',
+                'required_if:target_scope,'.AdTargeting::SCOPE_CITY,
+                'array',
+                'min:1',
+            ],
+            'target_city_ids.*' => ['integer', 'exists:cities,id'],
+
             'sells_on_vopen' => ['required', 'in:0,1'],
             'seller_id' => ['nullable', 'required_if:sells_on_vopen,1', 'string', 'max:255'],
             'duration' => ['required', 'in:'.implode(',', $durations)],
@@ -115,6 +143,30 @@ class StartAdvertisingController extends Controller
             'contact_phone' => ['nullable', 'string', 'max:255'],
         ]);
 
+        // A region or city is only a valid choice inside the province it belongs to.
+        $validator->after(function ($validator) use ($request): void {
+            $provinceId = $request->integer('target_province_id');
+
+            if (! $provinceId) {
+                return;
+            }
+
+            $strays = fn (string $key, array $allowed): array => array_values(array_diff(
+                array_map('intval', (array) $request->input($key, [])),
+                $allowed,
+            ));
+
+            if ($strays('target_region_ids', array_keys(AdTargeting::regionOptions($provinceId)))) {
+                $validator->errors()->add('target_region_ids', 'Those regions are not in the selected province.');
+            }
+
+            if ($strays('target_city_ids', array_keys(AdTargeting::cityOptions($provinceId)))) {
+                $validator->errors()->add('target_city_ids', 'Those locations are not in the selected province.');
+            }
+        });
+
+        $validated = $validator->validate();
+
         if ($validated['accepts_terms'] !== 'yes') {
             return back()
                 ->withInput()
@@ -127,10 +179,8 @@ class StartAdvertisingController extends Controller
         }
 
         $recommendations = $this->buildRecommendations($validated);
-        $targetRegions = $this->prepareTargetRegions(
-            $validated['target_regions'] ?? [],
-            $validated['target_provinces'],
-        );
+        $target = AdTargeting::normalise($validated);
+        $quote = app(AdPricingService::class)->quote($validated['ad_type_id'], $target);
 
         AdvertisingInquiry::create([
             'user_id' => auth()->id(),
@@ -139,8 +189,9 @@ class StartAdvertisingController extends Controller
             'industry' => $validated['industry'],
             'business_province' => $validated['business_province'],
             'company_size' => $validated['company_size'],
-            'target_provinces' => $validated['target_provinces'],
-            'target_regions' => $targetRegions,
+            'ad_type_id' => $validated['ad_type_id'],
+            ...$target,
+            'quote' => $quote,
             'sells_on_vopen' => (bool) $validated['sells_on_vopen'],
             'seller_id' => $validated['seller_id'] ?? null,
             'duration' => $validated['duration'],
@@ -185,45 +236,4 @@ class StartAdvertisingController extends Controller
         return array_values(array_unique($recommendations));
     }
 
-    /**
-     * Remove UI-only checkbox markers and keep region choices aligned to the
-     * selected provinces before saving the inquiry.
-     */
-    protected function prepareTargetRegions(array $regions, array $targetProvinces): array
-    {
-        $selectedProvinces = array_flip($targetProvinces);
-        $categories = config('advertising.region_categories');
-        $provinceCategories = config('advertising.province_region_categories', []);
-        $clean = [];
-
-        foreach ($regions as $province => $provinceRegions) {
-            if (! isset($selectedProvinces[$province]) || ! is_array($provinceRegions)) {
-                continue;
-            }
-
-            $availableCategories = array_replace_recursive($categories, $provinceCategories[$province] ?? []);
-
-            foreach ($provinceRegions as $category => $places) {
-                if (! isset($availableCategories[$category]) || ! is_array($places)) {
-                    continue;
-                }
-
-                $selectedPlaces = array_values(array_filter(
-                    array_unique($places),
-                    fn ($place) => $place !== '__category',
-                ));
-
-                if (empty($selectedPlaces) && in_array('__category', $places, true)) {
-                    $label = $availableCategories[$category]['label'];
-                    $selectedPlaces = ["All {$label}"];
-                }
-
-                if (! empty($selectedPlaces)) {
-                    $clean[$province][$category] = $selectedPlaces;
-                }
-            }
-        }
-
-        return $clean;
-    }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Filament\Advertiser\Pages;
 
+use App\Models\AdType;
 use App\Models\AdvertisingInquiry;
+use App\Services\AdPricingService;
+use App\Support\AdQuotePreview;
+use App\Support\AdTargeting;
 use Filament\Forms;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -73,9 +77,6 @@ class StartAdvertising extends Page implements HasForms
 
     public function form(Form $form): Form
     {
-        $regionCategories = config('advertising.region_categories');
-        $provinceRegionCategories = config('advertising.province_region_categories', []);
-
         return $form
             ->schema([
                 Wizard::make([
@@ -113,9 +114,9 @@ class StartAdvertising extends Page implements HasForms
                                 ->required(),
                             Forms\Components\Select::make('business_province')
                                 ->label('Business location (province)')
-                                ->options(array_combine(
-                                    config('advertising.provinces'),
-                                    config('advertising.provinces'),
+                                ->options(fn (): array => array_combine(
+                                    $names = array_values(AdTargeting::provinceOptions()),
+                                    $names,
                                 ))
                                 ->searchable()
                                 ->required(),
@@ -140,93 +141,20 @@ class StartAdvertising extends Page implements HasForms
                     Wizard\Step::make('Targeting')
                         ->icon('heroicon-o-map')
                         ->visible(fn (Get $get): bool => $get('accepts_terms') === 'yes')
+                        ->columns(2)
                         ->schema([
-                            Forms\Components\CheckboxList::make('target_provinces')
-                                ->label('Where do you want to advertise? (Select all that apply)')
-                                ->options(array_merge(
-                                    [config('advertising.country_wide_label') => config('advertising.country_wide_label')],
-                                    array_combine(
-                                        config('advertising.provinces'),
-                                        config('advertising.provinces'),
-                                    ),
-                                ))
-                                ->columns(2)
+                            Forms\Components\Select::make('ad_type_id')
+                                ->label('Which type of advertisement?')
+                                ->options(fn (): array => AdType::options())
+                                ->searchable()
                                 ->required()
-                                ->live(),
-                            Forms\Components\Repeater::make('target_regions')
-                                ->label('Select the region(s) you would like to advertise')
-                                ->helperText('Add a row for each province/region you want to target.')
-                                ->visible(fn (Get $get): bool => ! empty(array_diff(
-                                    (array) $get('target_provinces'),
-                                    [config('advertising.country_wide_label')],
-                                )))
-                                ->schema([
-                                    Forms\Components\Select::make('province')
-                                        ->options(fn (Get $get): array => array_combine(
-                                            $p = array_values(array_diff(
-                                                (array) $get('../../target_provinces'),
-                                                [config('advertising.country_wide_label')],
-                                            )),
-                                            $p,
-                                        ))
-                                        ->required()
-                                        ->live(),
-                                    Forms\Components\Select::make('category')
-                                        ->options(function (Get $get) use ($regionCategories, $provinceRegionCategories): array {
-                                            $province = $get('province');
-                                            $categories = array_replace_recursive(
-                                                $regionCategories,
-                                                $provinceRegionCategories[$province] ?? [],
-                                            );
+                                ->live()
+                                ->helperText('Pricing depends on the ad type and where you advertise.')
+                                ->columnSpanFull(),
 
-                                            return collect($categories)
-                                                // Hide categories with no data for this province,
-                                                // but always keep "Across the Province".
-                                                ->filter(function ($category, $key): bool {
-                                                    if ($key === 'across_province') {
-                                                        return true;
-                                                    }
+                            ...AdTargeting::formSchema(),
 
-                                                    return ($category['display_count'] ?? count($category['places'] ?? [])) > 0;
-                                                })
-                                                ->mapWithKeys(function ($category, $key) {
-                                                    $count = $category['display_count'] ?? count($category['places'] ?? []);
-                                                    $label = $category['label'].($count ? " ({$count})" : '');
-
-                                                    return [$key => $label];
-                                                })
-                                                ->all();
-                                        })
-                                        ->required()
-                                        ->live(),
-                                    Forms\Components\Select::make('places')
-                                        ->multiple()
-                                        ->options(function (Get $get) use ($regionCategories, $provinceRegionCategories): array {
-                                            $province = $get('province');
-                                            $cat = $get('category');
-                                            $categories = array_replace_recursive(
-                                                $regionCategories,
-                                                $provinceRegionCategories[$province] ?? [],
-                                            );
-                                            $places = $categories[$cat]['places'] ?? [];
-
-                                            return array_combine($places, $places);
-                                        })
-                                        ->visible(function (Get $get) use ($regionCategories, $provinceRegionCategories): bool {
-                                            $province = $get('province');
-                                            $cat = $get('category');
-                                            $categories = array_replace_recursive(
-                                                $regionCategories,
-                                                $provinceRegionCategories[$province] ?? [],
-                                            );
-
-                                            return ! empty($categories[$cat]['places'] ?? []);
-                                        })
-                                        ->helperText('Leave empty to target the whole category.'),
-                                ])
-                                ->columns(3)
-                                ->addActionLabel('Add a region')
-                                ->default([]),
+                            AdQuotePreview::field(),
                         ]),
 
                     Wizard\Step::make('Selling & duration')
@@ -392,6 +320,8 @@ class StartAdvertising extends Page implements HasForms
         }
 
         $recommendations = $this->buildRecommendations($data);
+        $target = AdTargeting::normalise($data);
+        $quote = app(AdPricingService::class)->quote($data['ad_type_id'] ?? null, $target);
 
         AdvertisingInquiry::create([
             'user_id' => auth()->id(),
@@ -400,8 +330,9 @@ class StartAdvertising extends Page implements HasForms
             'industry' => $data['industry'],
             'business_province' => $data['business_province'],
             'company_size' => $data['company_size'],
-            'target_provinces' => $data['target_provinces'] ?? [],
-            'target_regions' => $data['target_regions'] ?? [],
+            'ad_type_id' => $data['ad_type_id'] ?? null,
+            ...$target,
+            'quote' => $quote,
             'sells_on_vopen' => (bool) ($data['sells_on_vopen'] ?? false),
             'seller_id' => $data['seller_id'] ?? null,
             'duration' => $data['duration'],

@@ -1,24 +1,34 @@
 @include('partials.header')
 
 @php
+    use App\Support\AdTargeting;
+
     $industries = config('advertising.industries');
-    $provinces = config('advertising.provinces');
-    $countryWide = config('advertising.country_wide_label');
     $companySizes = config('advertising.company_sizes');
     $durations = config('advertising.durations');
     $adAbout = config('advertising.ad_about');
     $schedules = config('advertising.display_schedules');
     $bands = config('advertising.daily_budget_bands');
-    $regionCategories = config('advertising.region_categories');
-    $provinceRegionCategories = config('advertising.province_region_categories', []);
     $sizeHints = [
         'micro' => 'Recommended: Business listing page.',
         'small' => 'Recommended: Business listing page + ads on that page + ads on the home page (except slider ads).',
         'medium' => 'Recommended: Home page slider + other home page ads.',
         'large' => 'Recommended: Home page sliders, other home page ads and the business listing page ad.',
     ];
-    $oldProvinces = old('target_provinces', []);
-    $oldRegions = old('target_regions', []);
+
+    // Provinces, regions and cities come from the database — the same list
+    // customers pick from when they register on the marketplace.
+    $provinces = AdTargeting::provinceOptions();
+    $provinceNames = array_values($provinces);
+    $adTypes = \App\Models\AdType::options();
+    $scopes = AdTargeting::scopeOptions();
+    $scopeHints = AdTargeting::scopeDescriptions();
+
+    $oldScope = old('target_scope');
+    $oldProvinceId = old('target_province_id');
+    $oldProvinceIds = array_map('strval', (array) old('target_province_ids', []));
+    $oldRegionIds = array_map('intval', (array) old('target_region_ids', []));
+    $oldCityIds = array_map('intval', (array) old('target_city_ids', []));
 @endphp
 
 <style>
@@ -47,6 +57,20 @@
   .sa-grid-checks{display:grid;gap:.5rem}
   @media(min-width:640px){.sa-grid-checks{grid-template-columns:1fr 1fr}}
   .sa-region-block{border:1px solid var(--sa-line);background:var(--sa-canvas);border-radius:.7rem;padding:1rem;margin-top:.75rem}
+  /* The quote panel is rendered server-side with utility classes; map the few it uses. */
+  #sa-quote .text-sm{font-size:.92rem}
+  #sa-quote .space-y-2>*+*{margin-top:.5rem}
+  #sa-quote .flex{display:flex}
+  #sa-quote .justify-between{justify-content:space-between}
+  #sa-quote .gap-4{gap:1rem}
+  #sa-quote .font-medium{font-weight:600}
+  #sa-quote .font-semibold{font-weight:800}
+  #sa-quote .border-t{border-top:1px solid var(--sa-line)}
+  #sa-quote .pt-2{padding-top:.5rem}
+  #sa-quote .whitespace-nowrap{white-space:nowrap}
+  #sa-quote .text-gray-500{color:var(--sa-muted)}
+  #sa-quote .text-primary-600{color:var(--sa-accent-deep)}
+  #sa-quote .text-warning-600{color:#b45309}
   .sa-region-list{display:grid;gap:.6rem}
   .sa-region-category{border:1px solid var(--sa-line);background:#fff;border-radius:.65rem;padding:.85rem}
   .sa-region-head{display:flex;align-items:center;gap:.55rem;font-size:.93rem;font-weight:800;color:var(--sa-copy);cursor:pointer}
@@ -154,7 +178,7 @@
               <label class="sa-q" for="business_province">Business location (province)</label>
               <select class="sa-field" id="business_province" name="business_province" required>
                 <option value="">Select a province…</option>
-                @foreach ($provinces as $province)
+                @foreach ($provinceNames as $province)
                   <option value="{{ $province }}" @selected(old('business_province') === $province)>{{ $province }}</option>
                 @endforeach
               </select>
@@ -176,54 +200,66 @@
 
         <div class="sa-card">
           <h2>Where do you want to advertise?</h2>
-          <p class="sa-help" style="margin:-.4rem 0 1rem">Select all that apply. When a province is selected, refine its regions using the sections that appear below it.</p>
-          <div class="sa-grid-checks">
-            <label class="sa-opt"><input type="checkbox" name="target_provinces[]" value="{{ $countryWide }}" @checked(in_array($countryWide, $oldProvinces, true))> {{ $countryWide }}</label>
-            @foreach ($provinces as $province)
-              <label class="sa-opt"><input type="checkbox" name="target_provinces[]" value="{{ $province }}" data-province-toggle="{{ \Illuminate\Support\Str::slug($province) }}" @checked(in_array($province, $oldProvinces, true))> {{ $province }}</label>
+
+          <div class="sa-group" style="margin-bottom:1.5rem">
+            <label class="sa-q" for="ad_type_id">Which type of advertisement?</label>
+            <select class="sa-field" id="ad_type_id" name="ad_type_id" required>
+              <option value="">Select an ad type…</option>
+              @foreach ($adTypes as $id => $name)
+                <option value="{{ $id }}" @selected((string) old('ad_type_id') === (string) $id)>{{ $name }}</option>
+              @endforeach
+            </select>
+            <p class="sa-help">Pricing depends on the ad type and where you advertise.</p>
+          </div>
+
+          <div class="sa-group" style="gap:.6rem">
+            <p class="sa-q">How far do you want your ad to reach?</p>
+            @foreach ($scopes as $key => $label)
+              <label class="sa-opt sa-opt-card">
+                <input type="radio" name="target_scope" value="{{ $key }}" required data-scope-toggle @checked($oldScope === $key)>
+                <span><span class="sa-opt-title">{{ $label }}</span><span class="sa-opt-sub">{{ $scopeHints[$key] }}</span></span>
+              </label>
             @endforeach
           </div>
 
-          @foreach ($provinces as $province)
-            @php
-              $slug = \Illuminate\Support\Str::slug($province);
-              $provinceRegions = array_replace_recursive($regionCategories, $provinceRegionCategories[$province] ?? []);
-            @endphp
-            <div class="sa-region-block {{ in_array($province, $oldProvinces, true) ? '' : 'sa-hidden' }}" data-province-block="{{ $slug }}">
-              <p class="sa-q" style="margin-bottom:.75rem">Select the region(s) you would like to advertise in {{ $province }}</p>
-              <div class="sa-region-list">
-                @foreach ($provinceRegions as $catKey => $cat)
-                  @php $places = $cat['places'] ?? []; @endphp
-                  {{-- Hide categories with no data for this province, but always keep "Across the Province". --}}
-                  @continue($catKey !== 'across_province' && ($cat['display_count'] ?? count($places)) < 1)
-                  @php
-                    $selectedRegions = $oldRegions[$province][$catKey] ?? [];
-                    $categoryChecked = in_array('__category', $selectedRegions, true) || count(array_intersect($places, $selectedRegions)) > 0;
-                    $count = $cat['display_count'] ?? count($places);
-                    $label = $cat['label'] . ($count ? ' (' . $count . ')' : '');
-                  @endphp
-                  <div class="sa-region-category">
-                    <label class="sa-region-head">
-                      <input type="checkbox" name="target_regions[{{ $province }}][{{ $catKey }}][]" value="__category" data-region-category @checked($categoryChecked)>
-                      <span>{{ $label }}</span>
-                    </label>
-                    @if (count($places))
-                      <div class="sa-place-panel {{ $categoryChecked ? '' : 'sa-hidden' }}">
-                        <div class="sa-place-grid">
-                          @foreach ($places as $place)
-                            <label class="sa-opt">
-                              <input type="checkbox" name="target_regions[{{ $province }}][{{ $catKey }}][]" value="{{ $place }}" @checked(in_array($place, $selectedRegions, true))>
-                              {{ $place }}
-                            </label>
-                          @endforeach
-                        </div>
-                      </div>
-                    @endif
-                  </div>
-                @endforeach
-              </div>
+          <div class="sa-region-block {{ $oldScope === 'multi_province' ? '' : 'sa-hidden' }}" data-scope-block="multi_province">
+            <label class="sa-q" for="target_province_ids">Which provinces?</label>
+            <select class="sa-field" id="target_province_ids" name="target_province_ids[]" multiple size="8">
+              @foreach ($provinces as $id => $name)
+                <option value="{{ $id }}" @selected(in_array((string) $id, $oldProvinceIds, true))>{{ $name }}</option>
+              @endforeach
+            </select>
+            <p class="sa-help">Hold Ctrl (Cmd on Mac) to select more than one. Pick at least two.</p>
+          </div>
+
+          <div class="sa-region-block {{ in_array($oldScope, ['province', 'region', 'city'], true) ? '' : 'sa-hidden' }}" data-scope-block="province region city">
+            <label class="sa-q" for="target_province_id">Province</label>
+            <select class="sa-field" id="target_province_id" name="target_province_id">
+              <option value="">Select a province…</option>
+              @foreach ($provinces as $id => $name)
+                <option value="{{ $id }}" @selected((string) $oldProvinceId === (string) $id)>{{ $name }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="sa-region-block {{ $oldScope === 'region' ? '' : 'sa-hidden' }}" data-scope-block="region">
+            <label class="sa-q" for="target_region_ids">Region(s)</label>
+            <select class="sa-field" id="target_region_ids" name="target_region_ids[]" multiple size="8"></select>
+            <p class="sa-help">Counties, districts and municipalities in the selected province. Hold Ctrl (Cmd on Mac) to select more than one.</p>
+          </div>
+
+          <div class="sa-region-block {{ $oldScope === 'city' ? '' : 'sa-hidden' }}" data-scope-block="city">
+            <label class="sa-q" for="target_city_ids">Select nearest location(s)</label>
+            <select class="sa-field" id="target_city_ids" name="target_city_ids[]" multiple size="10"></select>
+            <p class="sa-help">The same city list customers pick from when they register. Hold Ctrl (Cmd on Mac) to select more than one.</p>
+          </div>
+
+          <div class="sa-region-block" id="sa-quote">
+            <p class="sa-q" style="margin-bottom:.6rem">Estimated price</p>
+            <div id="sa-quote-body">
+              <span class="sa-help">Choose an ad type and where you want to advertise to see pricing.</span>
             </div>
-          @endforeach
+          </div>
         </div>
 
         <div class="sa-card">
@@ -388,40 +424,135 @@
       });
     });
 
-    var syncRegionCategory = function (checkbox) {
-      var panel = checkbox.closest('.sa-region-category').querySelector('.sa-place-panel');
-      if (!panel) return;
-      panel.classList.toggle(H, !checkbox.checked);
-      panel.querySelectorAll('input').forEach(function (field) {
-        field.disabled = !checkbox.checked || checkbox.disabled;
+    // ---- Targeting: scope -> province -> region / city, and the live price ----
+
+    var adType = document.getElementById('ad_type_id');
+    var provinceOne = document.getElementById('target_province_id');
+    var provinceMany = document.getElementById('target_province_ids');
+    var regions = document.getElementById('target_region_ids');
+    var cities = document.getElementById('target_city_ids');
+    var quoteBody = document.getElementById('sa-quote-body');
+
+    var endpoints = {
+      regions: @json(route('advertising.regions')),
+      cities: @json(route('advertising.cities')),
+      quote: @json(route('advertising.quote')),
+    };
+
+    // Re-select what the advertiser had chosen if the form came back with errors.
+    var preselect = {
+      regions: @json($oldRegionIds),
+      cities: @json($oldCityIds),
+    };
+
+    var currentScope = function () {
+      var checked = form.querySelector('[data-scope-toggle]:checked');
+      return checked ? checked.value : '';
+    };
+
+    // Only the fields for the chosen scope are shown, and only those are
+    // submitted — a disabled field is left out of the POST.
+    var syncScope = function () {
+      var scope = currentScope();
+
+      form.querySelectorAll('[data-scope-block]').forEach(function (block) {
+        var applies = block.getAttribute('data-scope-block').split(' ').indexOf(scope) !== -1;
+        block.classList.toggle(H, !applies);
+        block.querySelectorAll('select').forEach(function (field) {
+          field.disabled = !applies;
+        });
       });
     };
 
-    var syncProvinceBlock = function (checkbox) {
-      var block = form.querySelector('[data-province-block="' + checkbox.getAttribute('data-province-toggle') + '"]');
-      if (!block) return;
-      block.classList.toggle(H, !checkbox.checked);
-      block.querySelectorAll('input, select, textarea').forEach(function (field) {
-        field.disabled = !checkbox.checked;
+    var fillOptions = function (select, options, selected) {
+      select.innerHTML = '';
+      options.forEach(function (option) {
+        var el = document.createElement('option');
+        el.value = option.id;
+        el.textContent = option.name;
+        el.selected = selected.indexOf(option.id) !== -1;
+        select.appendChild(el);
       });
-      block.querySelectorAll('[data-region-category]').forEach(syncRegionCategory);
     };
 
-    form.querySelectorAll('[data-province-toggle]').forEach(function (el) {
-      syncProvinceBlock(el);
+    var loadPlaces = function () {
+      var provinceId = provinceOne.value;
+      var scope = currentScope();
 
+      if (!provinceId || (scope !== 'region' && scope !== 'city')) {
+        return Promise.resolve();
+      }
+
+      var target = scope === 'region' ? regions : cities;
+      var url = (scope === 'region' ? endpoints.regions : endpoints.cities)
+        + '?province_id=' + encodeURIComponent(provinceId);
+
+      return fetch(url, { headers: { Accept: 'application/json' } })
+        .then(function (response) { return response.json(); })
+        .then(function (options) {
+          fillOptions(target, options, scope === 'region' ? preselect.regions : preselect.cities);
+          // Old selections only apply to the first render.
+          preselect.regions = [];
+          preselect.cities = [];
+        })
+        .catch(function () {
+          target.innerHTML = '';
+        });
+    };
+
+    var selectedValues = function (select) {
+      return Array.prototype.slice.call(select.selectedOptions).map(function (option) {
+        return option.value;
+      });
+    };
+
+    var refreshQuote = function () {
+      var scope = currentScope();
+
+      if (!adType.value || !scope) {
+        quoteBody.innerHTML = '<span class="sa-help">Choose an ad type and where you want to advertise to see pricing.</span>';
+        return;
+      }
+
+      var params = new URLSearchParams();
+      params.append('ad_type_id', adType.value);
+      params.append('target_scope', scope);
+
+      if (provinceOne.value) {
+        params.append('target_province_id', provinceOne.value);
+      }
+
+      selectedValues(provinceMany).forEach(function (id) { params.append('target_province_ids[]', id); });
+      selectedValues(regions).forEach(function (id) { params.append('target_region_ids[]', id); });
+      selectedValues(cities).forEach(function (id) { params.append('target_city_ids[]', id); });
+
+      fetch(endpoints.quote + '?' + params.toString(), { headers: { Accept: 'application/json' } })
+        .then(function (response) { return response.json(); })
+        .then(function (data) { quoteBody.innerHTML = data.html; })
+        .catch(function () {
+          quoteBody.innerHTML = '<span class="sa-help">Pricing is unavailable right now — we will quote you directly.</span>';
+        });
+    };
+
+    form.querySelectorAll('[data-scope-toggle]').forEach(function (el) {
       el.addEventListener('change', function () {
-        syncProvinceBlock(this);
+        syncScope();
+        loadPlaces().then(refreshQuote);
       });
     });
 
-    form.querySelectorAll('[data-region-category]').forEach(function (el) {
-      syncRegionCategory(el);
-
-      el.addEventListener('change', function () {
-        syncRegionCategory(this);
-      });
+    provinceOne.addEventListener('change', function () {
+      regions.innerHTML = '';
+      cities.innerHTML = '';
+      loadPlaces().then(refreshQuote);
     });
+
+    [adType, provinceMany, regions, cities].forEach(function (el) {
+      el.addEventListener('change', refreshQuote);
+    });
+
+    syncScope();
+    loadPlaces().then(refreshQuote);
   })();
 </script>
 

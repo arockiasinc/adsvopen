@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdvertiserLoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ReceiptController;
+use App\Http\Controllers\AdvertisingLookupController;
 use App\Http\Controllers\StartAdvertisingController;
 use App\Models\Banner;
 use App\Models\Menu;
@@ -232,6 +233,14 @@ Route::get('/best-place-to-advertise-across-Canada', function () use ($resolveMe
 Route::get('/start-advertising', [StartAdvertisingController::class, 'show'])->name('start.advertising');
 Route::post('/start-advertising', [StartAdvertisingController::class, 'store'])
     ->name('start.advertising.store');
+
+// Drives the province -> region / city cascade and the live price on that form.
+Route::get('/advertising/regions', [AdvertisingLookupController::class, 'regions'])
+    ->name('advertising.regions');
+Route::get('/advertising/cities', [AdvertisingLookupController::class, 'cities'])
+    ->name('advertising.cities');
+Route::get('/advertising/quote', [AdvertisingLookupController::class, 'quote'])
+    ->name('advertising.quote');
 
 Route::post('/advertiser/login', AdvertiserLoginController::class)
     ->middleware(SetUpPanel::class.':advertiser')

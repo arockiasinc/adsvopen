@@ -3,10 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CampaignResource\Pages;
-use App\Filament\Resources\CampaignResource\RelationManagers;
+use App\Models\AdType;
 use App\Models\Campaign;
+use App\Support\AdQuotePreview;
+use App\Support\AdTargeting;
+use App\Support\CampaignPricing;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -31,9 +35,12 @@ class CampaignResource extends Resource
                     ->options(Campaign::statusOptions())
                     ->required()
                     ->default(Campaign::STATUS_DRAFT),
-                Forms\Components\TextInput::make('format')
+                Forms\Components\Select::make('ad_type_id')
+                    ->label('Ad type')
+                    ->options(fn (): array => AdType::options())
+                    ->searchable()
                     ->required()
-                    ->maxLength(255),
+                    ->live(),
                 Forms\Components\TextInput::make('objective')
                     ->required()
                     ->maxLength(255),
@@ -52,11 +59,24 @@ class CampaignResource extends Resource
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('start_date')
                     ->label('From')
-                    ->required(),
+                    ->required()
+                    ->live(),
                 Forms\Components\DatePicker::make('end_date')
                     ->label('To')
                     ->required()
-                    ->afterOrEqual('start_date'),
+                    ->afterOrEqual('start_date')
+                    ->live(),
+                Forms\Components\Section::make('Targeting & price')
+                    ->description('Priced from the rate card for this ad type, location and date range.')
+                    ->columns(2)
+                    ->columnSpanFull()
+                    ->schema([
+                        ...AdTargeting::formSchema(),
+                        AdQuotePreview::field(fn (Get $get): ?int => CampaignPricing::daysBetween(
+                            $get('start_date'),
+                            $get('end_date'),
+                        )),
+                    ]),
                 Forms\Components\TagsInput::make('placements')
                     ->placeholder('Add a placement')
                     ->columnSpanFull(),
@@ -76,13 +96,26 @@ class CampaignResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('format')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('adType.name')
+                    ->label('Ad type')
+                    ->searchable()
+                    ->placeholder('—'),
+                Tables\Columns\TextColumn::make('target_scope')
+                    ->label('Targeting')
+                    ->formatStateUsing(fn (?string $state): string => AdTargeting::scopeLabel($state))
+                    ->placeholder('—')
+                    ->toggleable(),
+                Tables\Columns\TextColumn::make('quoted_price')
+                    ->label('Quoted price')
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : '—')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('objective')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('daily_budget')
                     ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$'.number_format((float) $state, 2) : (string) $state)
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('headline')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('cta')

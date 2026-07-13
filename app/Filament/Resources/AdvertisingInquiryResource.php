@@ -4,6 +4,8 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AdvertisingInquiryResource\Pages;
 use App\Models\AdvertisingInquiry;
+use App\Support\AdQuotePreview;
+use App\Support\AdTargeting;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists;
@@ -42,6 +44,38 @@ class AdvertisingInquiryResource extends Resource
             ]);
     }
 
+    /**
+     * The targeted places, one per line. Inquiries submitted before targeting
+     * moved to province/region/city IDs still carry the old province + category
+     * text, so fall back to that.
+     *
+     * @return array<int, string>
+     */
+    protected static function locationLines(AdvertisingInquiry $record): array
+    {
+        if (filled($record->target_scope)) {
+            return $record->targetSummary();
+        }
+
+        $lines = [];
+
+        foreach ((array) $record->target_regions as $province => $categories) {
+            if (! is_array($categories)) {
+                $lines[] = $province.': '.$categories;
+
+                continue;
+            }
+
+            foreach ($categories as $category => $places) {
+                $label = ucwords(str_replace('_', ' ', (string) $category));
+                $placeList = is_array($places) ? implode(', ', $places) : $places;
+                $lines[] = $province.' — '.$label.': '.$placeList;
+            }
+        }
+
+        return $lines ?: array_map('strval', (array) $record->target_provinces);
+    }
+
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist
@@ -63,40 +97,30 @@ class AdvertisingInquiryResource extends Resource
                         Infolists\Components\TextEntry::make('business_province'),
                         Infolists\Components\TextEntry::make('company_size'),
                         Infolists\Components\TextEntry::make('duration'),
-                        Infolists\Components\TextEntry::make('target_provinces')
-                            ->badge()
-                            ->placeholder('—')
-                            ->columnSpanFull(),
-                        Infolists\Components\TextEntry::make('target_regions')
+                        Infolists\Components\TextEntry::make('adType.name')
+                            ->label('Ad type')
+                            ->placeholder('—'),
+                        Infolists\Components\TextEntry::make('target_scope')
+                            ->label('Targeting scope')
+                            ->formatStateUsing(fn (?string $state): string => AdTargeting::scopeLabel($state))
+                            ->placeholder('—'),
+                        Infolists\Components\TextEntry::make('targets')
+                            ->label('Locations')
                             ->placeholder('—')
                             ->columnSpanFull()
                             ->listWithLineBreaks()
                             ->bulleted()
-                            ->getStateUsing(function (AdvertisingInquiry $record): ?array {
-                                $regions = $record->target_regions;
-
-                                if (! is_array($regions) || $regions === []) {
-                                    return null;
-                                }
-
-                                $lines = [];
-
-                                foreach ($regions as $province => $scopes) {
-                                    if (! is_array($scopes)) {
-                                        $lines[] = $province.': '.$scopes;
-
-                                        continue;
-                                    }
-
-                                    foreach ($scopes as $scope => $places) {
-                                        $label = ucwords(str_replace('_', ' ', (string) $scope));
-                                        $placeList = is_array($places) ? implode(', ', $places) : $places;
-                                        $lines[] = $province.' — '.$label.': '.$placeList;
-                                    }
-                                }
-
-                                return $lines;
-                            }),
+                            ->getStateUsing(fn (AdvertisingInquiry $record): array => self::locationLines($record)),
+                    ]),
+                Infolists\Components\Section::make('Rate card quote')
+                    ->description('What our published rates come to for the ad type and locations above.')
+                    ->visible(fn (AdvertisingInquiry $record): bool => filled($record->quote['lines'] ?? null)
+                        || filled($record->quote['unpriced'] ?? null))
+                    ->schema([
+                        Infolists\Components\TextEntry::make('quote')
+                            ->hiddenLabel()
+                            ->html()
+                            ->getStateUsing(fn (AdvertisingInquiry $record) => AdQuotePreview::toHtml($record->quote)),
                     ]),
                 Infolists\Components\Section::make('Campaign details')
                     ->columns(2)
@@ -172,6 +196,15 @@ class AdvertisingInquiryResource extends Resource
                     ->label('Account')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('adType.name')
+                    ->label('Ad type')
+                    ->searchable()
+                    ->placeholder('—'),
+                Tables\Columns\TextColumn::make('target_scope')
+                    ->label('Targeting')
+                    ->formatStateUsing(fn (?string $state): string => AdTargeting::scopeLabel($state))
+                    ->placeholder('—')
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('industry')
                     ->searchable()
                     ->toggleable(),
@@ -206,6 +239,12 @@ class AdvertisingInquiryResource extends Resource
                     ]),
                 Tables\Filters\SelectFilter::make('company_size')
                     ->options(config('advertising.company_sizes')),
+                Tables\Filters\SelectFilter::make('ad_type_id')
+                    ->label('Ad type')
+                    ->options(fn (): array => \App\Models\AdType::options()),
+                Tables\Filters\SelectFilter::make('target_scope')
+                    ->label('Targeting')
+                    ->options(AdTargeting::scopeOptions()),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

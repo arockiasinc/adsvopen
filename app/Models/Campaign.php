@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\AdTargeting;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,6 +39,13 @@ class Campaign extends Model
         'title',
         'status',
         'format',
+        'ad_type_id',
+        'target_scope',
+        'target_province_ids',
+        'target_region_ids',
+        'target_city_ids',
+        'quoted_price',
+        'quote',
         'objective',
         'daily_budget',
         'headline',
@@ -56,6 +64,11 @@ class Campaign extends Model
             'end_date' => 'date',
             'placements' => 'array',
             'metrics' => 'array',
+            'target_province_ids' => 'array',
+            'target_region_ids' => 'array',
+            'target_city_ids' => 'array',
+            'quote' => 'array',
+            'quoted_price' => 'decimal:2',
         ];
     }
 
@@ -64,8 +77,40 @@ class Campaign extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function adType(): BelongsTo
+    {
+        return $this->belongsTo(AdType::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
+    }
+
+    /**
+     * Plain-English list of the places this campaign targets.
+     *
+     * @return array<int, string>
+     */
+    public function targetSummary(): array
+    {
+        return AdTargeting::summarise($this->only([
+            'target_scope',
+            'target_province_ids',
+            'target_region_ids',
+            'target_city_ids',
+        ]));
+    }
+
+    /**
+     * Days the campaign runs for, used to price it against the rate card.
+     */
+    public function durationInDays(): ?int
+    {
+        if (! $this->start_date || ! $this->end_date) {
+            return null;
+        }
+
+        return $this->start_date->diffInDays($this->end_date) + 1;
     }
 }

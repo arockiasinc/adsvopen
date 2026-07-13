@@ -3,6 +3,7 @@
 namespace App\Filament\Advertiser\Resources\CampaignResource\Pages;
 
 use App\Filament\Advertiser\Resources\CampaignResource;
+use App\Support\CampaignPricing;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateCampaign extends CreateRecord
@@ -13,6 +14,6 @@ class CreateCampaign extends CreateRecord
     {
         $data['user_id'] = auth()->id();
 
-        return $data;
+        return CampaignPricing::prepare($data);
     }
 }

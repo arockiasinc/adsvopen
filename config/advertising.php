@@ -89,7 +89,18 @@ return [
         'Beauty & Personal Care',
     ],
 
-    // Canadian provinces & territories (used for business location + targeting).
+    /*
+    | SUPERSEDED. Provinces, regions and cities now live in the database
+    | (`provinces`, `regions`, `cities`), seeded from the marketplace by
+    | Database\Seeders\LocationSeeder so advertisers target the same places
+    | customers register against. Read them via App\Support\AdTargeting.
+    |
+    | The keys below — `provinces`, `country_wide_label`, `region_categories`,
+    | `province_region_categories` and config/regions/*.php — are no longer read
+    | by the app. They are kept only so historical advertising_inquiries rows,
+    | which stored province and category *names*, still make sense. Editing them
+    | changes nothing; add a province in the database instead.
+    */
     'provinces' => [
         'Alberta',
         'British Columbia',
@@ -108,6 +119,10 @@ return [
 
     // Special targeting option offered alongside the provinces.
     'country_wide_label' => 'Country wide',
+
+    // The country advertisers target. Provinces, regions and cities live in the
+    // database (see LocationSeeder), not in this file.
+    'country_name' => 'Canada',
 
     /*
     | Region categories that appear once a province is targeted. Common
