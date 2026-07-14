@@ -3,19 +3,28 @@
   @php
     $scriptPath = public_path('js/script.js');
     $scriptVersion = file_exists($scriptPath) ? filemtime($scriptPath) : null;
+
+    // Legal pages are DB-backed and editable from /admin. Guard the lookup so
+    // the footer still renders on a database that has not been migrated yet.
+    try {
+      $footerLegalPages = \Illuminate\Support\Facades\Schema::hasTable('legal_pages')
+        ? \App\Models\LegalPage::query()->published()->where('is_footer', true)->ordered()->get(['title', 'slug'])
+        : collect();
+    } catch (\Throwable $exception) {
+      $footerLegalPages = collect();
+    }
   @endphp
 
   <footer class="bg-ink py-16 text-white md:py-[76px]" aria-label="Site footer">
     <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
       <div class="grid gap-5 pt-2">
         <nav class="flex flex-wrap items-center gap-3 text-[0.84rem]" aria-label="Legal">
-          <a href="#top">About us</a>
-          <a href="#faq">Conditions of use</a>
-          <a href="#faq">Privacy Notice</a>
-          <a href="#benefits">Interest-Based Ads</a>
-          <a href="#faq">Cookie Notice</a>
-          <a href="#latest-news">Ad platform status</a>
-          <a href="#partner-support">Careers</a>
+          <a href="{{ route('home') }}#top">About us</a>
+          @foreach ($footerLegalPages as $footerLegalPage)
+            <a href="{{ route('legal.page', $footerLegalPage->slug) }}">{{ $footerLegalPage->title }}</a>
+          @endforeach
+          <a href="{{ route('home') }}#benefits">Interest-Based Ads</a>
+          <a href="{{ route('home') }}#partner-support">Careers</a>
         </nav>
 
         <div class="flex flex-wrap items-center gap-3" aria-label="Social links">

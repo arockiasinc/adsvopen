@@ -9,18 +9,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 /**
- * Feeds the public Start Advertising form: the province -> region / city
+ * Feeds the public Start Advertising form: the province -> nearest-location
  * cascade, and the live price from the rate card.
  */
 class AdvertisingLookupController extends Controller
 {
-    public function regions(Request $request): JsonResponse
-    {
-        return response()->json(
-            $this->asOptions(AdTargeting::regionOptions($request->query('province_id'))),
-        );
-    }
-
     public function cities(Request $request): JsonResponse
     {
         return response()->json(
@@ -34,7 +27,6 @@ class AdvertisingLookupController extends Controller
             'target_scope' => $request->query('target_scope'),
             'target_province_id' => $request->query('target_province_id'),
             'target_province_ids' => (array) $request->query('target_province_ids', []),
-            'target_region_ids' => (array) $request->query('target_region_ids', []),
             'target_city_ids' => (array) $request->query('target_city_ids', []),
         ]);
 

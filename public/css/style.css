@@ -3901,3 +3901,73 @@ footer nav[aria-label="Legal"] a {
   font-size: 0.78rem;
   font-weight: 900;
 }
+
+/* Legal pages (Privacy Policy, Cookies Policy, Terms of Use, Terms & Conditions).
+   The bodies are admin-editable HTML, so style the raw tags rather than classes. */
+.legal-prose {
+  color: var(--color-copy);
+  font-size: 0.96rem;
+  line-height: 1.75;
+}
+
+.legal-prose > :first-child {
+  margin-top: 0;
+}
+
+.legal-prose > :last-child {
+  margin-bottom: 0;
+}
+
+.legal-prose h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  color: var(--color-copy);
+}
+
+.legal-prose h3 {
+  margin: 1.75rem 0 0.5rem;
+  font-size: 1.08rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-copy);
+}
+
+.legal-prose p {
+  margin: 0 0 1rem;
+  color: var(--color-muted);
+}
+
+.legal-prose strong {
+  font-weight: 700;
+  color: var(--color-copy);
+}
+
+.legal-prose ul,
+.legal-prose ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+  color: var(--color-muted);
+}
+
+.legal-prose ul { list-style: disc; }
+.legal-prose ol { list-style: decimal; }
+.legal-prose li { margin-bottom: 0.4rem; }
+
+.legal-prose a {
+  color: var(--color-accentDeep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.legal-prose a:hover {
+  color: var(--color-accent);
+}
+
+.legal-prose hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid rgb(0 0 0 / 0.1);
+}

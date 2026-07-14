@@ -35,7 +35,7 @@ class AdPriceResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Section::make('What is being priced')
-                    ->description('Prices fall back from the most specific location to the least: a city uses its own price, then its region\'s, then its province\'s, then the country-wide one. Set a country-wide price per ad type and you have covered everything.')
+                    ->description('Prices fall back from the most specific location to the least: a location uses its own price, then its region\'s, then its province\'s, then the country-wide one. Set a country-wide price per ad type and you have covered everything. Advertisers only pick a province or the locations inside it — a region price is a shortcut that prices every location in one county or district at once.')
                     ->columns(2)
                     ->schema([
                         Forms\Components\Select::make('ad_type_id')
@@ -69,18 +69,20 @@ class AdPriceResource extends Resource
                             }),
 
                         Forms\Components\Select::make('region_id')
-                            ->label('Region')
+                            ->label('Region (county / district)')
                             ->options(fn (Get $get): array => AdTargeting::regionOptions($get('province_id')))
                             ->searchable()
                             ->required(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_REGION)
-                            ->visible(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_REGION),
+                            ->visible(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_REGION)
+                            ->helperText('Every location in this region inherits the price, unless it has one of its own.'),
 
                         Forms\Components\Select::make('city_id')
-                            ->label('City')
+                            ->label('Location')
                             ->options(fn (Get $get): array => AdTargeting::cityOptions($get('province_id')))
                             ->searchable()
                             ->required(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_CITY)
-                            ->visible(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_CITY),
+                            ->visible(fn (Get $get): bool => $get('scope') === AdTargeting::SCOPE_CITY)
+                            ->helperText('The same list customers pick from when they register.'),
                     ]),
 
                 Forms\Components\Section::make('Price')

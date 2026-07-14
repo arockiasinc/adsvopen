@@ -79,6 +79,15 @@ class Register extends BaseRegister
                             ->required()
                             ->maxLength(255),
                     ]),
+
+                Forms\Components\ViewField::make('terms_and_condition')
+                    ->view('filament.advertiser.forms.terms-acceptance')
+                    ->hiddenLabel()
+                    ->default(false)
+                    ->rules(['accepted'])
+                    ->validationMessages([
+                        'accepted' => 'You have to read and accept the Privacy Policy, Cookies Policy, Terms of Use and Terms & Conditions to complete registration.',
+                    ]),
             ])
             ->statePath('data');
     }
@@ -101,6 +110,9 @@ class Register extends BaseRegister
             'password' => $data['password'],
             'role' => 'advertiser',
             'is_approved' => false,
+            // Record when the advertiser accepted the policies, so consent is
+            // auditable rather than only validated at submit time.
+            'terms_accepted_at' => now(),
         ]);
 
         $user->advertiserProfile()->create([

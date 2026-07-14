@@ -96,7 +96,7 @@ class StartAdvertisingController extends Controller
             'target_scope' => ['required', 'in:'.implode(',', $scopes)],
             'target_province_id' => [
                 'nullable',
-                'required_if:target_scope,'.AdTargeting::SCOPE_PROVINCE.','.AdTargeting::SCOPE_REGION.','.AdTargeting::SCOPE_CITY,
+                'required_if:target_scope,'.AdTargeting::SCOPE_PROVINCE.','.AdTargeting::SCOPE_CITY,
                 'integer',
                 'exists:provinces,id',
             ],
@@ -107,13 +107,6 @@ class StartAdvertisingController extends Controller
                 'min:2',
             ],
             'target_province_ids.*' => ['integer', 'exists:provinces,id'],
-            'target_region_ids' => [
-                'nullable',
-                'required_if:target_scope,'.AdTargeting::SCOPE_REGION,
-                'array',
-                'min:1',
-            ],
-            'target_region_ids.*' => ['integer', 'exists:regions,id'],
             'target_city_ids' => [
                 'nullable',
                 'required_if:target_scope,'.AdTargeting::SCOPE_CITY,
@@ -143,7 +136,7 @@ class StartAdvertisingController extends Controller
             'contact_phone' => ['nullable', 'string', 'max:255'],
         ]);
 
-        // A region or city is only a valid choice inside the province it belongs to.
+        // A location is only a valid choice inside the province it belongs to.
         $validator->after(function ($validator) use ($request): void {
             $provinceId = $request->integer('target_province_id');
 
@@ -151,16 +144,12 @@ class StartAdvertisingController extends Controller
                 return;
             }
 
-            $strays = fn (string $key, array $allowed): array => array_values(array_diff(
-                array_map('intval', (array) $request->input($key, [])),
-                $allowed,
-            ));
+            $strays = array_diff(
+                array_map('intval', (array) $request->input('target_city_ids', [])),
+                array_keys(AdTargeting::cityOptions($provinceId)),
+            );
 
-            if ($strays('target_region_ids', array_keys(AdTargeting::regionOptions($provinceId)))) {
-                $validator->errors()->add('target_region_ids', 'Those regions are not in the selected province.');
-            }
-
-            if ($strays('target_city_ids', array_keys(AdTargeting::cityOptions($provinceId)))) {
+            if ($strays) {
                 $validator->errors()->add('target_city_ids', 'Those locations are not in the selected province.');
             }
         });

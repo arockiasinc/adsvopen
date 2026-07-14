@@ -16,8 +16,8 @@
         'large' => 'Recommended: Home page sliders, other home page ads and the business listing page ad.',
     ];
 
-    // Provinces, regions and cities come from the database — the same list
-    // customers pick from when they register on the marketplace.
+    // Provinces and locations come from the database — the same lists customers
+    // pick from when they register on the marketplace.
     $provinces = AdTargeting::provinceOptions();
     $provinceNames = array_values($provinces);
     $adTypes = \App\Models\AdType::options();
@@ -27,7 +27,6 @@
     $oldScope = old('target_scope');
     $oldProvinceId = old('target_province_id');
     $oldProvinceIds = array_map('strval', (array) old('target_province_ids', []));
-    $oldRegionIds = array_map('intval', (array) old('target_region_ids', []));
     $oldCityIds = array_map('intval', (array) old('target_city_ids', []));
 @endphp
 
@@ -43,7 +42,6 @@
   .sa-q{display:block;font-size:.97rem;font-weight:800;color:var(--sa-copy);margin-bottom:.6rem}
   .sa-field{display:block;width:100%;border:1px solid var(--sa-line);background:#fff;border-radius:.6rem;padding:.7rem .9rem;font-size:.95rem;color:var(--sa-copy);font-family:inherit}
   .sa-field:focus{outline:none;border-color:var(--sa-accent);box-shadow:0 0 0 3px rgba(247,90,6,.18)}
-  select.sa-field[multiple]{padding:.4rem;min-height:6.5rem}
   .sa-row{display:grid;gap:1rem;margin-bottom:1rem}
   @media(min-width:640px){.sa-row.sa-2{grid-template-columns:1fr 1fr}.sa-row.sa-3{grid-template-columns:1fr 1fr 1fr}}
   .sa-group{display:grid;gap:.4rem}
@@ -57,6 +55,29 @@
   .sa-grid-checks{display:grid;gap:.5rem}
   @media(min-width:640px){.sa-grid-checks{grid-template-columns:1fr 1fr}}
   .sa-region-block{border:1px solid var(--sa-line);background:var(--sa-canvas);border-radius:.7rem;padding:1rem;margin-top:.75rem}
+  /* Location picker: search + tickable list + chips for what is already chosen.
+     A province can hold 700+ locations, so the list scrolls instead of growing. */
+  .sa-picker{border:1px solid var(--sa-line);border-radius:.7rem;background:#fff;overflow:hidden}
+  .sa-picker-top{display:flex;gap:.5rem;padding:.6rem;border-bottom:1px solid var(--sa-line)}
+  .sa-search{flex:1;min-width:0;border:1px solid var(--sa-line);border-radius:.5rem;padding:.55rem .8rem;font-family:inherit;font-size:.92rem;color:var(--sa-copy)}
+  .sa-search:focus{outline:none;border-color:var(--sa-accent);box-shadow:0 0 0 3px rgba(247,90,6,.18)}
+  .sa-clear{flex:none;border:1px solid var(--sa-line);background:#fff;border-radius:.5rem;padding:0 .85rem;font-family:inherit;font-size:.83rem;font-weight:700;color:var(--sa-muted);cursor:pointer}
+  .sa-clear:hover{color:var(--sa-accent-deep);border-color:var(--sa-accent)}
+  .sa-chips{display:flex;flex-wrap:wrap;gap:.4rem;padding:.6rem;border-bottom:1px solid var(--sa-line);background:var(--sa-canvas)}
+  .sa-chip{display:inline-flex;align-items:center;gap:.15rem;background:#fff;border:1px solid rgba(247,90,6,.4);border-radius:999px;padding:.22rem .25rem .22rem .65rem;font-size:.82rem;font-weight:700;color:var(--sa-copy)}
+  .sa-chip button{border:0;background:transparent;color:var(--sa-muted);font-size:1rem;line-height:1;padding:0 .3rem;cursor:pointer}
+  .sa-chip button:hover{color:#b91c1c}
+  .sa-picker-list{display:grid;gap:.1rem;padding:.35rem;max-height:17rem;overflow-y:auto}
+  @media(min-width:640px){.sa-picker-list{grid-template-columns:1fr 1fr}}
+  .sa-picker-empty{grid-column:1/-1;margin:0;padding:1.1rem;font-size:.88rem;color:var(--sa-muted);text-align:center}
+  .sa-picker-meta{margin:0;padding:.55rem .75rem;border-top:1px solid var(--sa-line);font-size:.8rem;color:var(--sa-muted)}
+  .sa-checkgrid{display:grid;gap:.1rem;border:1px solid var(--sa-line);border-radius:.7rem;background:#fff;padding:.35rem}
+  @media(min-width:640px){.sa-checkgrid{grid-template-columns:1fr 1fr 1fr}}
+  .sa-pick{display:flex;align-items:center;gap:.55rem;min-width:0;padding:.45rem .55rem;border-radius:.45rem;font-size:.9rem;color:var(--sa-copy);cursor:pointer}
+  .sa-pick:hover{background:var(--sa-canvas)}
+  .sa-pick input{flex:none;accent-color:var(--sa-accent)}
+  .sa-pick span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sa-pick.sa-filtered{display:none}
   /* The quote panel is rendered server-side with utility classes; map the few it uses. */
   #sa-quote .text-sm{font-size:.92rem}
   #sa-quote .space-y-2>*+*{margin-top:.5rem}
@@ -223,16 +244,19 @@
           </div>
 
           <div class="sa-region-block {{ $oldScope === 'multi_province' ? '' : 'sa-hidden' }}" data-scope-block="multi_province">
-            <label class="sa-q" for="target_province_ids">Which provinces?</label>
-            <select class="sa-field" id="target_province_ids" name="target_province_ids[]" multiple size="8">
+            <p class="sa-q">Which provinces?</p>
+            <div class="sa-checkgrid" id="target_province_ids">
               @foreach ($provinces as $id => $name)
-                <option value="{{ $id }}" @selected(in_array((string) $id, $oldProvinceIds, true))>{{ $name }}</option>
+                <label class="sa-pick">
+                  <input type="checkbox" name="target_province_ids[]" value="{{ $id }}" @checked(in_array((string) $id, $oldProvinceIds, true))>
+                  <span>{{ $name }}</span>
+                </label>
               @endforeach
-            </select>
-            <p class="sa-help">Hold Ctrl (Cmd on Mac) to select more than one. Pick at least two.</p>
+            </div>
+            <p class="sa-help" style="margin-top:.6rem">Tick at least two.</p>
           </div>
 
-          <div class="sa-region-block {{ in_array($oldScope, ['province', 'region', 'city'], true) ? '' : 'sa-hidden' }}" data-scope-block="province region city">
+          <div class="sa-region-block {{ in_array($oldScope, ['province', 'city'], true) ? '' : 'sa-hidden' }}" data-scope-block="province city">
             <label class="sa-q" for="target_province_id">Province</label>
             <select class="sa-field" id="target_province_id" name="target_province_id">
               <option value="">Select a province…</option>
@@ -242,16 +266,21 @@
             </select>
           </div>
 
-          <div class="sa-region-block {{ $oldScope === 'region' ? '' : 'sa-hidden' }}" data-scope-block="region">
-            <label class="sa-q" for="target_region_ids">Region(s)</label>
-            <select class="sa-field" id="target_region_ids" name="target_region_ids[]" multiple size="8"></select>
-            <p class="sa-help">Counties, districts and municipalities in the selected province. Hold Ctrl (Cmd on Mac) to select more than one.</p>
-          </div>
-
           <div class="sa-region-block {{ $oldScope === 'city' ? '' : 'sa-hidden' }}" data-scope-block="city">
-            <label class="sa-q" for="target_city_ids">Select nearest location(s)</label>
-            <select class="sa-field" id="target_city_ids" name="target_city_ids[]" multiple size="10"></select>
-            <p class="sa-help">The same city list customers pick from when they register. Hold Ctrl (Cmd on Mac) to select more than one.</p>
+            <label class="sa-q" for="sa-city-search">Select nearest location(s)</label>
+            <p class="sa-help" style="margin-bottom:.65rem">Search or scroll, then tick every location you want to cover — the same list customers pick from when they register.</p>
+
+            <div class="sa-picker">
+              <div class="sa-picker-top">
+                <input type="search" class="sa-search" id="sa-city-search" placeholder="Search locations…" autocomplete="off">
+                <button type="button" class="sa-clear" id="sa-city-clear" hidden>Clear all</button>
+              </div>
+              <div class="sa-chips" id="sa-city-chips" hidden></div>
+              <div class="sa-picker-list" id="target_city_ids">
+                <p class="sa-picker-empty">Choose a province above to see its locations.</p>
+              </div>
+              <p class="sa-picker-meta" id="sa-city-meta">No locations selected yet.</p>
+            </div>
           </div>
 
           <div class="sa-region-block" id="sa-quote">
@@ -424,24 +453,25 @@
       });
     });
 
-    // ---- Targeting: scope -> province -> region / city, and the live price ----
+    // ---- Targeting: scope -> province -> nearest location, and the live price ----
 
     var adType = document.getElementById('ad_type_id');
     var provinceOne = document.getElementById('target_province_id');
     var provinceMany = document.getElementById('target_province_ids');
-    var regions = document.getElementById('target_region_ids');
     var cities = document.getElementById('target_city_ids');
+    var citySearch = document.getElementById('sa-city-search');
+    var cityChips = document.getElementById('sa-city-chips');
+    var cityClear = document.getElementById('sa-city-clear');
+    var cityMeta = document.getElementById('sa-city-meta');
     var quoteBody = document.getElementById('sa-quote-body');
 
     var endpoints = {
-      regions: @json(route('advertising.regions')),
       cities: @json(route('advertising.cities')),
       quote: @json(route('advertising.quote')),
     };
 
     // Re-select what the advertiser had chosen if the form came back with errors.
     var preselect = {
-      regions: @json($oldRegionIds),
       cities: @json($oldCityIds),
     };
 
@@ -458,51 +488,120 @@
       form.querySelectorAll('[data-scope-block]').forEach(function (block) {
         var applies = block.getAttribute('data-scope-block').split(' ').indexOf(scope) !== -1;
         block.classList.toggle(H, !applies);
-        block.querySelectorAll('select').forEach(function (field) {
+        block.querySelectorAll('select, input').forEach(function (field) {
           field.disabled = !applies;
         });
       });
     };
 
-    var fillOptions = function (select, options, selected) {
-      select.innerHTML = '';
-      options.forEach(function (option) {
-        var el = document.createElement('option');
-        el.value = option.id;
-        el.textContent = option.name;
-        el.selected = selected.indexOf(option.id) !== -1;
-        select.appendChild(el);
-      });
+    var ticked = function (container) {
+      return Array.prototype.slice.call(container.querySelectorAll('input[type="checkbox"]:checked'));
     };
 
+    var placeholder = function (message) {
+      cities.innerHTML = '';
+      var note = document.createElement('p');
+      note.className = 'sa-picker-empty';
+      note.textContent = message;
+      cities.appendChild(note);
+    };
+
+    // A chip per chosen location, so a long list never hides what is selected.
+    var syncCities = function () {
+      var chosen = ticked(cities);
+      var total = cities.querySelectorAll('input[type="checkbox"]').length;
+
+      cityChips.innerHTML = '';
+      cityChips.hidden = chosen.length === 0;
+      cityClear.hidden = chosen.length === 0;
+
+      chosen.forEach(function (box) {
+        var chip = document.createElement('span');
+        chip.className = 'sa-chip';
+        chip.appendChild(document.createTextNode(box.parentNode.textContent.trim()));
+
+        var remove = document.createElement('button');
+        remove.type = 'button';
+        remove.innerHTML = '&times;';
+        remove.setAttribute('aria-label', 'Remove ' + box.parentNode.textContent.trim());
+        remove.addEventListener('click', function () {
+          box.checked = false;
+          syncCities();
+          refreshQuote();
+        });
+
+        chip.appendChild(remove);
+        cityChips.appendChild(chip);
+      });
+
+      cityMeta.textContent = total
+        ? chosen.length + ' of ' + total + ' locations selected'
+        : 'No locations selected yet.';
+    };
+
+    // Every location in the province, exactly as customer registration lists them.
     var loadPlaces = function () {
       var provinceId = provinceOne.value;
-      var scope = currentScope();
 
-      if (!provinceId || (scope !== 'region' && scope !== 'city')) {
+      if (currentScope() !== 'city') {
         return Promise.resolve();
       }
 
-      var target = scope === 'region' ? regions : cities;
-      var url = (scope === 'region' ? endpoints.regions : endpoints.cities)
-        + '?province_id=' + encodeURIComponent(provinceId);
+      if (!provinceId) {
+        placeholder('Choose a province above to see its locations.');
+        syncCities();
+
+        return Promise.resolve();
+      }
+
+      var url = endpoints.cities + '?province_id=' + encodeURIComponent(provinceId);
 
       return fetch(url, { headers: { Accept: 'application/json' } })
         .then(function (response) { return response.json(); })
         .then(function (options) {
-          fillOptions(target, options, scope === 'region' ? preselect.regions : preselect.cities);
+          if (!options.length) {
+            placeholder('No locations are listed for this province yet.');
+
+            return;
+          }
+
+          var list = document.createDocumentFragment();
+
+          options.forEach(function (option) {
+            var row = document.createElement('label');
+            row.className = 'sa-pick';
+            row.setAttribute('data-name', option.name.toLowerCase());
+
+            var box = document.createElement('input');
+            box.type = 'checkbox';
+            box.name = 'target_city_ids[]';
+            box.value = option.id;
+            box.checked = preselect.cities.indexOf(option.id) !== -1;
+
+            var name = document.createElement('span');
+            name.textContent = option.name;
+            name.title = option.name;
+
+            row.appendChild(box);
+            row.appendChild(name);
+            list.appendChild(row);
+          });
+
+          cities.innerHTML = '';
+          cities.appendChild(list);
+          citySearch.value = '';
           // Old selections only apply to the first render.
-          preselect.regions = [];
           preselect.cities = [];
         })
         .catch(function () {
-          target.innerHTML = '';
-        });
+          placeholder('Locations could not be loaded. Please try again.');
+        })
+        .then(syncCities);
     };
 
-    var selectedValues = function (select) {
-      return Array.prototype.slice.call(select.selectedOptions).map(function (option) {
-        return option.value;
+    var selectedValues = function (container) {
+      return ticked(container).map(function (box) {
+        return box.value;
       });
     };
 
@@ -523,7 +622,6 @@
       }
 
       selectedValues(provinceMany).forEach(function (id) { params.append('target_province_ids[]', id); });
-      selectedValues(regions).forEach(function (id) { params.append('target_region_ids[]', id); });
       selectedValues(cities).forEach(function (id) { params.append('target_city_ids[]', id); });
 
       fetch(endpoints.quote + '?' + params.toString(), { headers: { Accept: 'application/json' } })
@@ -542,12 +640,34 @@
     });
 
     provinceOne.addEventListener('change', function () {
-      regions.innerHTML = '';
-      cities.innerHTML = '';
+      // A location only belongs to one province, so start the list over.
+      placeholder('Loading locations…');
       loadPlaces().then(refreshQuote);
     });
 
-    [adType, provinceMany, regions, cities].forEach(function (el) {
+    citySearch.addEventListener('input', function () {
+      var needle = this.value.trim().toLowerCase();
+
+      cities.querySelectorAll('.sa-pick').forEach(function (row) {
+        var hit = !needle || row.getAttribute('data-name').indexOf(needle) !== -1;
+        row.classList.toggle('sa-filtered', !hit);
+      });
+    });
+
+    // A filtered-out location stays ticked and still submits — searching only
+    // narrows what is on screen.
+    cities.addEventListener('change', function () {
+      syncCities();
+      refreshQuote();
+    });
+
+    cityClear.addEventListener('click', function () {
+      ticked(cities).forEach(function (box) { box.checked = false; });
+      syncCities();
+      refreshQuote();
+    });
+
+    [adType, provinceMany].forEach(function (el) {
       el.addEventListener('change', refreshQuote);
     });
 

@@ -125,15 +125,15 @@ class AdvertisingScreensTest extends TestCase
             ->assertSee('Which type of advertisement?')
             ->assertSee('Country wide')
             ->assertSee('Multiple provinces')
-            ->assertSee('Select nearest location(s)');
+            ->assertSee('Specific locations within a province')
+            ->assertSee('Select nearest location(s)')
+            // Advertisers pick a province and then a location, exactly as a
+            // customer does when registering — never a county or district.
+            ->assertDontSee('Specific regions within a province');
     }
 
-    public function test_the_region_and_city_lookups_are_scoped_to_the_province(): void
+    public function test_the_location_lookup_is_scoped_to_the_province(): void
     {
-        $this->getJson('/advertising/regions?province_id=671')
-            ->assertOk()
-            ->assertJson([['id' => 10, 'name' => 'Simcoe County']]);
-
         $this->getJson('/advertising/cities?province_id=671')
             ->assertOk()
             ->assertJson([['id' => 100, 'name' => 'Barrie']]);

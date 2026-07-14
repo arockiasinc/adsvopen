@@ -17,6 +17,13 @@ use Filament\Forms\Get;
  * scopes an advertiser needs: the whole country, several provinces at once, or
  * one province end to end.
  *
+ * Advertisers are never asked to pick a region (county / district): the
+ * marketplace does not ask a customer for one either — it derives it from the
+ * location they choose — and the region list is missing altogether for Quebec,
+ * Newfoundland, Yukon, Nunavut and the Northwest Territories. Regions survive
+ * only as a rate-card tier: the admin can price a whole county in one row and
+ * every location in it inherits that price.
+ *
  * Whatever the scope, targeting is stored the same way: a scope string plus
  * lists of province / region / city IDs.
  */
@@ -31,10 +38,13 @@ class AdTargeting
     /** One province, end to end. */
     public const SCOPE_PROVINCE = 'province';
 
-    /** Named regions (counties / districts) inside one province. */
+    /**
+     * Named regions (counties / districts) inside one province. Not offered to
+     * advertisers — a rate-card tier and the scope of older saved records only.
+     */
     public const SCOPE_REGION = 'region';
 
-    /** Named cities inside one province — the marketplace's "nearest location". */
+    /** Named locations inside one province — the marketplace's "nearest location". */
     public const SCOPE_CITY = 'city';
 
     /**
@@ -48,8 +58,7 @@ class AdTargeting
             self::SCOPE_COUNTRY => 'Country wide — every province',
             self::SCOPE_MULTI_PROVINCE => 'Multiple provinces',
             self::SCOPE_PROVINCE => 'Province wide — one province',
-            self::SCOPE_REGION => 'Specific regions within a province',
-            self::SCOPE_CITY => 'Specific cities within a province',
+            self::SCOPE_CITY => 'Specific locations within a province',
         ];
     }
 
@@ -62,14 +71,17 @@ class AdTargeting
             self::SCOPE_COUNTRY => 'Your ad runs everywhere we operate.',
             self::SCOPE_MULTI_PROVINCE => 'Pick two or more provinces; the ad runs across all of each one.',
             self::SCOPE_PROVINCE => 'The ad runs across one whole province.',
-            self::SCOPE_REGION => 'Pick the counties, districts or municipalities to cover.',
-            self::SCOPE_CITY => 'Pick the nearest locations — the same city list customers choose from when they register.',
+            self::SCOPE_CITY => 'Pick the nearest locations — the same list customers choose from when they register.',
         ];
     }
 
     public static function scopeLabel(?string $scope): string
     {
-        return self::scopeOptions()[$scope] ?? '—';
+        // Region is retired from the picker but still has to read back on the
+        // records that were saved while it was on offer.
+        $labels = self::scopeOptions() + [self::SCOPE_REGION => 'Specific regions within a province'];
+
+        return $labels[$scope] ?? '—';
     }
 
     /**
@@ -83,8 +95,8 @@ class AdTargeting
         return [
             self::SCOPE_COUNTRY => 'Country wide',
             self::SCOPE_PROVINCE => 'Province wide',
-            self::SCOPE_REGION => 'Region',
-            self::SCOPE_CITY => 'City',
+            self::SCOPE_REGION => 'Region (county / district)',
+            self::SCOPE_CITY => 'One location',
         ];
     }
 
@@ -112,7 +124,6 @@ class AdTargeting
                     // Selections from the previous scope no longer apply.
                     $set('target_province_id', null);
                     $set('target_province_ids', []);
-                    $set('target_region_ids', []);
                     $set('target_city_ids', []);
                 })
                 ->columnSpanFull(),
@@ -135,29 +146,18 @@ class AdTargeting
                 ->searchable()
                 ->required(fn (Get $get): bool => in_array(
                     $get('target_scope'),
-                    [self::SCOPE_PROVINCE, self::SCOPE_REGION, self::SCOPE_CITY],
+                    [self::SCOPE_PROVINCE, self::SCOPE_CITY],
                     true,
                 ))
                 ->visible(fn (Get $get): bool => in_array(
                     $get('target_scope'),
-                    [self::SCOPE_PROVINCE, self::SCOPE_REGION, self::SCOPE_CITY],
+                    [self::SCOPE_PROVINCE, self::SCOPE_CITY],
                     true,
                 ))
                 ->live()
                 ->afterStateUpdated(function (Forms\Set $set): void {
-                    $set('target_region_ids', []);
                     $set('target_city_ids', []);
                 }),
-
-            Forms\Components\Select::make('target_region_ids')
-                ->label('Region(s)')
-                ->multiple()
-                ->options(fn (Get $get): array => self::regionOptions($get('target_province_id')))
-                ->searchable()
-                ->live()
-                ->required(fn (Get $get): bool => $get('target_scope') === self::SCOPE_REGION)
-                ->visible(fn (Get $get): bool => $get('target_scope') === self::SCOPE_REGION)
-                ->helperText('Counties, districts and municipalities in the selected province.'),
 
             Forms\Components\Select::make('target_city_ids')
                 ->label('Select nearest location(s)')
@@ -167,7 +167,8 @@ class AdTargeting
                 ->live()
                 ->required(fn (Get $get): bool => $get('target_scope') === self::SCOPE_CITY)
                 ->visible(fn (Get $get): bool => $get('target_scope') === self::SCOPE_CITY)
-                ->helperText('The same city list customers pick from when they register.'),
+                ->helperText('Every location in the selected province — the same list customers pick from when they register.')
+                ->columnSpanFull(),
         ];
     }
 

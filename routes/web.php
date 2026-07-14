@@ -5,6 +5,7 @@ use App\Http\Controllers\AdvertiserLoginController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ReceiptController;
 use App\Http\Controllers\AdvertisingLookupController;
+use App\Http\Controllers\LegalPageController;
 use App\Http\Controllers\StartAdvertisingController;
 use App\Models\Banner;
 use App\Models\Menu;
@@ -234,13 +235,19 @@ Route::get('/start-advertising', [StartAdvertisingController::class, 'show'])->n
 Route::post('/start-advertising', [StartAdvertisingController::class, 'store'])
     ->name('start.advertising.store');
 
-// Drives the province -> region / city cascade and the live price on that form.
-Route::get('/advertising/regions', [AdvertisingLookupController::class, 'regions'])
-    ->name('advertising.regions');
+// Drives the province -> nearest-location cascade and the live price on that form.
 Route::get('/advertising/cities', [AdvertisingLookupController::class, 'cities'])
     ->name('advertising.cities');
 Route::get('/advertising/quote', [AdvertisingLookupController::class, 'quote'])
     ->name('advertising.quote');
+
+// Legal pages (Privacy Policy, Cookies Policy, Terms of Use, Terms & Conditions).
+// Content is DB-backed and editable from /admin, so one route serves them all.
+Route::get('/page/{slug}', [LegalPageController::class, 'show'])->name('legal.page');
+
+// JSON body for the scroll-to-accept terms modal on the registration form.
+Route::get('/legal/{slug}/content', [LegalPageController::class, 'content'])
+    ->name('legal.content');
 
 Route::post('/advertiser/login', AdvertiserLoginController::class)
     ->middleware(SetUpPanel::class.':advertiser')

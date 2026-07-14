@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LocationSeeder::class,
             AdTypeSeeder::class,
+            LegalPageSeeder::class,
         ]);
 
         User::updateOrCreate(
