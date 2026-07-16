@@ -6,9 +6,9 @@
   <title>Receipt {{ $payment->invoice_number }}</title>
   <style>
     * { box-sizing: border-box; }
-    body { font-family: 'Public Sans', Arial, sans-serif; color: #1a1a1a; margin: 0; padding: 40px; background: #f4f4f5; }
+    body { font-family: 'Public Sans', Arial, sans-serif; color: #141922; margin: 0; padding: 40px; background: #f4f4f5; }
     .receipt { max-width: 720px; margin: 0 auto; background: #fff; padding: 48px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
-    .receipt-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #f59e0b; padding-bottom: 24px; margin-bottom: 32px; }
+    .receipt-head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #ff6507; padding-bottom: 24px; margin-bottom: 32px; }
     .brand { font-size: 22px; font-weight: 800; }
     .brand small { display: block; font-weight: 500; color: #6b7280; font-size: 13px; }
     h1 { font-size: 28px; margin: 0 0 4px; }
@@ -20,10 +20,10 @@
     th { color: #6b7280; font-weight: 600; }
     .total-row td { border-bottom: none; font-size: 18px; font-weight: 800; padding-top: 20px; }
     .status { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 13px; font-weight: 700;
-      background: {{ $payment->status === 'Paid' ? '#dcfce7' : '#fef3c7' }};
-      color: {{ $payment->status === 'Paid' ? '#166534' : '#92400e' }}; }
+      background: {{ $payment->status === 'Paid' ? '#ffe3d0' : '#ffffff' }};
+      color: {{ $payment->status === 'Paid' ? '#ff6507' : '#ff6507' }}; }
     .actions { max-width: 720px; margin: 0 auto 16px; text-align: right; }
-    .btn { display: inline-block; background: #f59e0b; color: #1a1a1a; font-weight: 700; padding: 10px 20px;
+    .btn { display: inline-block; background: #ff6507; color: #141922; font-weight: 700; padding: 10px 20px;
       border-radius: 8px; border: 0; cursor: pointer; text-decoration: none; font-size: 14px; }
     @media print { body { background: #fff; padding: 0; } .actions { display: none; } .receipt { box-shadow: none; } }
   </style>

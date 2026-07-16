@@ -118,25 +118,25 @@
     </div>
 
     <div class="grid gap-[14px] md:grid-cols-2 xl:grid-cols-4">
-      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
         <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-targeting.svg') }}" alt="Precise targeting icon">
         <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Precise Targeting</h3>
         <p class="text-[0.9rem] leading-[1.55] text-muted">Reach directly with your ideal customers through VOpen Market&rsquo;s advanced audience matching that maximizes your return on investment.</p>
       </article>
 
-      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-        <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/fixed-icon.png') }}" alt="Flat-rate pricing icon">
+      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+        <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/fixed-icon.svg') }}" alt="Flat-rate pricing icon">
         <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Not a Cost-Per-Click</h3>
         <p class="text-[0.9rem] leading-[1.55] text-muted">Enjoy the complete visibility and unlimited traffic potential with VOpen Market&rsquo;s high-value, flat-rate pricing model.</p>
       </article>
 
-      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
         <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-measure.svg') }}" alt="Transparent fees icon">
         <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Transparent Fees</h3>
         <p class="text-[0.9rem] leading-[1.55] text-muted">Build your campaign with complete peace of mind, knowing every cost is fully visible upfront with zero surprises.</p>
       </article>
 
-      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+      <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
         <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-placement.svg') }}" alt="Guaranteed display icon">
         <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Guaranteed Display</h3>
         <p class="text-[0.9rem] leading-[1.55] text-muted">Lock in your premium ad real estate today and enjoy non-stop visibility that keeps your brand at the top of the VOpen Market platform.</p>

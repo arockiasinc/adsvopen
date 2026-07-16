@@ -31,7 +31,7 @@
     <div class="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-8">
       <div class="max-w-[520px]">
         <div class="mb-5">
-          <span class="inline-grid h-[42px] w-[42px] place-items-center rounded-xl bg-ink shadow-[10px_10px_0_rgba(247,90,6,0.18)]">
+          <span class="inline-grid h-[42px] w-[42px] place-items-center rounded-xl bg-ink shadow-[10px_10px_0_rgba(255,101,7,0.18)]">
             <img class="h-6 w-6" src="{{ asset('images/stars-icon.svg') }}" alt="">
           </span>
         </div>
@@ -75,11 +75,11 @@
               {{-- In-feed product banners sit alongside trending products --}}
               <div class="vm-mock-grid" aria-hidden="true">
                 <span></span>
-                <span style="background:linear-gradient(120deg,#151d2f 0%,#d94800 60%,#f75a06 100%);border:0;"></span>
+                <span style="background:linear-gradient(120deg,#ff6507 0%,#ff6507 100%);border:0;"></span>
                 <span></span>
                 <span></span>
                 <span></span>
-                <span style="background:linear-gradient(120deg,#151d2f 0%,#d94800 60%,#f75a06 100%);border:0;"></span>
+                <span style="background:linear-gradient(120deg,#ff6507 0%,#ff6507 100%);border:0;"></span>
               </div>
             </div>
           </div>
@@ -218,18 +218,18 @@
       </div>
 
       <div class="ad-solutions-grid">
-        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
           <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-visuals.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Pivot Instantly</h3>
           <p class="text-[0.9rem] leading-[1.55] text-muted">Shift your marketing messaging on the fly based on breaking news, changing local weather, or seasonal promotions.</p>
         </article>
-        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
           <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-measure.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Continuous Optimization</h3>
           <p class="text-[0.9rem] leading-[1.55] text-muted">Perform limitless A/B testing on your headlines, promo codes, and visual layouts to find the highest-converting combination.</p>
         </article>
-        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-          <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/fixed-icon.png') }}" alt="">
+        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+          <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/fixed-icon.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Zero Friction</h3>
           <p class="text-[0.9rem] leading-[1.55] text-muted">Update your banner graphics, text, or destination links any time. Changes push live instantly&mdash;no support tickets, no delay.</p>
         </article>
@@ -275,7 +275,7 @@
       </div>
 
       <div class="grid w-full gap-3" data-faq-list>
-        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
           <h3>
             <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-1" id="faq-trigger-1" data-faq-trigger>
               <span class="w-full">Where exactly will my Leaderboard Ad appear?</span>
@@ -287,7 +287,7 @@
           </div>
         </article>
 
-        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
           <h3>
             <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2" data-faq-trigger>
               <span class="w-full">How precisely can I target my location?</span>
@@ -299,7 +299,7 @@
           </div>
         </article>
 
-        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
           <h3>
             <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3" data-faq-trigger>
               <span class="w-full">Can I change my creative after the campaign starts?</span>
@@ -311,7 +311,7 @@
           </div>
         </article>
 
-        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+        <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
           <h3>
             <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4" data-faq-trigger>
               <span class="w-full">Why is inventory limited per location?</span>

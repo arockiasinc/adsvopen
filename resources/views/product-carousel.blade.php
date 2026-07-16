@@ -158,12 +158,12 @@
       </div>
 
       <div class="mx-auto grid w-full max-w-[760px] gap-3.5 sm:grid-cols-2">
-        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
           <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-visuals.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Pivot Instantly</h3>
           <p class="text-[0.9rem] leading-[1.55] text-muted">Shift your headline, promotional offer, or call-to-action button in real-time to match sudden shifts in local weather, competitor pricing, or inventory changes.</p>
         </article>
-        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+        <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
           <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="{{ asset('images/icon-measure.svg') }}" alt="">
           <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Continuous Optimization</h3>
           <p class="text-[0.9rem] leading-[1.55] text-muted">Run endless A/B tests on your graphics and copy at zero additional cost to find the exact combination that drives the most phone calls and website clicks.</p>

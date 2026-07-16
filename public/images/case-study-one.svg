@@ -1,11 +1,11 @@
 <svg width="520" height="280" viewBox="0 0 520 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="520" height="280" fill="#FFF6EA"/>
-  <circle cx="128" cy="126" r="84" fill="#D9EEE7"/>
-  <path d="M116 76H180C194.359 76 206 87.6406 206 102V182C206 196.359 194.359 208 180 208H116C101.641 208 90 196.359 90 182V102C90 87.6406 101.641 76 116 76Z" fill="#0F4C45"/>
-  <path d="M146 100L162 132H130L146 100Z" fill="#FFD38D"/>
-  <rect x="242" y="78" width="198" height="22" rx="11" fill="#18212B"/>
+  <rect width="520" height="280" fill="#FFE3D0"/>
+  <circle cx="128" cy="126" r="84" fill="#ffe3d0"/>
+  <path d="M116 76H180C194.359 76 206 87.6406 206 102V182C206 196.359 194.359 208 180 208H116C101.641 208 90 196.359 90 182V102C90 87.6406 101.641 76 116 76Z" fill="#ff6507"/>
+  <path d="M146 100L162 132H130L146 100Z" fill="#FFE3D0"/>
+  <rect x="242" y="78" width="198" height="22" rx="11" fill="#141922"/>
   <rect x="242" y="114" width="164" height="14" rx="7" fill="#69717A"/>
-  <rect x="242" y="152" width="132" height="18" rx="9" fill="#F78F37"/>
-  <rect x="242" y="198" width="78" height="42" rx="21" fill="#DCEFE8"/>
-  <rect x="332" y="198" width="96" height="42" rx="21" fill="#FFE3AF"/>
+  <rect x="242" y="152" width="132" height="18" rx="9" fill="#FF6507"/>
+  <rect x="242" y="198" width="78" height="42" rx="21" fill="#ffe3d0"/>
+  <rect x="332" y="198" width="96" height="42" rx="21" fill="#FFE3D0"/>
 </svg>

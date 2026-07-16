@@ -192,11 +192,11 @@
                 [x-cloak] { display: none !important; }
 
                 .tc-consent { display: flex; align-items: flex-start; gap: .625rem; cursor: pointer; }
-                .tc-consent-box { margin-top: .15rem; width: 1.1rem; height: 1.1rem; flex: none; cursor: pointer; accent-color: #216e83; }
+                .tc-consent-box { margin-top: .15rem; width: 1.1rem; height: 1.1rem; flex: none; cursor: pointer; accent-color: #ff6507; }
                 .tc-consent-text { font-size: .875rem; line-height: 1.5rem; color: rgb(55 65 81); }
                 .dark .tc-consent-text { color: rgb(209 213 219); }
-                .tc-consent-text a { color: #2f7f97; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
-                .tc-consent-text a:hover { color: #216e83; }
+                .tc-consent-text a { color: #ff6507; font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+                .tc-consent-text a:hover { color: #ff6507; }
 
                 .tc-overlay {
                     position: fixed; inset: 0; z-index: 60;
@@ -222,11 +222,11 @@
                 .tc-banner {
                     margin: 0 0 1rem;
                     padding: .7rem 1rem;
-                    border: 1px solid #f0dca8; border-radius: 4px;
-                    background: #fdf8ec;
-                    font-size: .9rem; font-weight: 500; color: #8a6d3b;
+                    border: 1px solid #ffe3d0; border-radius: 4px;
+                    background: #ffffff;
+                    font-size: .9rem; font-weight: 500; color: #ff6507;
                 }
-                .tc-banner.is-ready { border-color: #bfe3c8; background: #f2faf4; color: #1f7a3d; }
+                .tc-banner.is-ready { border-color: #ffe3d0; background: #ffffff; color: #ff6507; }
 
                 .tc-content {
                     flex: 1 1 auto; min-height: 0;
@@ -239,7 +239,7 @@
                 }
 
                 .tc-status { text-align: center; color: #777; }
-                .tc-status-error { color: #b42318; }
+                .tc-status-error { color: #ff6507; }
 
                 .tc-content h2 { margin: 0 0 1rem; font-size: 1.15rem; font-weight: 700; color: #333; }
                 .tc-content h3 { margin: 1.5rem 0 .5rem; font-size: 1rem; font-weight: 700; color: #333; }
@@ -249,7 +249,7 @@
                 .tc-content ul { list-style: disc; }
                 .tc-content ol { list-style: decimal; }
                 .tc-content li { margin-bottom: .3rem; }
-                .tc-content a { color: #2f7f97; text-decoration: underline; }
+                .tc-content a { color: #ff6507; text-decoration: underline; }
 
                 .tc-actions { display: flex; justify-content: center; padding-top: 1.5rem; }
 
@@ -257,12 +257,12 @@
                     min-width: 90px;
                     padding: .65rem 1.4rem;
                     border: 0; border-radius: 4px;
-                    background: #216e83; color: #fff;
+                    background: #ff6507; color: #fff;
                     font-size: .95rem; font-weight: 500;
                     cursor: pointer;
                     transition: background-color .15s ease, opacity .15s ease;
                 }
-                .tc-agree:hover:not(:disabled) { background: #1b5c6e; }
+                .tc-agree:hover:not(:disabled) { background: #ff6507; }
                 .tc-agree:disabled { opacity: .5; cursor: not-allowed; }
     </style>
 </x-dynamic-component>

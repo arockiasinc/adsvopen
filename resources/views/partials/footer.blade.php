@@ -15,7 +15,7 @@
     }
   @endphp
 
-  <footer class="bg-ink py-16 text-white md:py-[76px]" aria-label="Site footer">
+  <footer class="site-footer py-16 text-white md:py-[76px]" aria-label="Site footer">
     <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
       <div class="grid gap-5 pt-2">
         <nav class="flex flex-wrap items-center gap-3 text-[0.84rem]" aria-label="Legal">

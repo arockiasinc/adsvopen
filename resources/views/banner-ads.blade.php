@@ -24,7 +24,7 @@
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-8">
         <div class="max-w-[520px]">
           <div class="mb-5">
-            <span class="inline-grid h-[42px] w-[42px] place-items-center rounded-xl bg-ink shadow-[10px_10px_0_rgba(247,90,6,0.18)]">
+            <span class="inline-grid h-[42px] w-[42px] place-items-center rounded-xl bg-ink shadow-[10px_10px_0_rgba(255,101,7,0.18)]">
               <img class="h-6 w-6" src="images/stars-icon.svg" alt="">
             </span>
           </div>
@@ -101,7 +101,7 @@
           </article>
 
           <article class="pp-card">
-            <span class="pp-card-icon"><img src="images/fixed-icon.png" alt=""></span>
+            <span class="pp-card-icon"><img src="images/fixed-icon.svg" alt=""></span>
             <h3 class="pp-card-title">Predictable, Fixed Pricing</h3>
             <p class="pp-card-text">Say goodbye to volatile auction environments and unpredictable bidding. Lock in the flat rate to completely control your marketing budget with zero financial surprises.</p>
           </article>
@@ -171,19 +171,19 @@
           </div>
 
           <div class="ad-solutions-grid">
-            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-              <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/fixed-icon.png" alt="Fixed and transparent fees icon">
+            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+              <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/fixed-icon.svg" alt="Fixed and transparent fees icon">
               <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Fixed &amp; Transparent Fees</h3>
               <p class="text-[0.9rem] leading-[1.55] text-muted">No cost-per-click means your ads can run during regular business hours or 24/7, on weekdays or weekends. You stay in control of your spending.</p>
             </article>
 
-            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
               <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/start-small.jpg" alt="Start small icon">
               <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Start Small</h3>
               <p class="text-[0.9rem] leading-[1.55] text-muted">Begin with a smaller ad budget and increase your spend as your sales grow. Scale at a pace that works for your business.</p>
             </article>
 
-            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+            <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
               <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/plan-your-budget.png" alt="Plan your ad budget icon">
               <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Plan Your Ad Budget</h3>
               <p class="text-[0.9rem] leading-[1.55] text-muted">No surprise fees, no pay-per-view charges, and no cost-per-click. Your advertisement stays visible without unexpected costs.</p>
@@ -201,27 +201,27 @@
         </div>
 
         <div class="grid gap-[14px] md:grid-cols-2">
-          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/icon-placement.svg" alt="">
             <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Prominent placement</h3>
             <p class="text-[0.9rem] leading-[1.55] text-muted">Show up at the top of search results and product pages to capture attention at key moments in the shopper journey.</p>
           </article>
-          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/icon-targeting.svg" alt="">
             <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Reach relevant shoppers</h3>
             <p class="text-[0.9rem] leading-[1.55] text-muted">Reach shoppers who matter most to your business through precise keyword and product targeting.</p>
           </article>
-          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/icon-brand.svg" alt="">
             <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Showcase your brand</h3>
             <p class="text-[0.9rem] leading-[1.55] text-muted">Use creatives and collections to highlight your catalog and build brand recognition.</p>
           </article>
-          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/icon-discovery.svg" alt="">
             <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Inspire product discovery</h3>
             <p class="text-[0.9rem] leading-[1.55] text-muted">Drive traffic to your Brand Store or product page that support product evaluation and catalogue discovery.</p>
           </article>
-          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="border border-black/10 bg-white px-5 py-6 text-center shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <img class="mx-auto mb-[14px] h-[38px] w-[38px]" src="images/icon-measure.svg" alt="">
             <h3 class="mb-2.5 text-base font-extrabold leading-[1.2]">Measure your brand-building efforts</h3>
             <p class="text-[0.9rem] leading-[1.55] text-muted">Get insights into how and which shoppers engage with your ads to understand your brand’s impact.</p>
@@ -277,7 +277,7 @@
         </div>
 
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 01</span>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Your complete guide to Panoramic Ads with AdsVOpen</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Understand campaign formats, placements, and how to structure a stronger branded discovery experience.</p>
@@ -286,7 +286,7 @@
               <span aria-hidden="true">&#8594;</span>
             </a>
           </article>
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 02</span>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">How to get started with Panoramic Ads video ads</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Use a simple framework to launch creative that is focused, easy to digest, and ready for mobile shoppers.</p>
@@ -295,7 +295,7 @@
               <span aria-hidden="true">&#8594;</span>
             </a>
           </article>
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <span class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Guide 03</span>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">A guide to setting up Panoramic Ads video creative</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">Follow a checklist for preparing assets, selecting products, and refining campaign targeting choices.</p>
@@ -308,7 +308,7 @@
       </div>
     </section>
 
-    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(247,90,6,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,248,239,0.96))] py-16 md:py-[76px]" id="video-campaign">
+    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(255,101,7,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,255,255,0.96))] py-16 md:py-[76px]" id="video-campaign">
       <div class="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:px-8">
         <div class="flex justify-center">
           <div class="w-full max-w-[260px] rounded-[22px] border border-black/10 bg-white p-[18px] shadow-soft">
@@ -346,7 +346,7 @@
       </div>
     </section>
 
-    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(247,90,6,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,248,239,0.96))] py-16 md:py-[76px]" id="partner-support">
+    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(255,101,7,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,255,255,0.96))] py-16 md:py-[76px]" id="partner-support">
       <div class="mx-auto grid max-w-7xl gap-9 px-6 lg:px-8">
         <div class="grid gap-5">
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-copy">Partner directory</p>
@@ -362,8 +362,8 @@
         </div>
 
         <div class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
               <img class="h-[42px] w-[42px]" src="images/icon-brand.svg" alt="Sample partner image for AiHello AutoPilo">
             </div>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">AiHello AutoPilo</h3>
@@ -376,8 +376,8 @@
               <span aria-hidden="true">&#8594;</span>
             </a>
           </article>
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
               <img class="h-[42px] w-[42px]" src="images/icon-discovery.svg" alt="Sample partner image for Perpetua">
             </div>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Perpetua</h3>
@@ -390,8 +390,8 @@
               <span aria-hidden="true">&#8594;</span>
             </a>
           </article>
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
-            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
+            <div class="inline-grid place-items-center rounded-[18px] border border-black/10 bg-canvas p-6 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
               <img class="h-[42px] w-[42px]" src="images/icon-measure.svg" alt="Sample partner image for Helium 10">
             </div>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Helium 10</h3>
@@ -413,7 +413,7 @@
       </div>
     </section>
 
-    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(247,90,6,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,248,239,0.96))] py-16 md:py-[76px]" id="latest-news">
+    <section class="border-t border-black/10 bg-[radial-gradient(circle_at_top_right,rgba(255,101,7,0.12),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.96),rgba(255,255,255,0.96))] py-16 md:py-[76px]" id="latest-news">
       <div class="mx-auto grid max-w-7xl gap-12 px-6 lg:px-8">
         <div class="grid w-full gap-5">
           <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Product announcements</p>
@@ -428,7 +428,7 @@
         </div>
 
         <div class="grid gap-5 md:grid-cols-2">
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 01</p>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Secure branded visibility with Panoramic Ads reserve share of voice</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
@@ -441,7 +441,7 @@
             </a>
           </article>
 
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 02</p>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Enhancements to branded search metrics</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
@@ -454,7 +454,7 @@
             </a>
           </article>
 
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 03</p>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">New audiences for bid adjustment for Panoramic Ads worldwide</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
@@ -467,7 +467,7 @@
             </a>
           </article>
 
-          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(86,29,0,0.08)]">
+          <article class="grid min-h-[220px] gap-4 rounded-[22px] border border-black/10 bg-white p-7 shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             <p class="text-[0.75rem] font-black uppercase tracking-[0.08em] text-accentDeep">Update 04</p>
             <h3 class="text-[clamp(1.1rem,3vw,1.55rem)] font-extrabold leading-[1.1] tracking-[-0.04em] text-[#141922]">Panoramic Ads is now available for single-book authors</h3>
             <p class="text-[0.98rem] leading-[1.7] text-muted">
@@ -539,7 +539,7 @@
         </div>
 
         <div class="grid w-full gap-3" data-faq-list>
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-1" id="faq-trigger-1" data-faq-trigger>
                 <span class="w-full">How much does Panoramic Ads cost?</span>
@@ -551,7 +551,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-2" id="faq-trigger-2" data-faq-trigger>
                 <span class="w-full">How can I measure results from my Panoramic Ads campaign?</span>
@@ -563,7 +563,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-3" id="faq-trigger-3" data-faq-trigger>
                 <span class="w-full">Who can use Panoramic Ads?</span>
@@ -575,7 +575,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-4" id="faq-trigger-4" data-faq-trigger>
                 <span class="w-full">What categories are not eligible for Panoramic Ads?</span>
@@ -587,7 +587,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-5" id="faq-trigger-5" data-faq-trigger>
                 <span class="w-full">What are new-to-brand metrics, and why should I use them?</span>
@@ -599,7 +599,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-6" id="faq-trigger-6" data-faq-trigger>
                 <span class="w-full">What are the different goals I can achieve with Panoramic Ads?</span>
@@ -611,7 +611,7 @@
             </div>
           </article>
 
-          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(86,29,0,0.08)]" data-faq-item>
+          <article class="overflow-hidden rounded-[22px] border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.08)]" data-faq-item>
             <h3>
               <button class="flex w-full items-center gap-4 px-5 py-6 text-left text-[0.98rem] font-extrabold leading-[1.2] tracking-[-0.04em] text-copy transition" type="button" aria-expanded="false" aria-controls="faq-panel-7" id="faq-trigger-7" data-faq-trigger>
                 <span class="w-full">What are the video specification requirements for Panoramic Ads video?</span>

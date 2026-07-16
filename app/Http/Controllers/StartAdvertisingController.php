@@ -18,30 +18,53 @@ class StartAdvertisingController extends Controller
 {
     /**
      * Public marketing menus, mirroring routes/web.php behaviour.
+     *
+     * Every known page label is resolved to its real route so the header nav
+     * links stay valid; anything else becomes an in-page anchor on the home
+     * page. Without this mapping the raw DB slugs (e.g. "panoramic-banner-ads")
+     * render as relative links that resolve to non-existent routes and 404.
      */
     protected function menus()
     {
+        $defaultMenuItems = [
+            (object) ['label' => 'Home', 'target' => ''],
+            (object) ['label' => 'Panoramic Banner Ads', 'target' => 'panoramic-banner-ads'],
+            (object) ['label' => 'Leaderboard Ads', 'target' => 'leaderboard-ads'],
+            (object) ['label' => 'Product Sponsored ads', 'target' => 'product-sponsored-ads'],
+            (object) ['label' => 'Product Carousel', 'target' => 'product-carousel'],
+            (object) ['label' => 'Start Advertising', 'target' => 'start-advertising'],
+            (object) ['label' => 'Contact', 'target' => 'contact'],
+        ];
+
         try {
             $menus = Schema::hasTable('menus')
                 ? Menu::query()->ordered()->get()
-                : collect([
-                    (object) ['label' => 'Banner Ads', 'target' => route('banner.ads')],
-                    (object) ['label' => 'Start Advertising', 'target' => route('start.advertising')],
-                ]);
+                : collect($defaultMenuItems);
         } catch (Throwable $exception) {
             Log::warning('Falling back to default start advertising menus.', [
                 'exception' => $exception->getMessage(),
             ]);
 
-            $menus = collect([
-                (object) ['label' => 'Banner Ads', 'target' => route('banner.ads')],
-                (object) ['label' => 'Start Advertising', 'target' => route('start.advertising')],
-            ]);
+            $menus = collect($defaultMenuItems);
         }
 
-        return $menus->map(function ($menu) {
-            if (trim(strtolower((string) $menu->label)) === 'banner ads') {
-                $menu->target = route('banner.ads');
+        $routedLabels = [
+            'home' => route('home'),
+            'panoramic banner ads' => route('banner.ads'),
+            'leaderboard ads' => route('leaderboard.ads'),
+            'product sponsored ads' => route('product.sponsored.ads'),
+            'product carousel' => route('product.carousel'),
+            'start advertising' => route('start.advertising'),
+        ];
+
+        return $menus->map(function ($menu) use ($routedLabels) {
+            $label = trim(strtolower((string) $menu->label));
+
+            if (isset($routedLabels[$label])) {
+                $menu->target = $routedLabels[$label];
+            } else {
+                $anchor = ltrim((string) $menu->target, '#');
+                $menu->target = route('home').'#'.$anchor;
             }
 
             return $menu;
