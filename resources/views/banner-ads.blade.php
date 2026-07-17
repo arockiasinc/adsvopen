@@ -483,49 +483,65 @@
       </div>
     </section>
 
-    <section class="sb-section sb-campaign-section" id="campaign-setup">
+    <section class="sb-section sb-flow-section" id="campaign-setup">
       <div class="sb-shell">
-        <div class="sb-campaign-panel">
-        
+        <div class="sb-flow-layout">
+          <aside class="sb-flow-aside">
+            <div class="sb-flow-intro">
+              <h2>How do I create a Panoramic Ads campaign?</h2>
+              <a class="sb-flow-cta" href="#top">Register</a>
+            </div>
+          </aside>
 
-          <div class="sb-campaign-intro">
-            <h2>How do I create a Panoramic Ads campaign?</h2>
-            <a class="sb-campaign-cta" href="#top">Register</a>
-          </div>
-
-          <ol class="sb-campaign-grid" aria-label="Steps to create a Panoramic Ads campaign">
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">1</span>
-              <p>Register for <a href="#top">sponsored ads</a>.</p>
+          <ol class="sb-flow-track" aria-label="Steps to create a Panoramic Ads campaign">
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">1</span>
+              <div class="sb-flow-step-body">
+                <p>Register for <a href="#top">sponsored ads</a>.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">2</span>
-              <p>Sign in to your account, click &ldquo;Create campaign,&rdquo; and choose Panoramic Ads. Give your campaign a name and choose your settings.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">2</span>
+              <div class="sb-flow-step-body">
+                <p>Sign in to your account, click &ldquo;Create campaign,&rdquo; and choose Panoramic Ads. Give your campaign a name and choose your settings.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">3</span>
-              <p>Choose the campaign goal that aligns with your business objective.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">3</span>
+              <div class="sb-flow-step-body">
+                <p>Choose the campaign goal that aligns with your business objective.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">4</span>
-              <p>Select your ad format. For assistance with building video creative, use <a href="#how-it-works">Video Generator</a> in the &ldquo;Creative tools&rdquo; tab or get help from trusted service providers.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">4</span>
+              <div class="sb-flow-step-body">
+                <p>Select your ad format. For assistance with building video creative, use <a href="#how-it-works">Video Generator</a> in the &ldquo;Creative tools&rdquo; tab or get help from trusted service providers.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">5</span>
-              <p>Under &ldquo;Landing page,&rdquo; select whether you want to drive shoppers directly to your Brand Store or to a product detail page.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">5</span>
+              <div class="sb-flow-step-body">
+                <p>Under &ldquo;Landing page,&rdquo; select whether you want to drive shoppers directly to your Brand Store or to a product detail page.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">6</span>
-              <p>Define your targeting strategy and select bids for your campaign, or use our recommendations.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">6</span>
+              <div class="sb-flow-step-body">
+                <p>Define your targeting strategy and select bids for your campaign, or use our recommendations.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">7</span>
-              <p>Upload your creative, which can be a static image or video that features a product or brand.</p>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">7</span>
+              <div class="sb-flow-step-body">
+                <p>Upload your creative, which can be a static image or video that features a product or brand.</p>
+              </div>
             </li>
-            <li class="sb-campaign-step">
-              <span class="sb-campaign-step-number">8</span>
-              <p>Submit your ad. It will be reviewed within 72 hours.</p>
-              <a class="sb-campaign-step-link" href="#top">Register</a>
+            <li class="sb-flow-step">
+              <span class="sb-flow-step-number">8</span>
+              <div class="sb-flow-step-body">
+                <p>Submit your ad. It will be reviewed within 72 hours.</p>
+                <a class="sb-flow-step-link" href="#top">Register</a>
+              </div>
             </li>
           </ol>
         </div>

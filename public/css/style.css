@@ -3291,13 +3291,168 @@ footer [aria-label="Footer navigation"] a {
   font-size: 1.05em;
 }
 
+/* ---------------------------------------------------------------------------
+   Panoramic Ads page — "How do I create a campaign?" step flow.
+   Sticky heading rail beside a vertical numbered timeline.
+   --------------------------------------------------------------------------- */
+
+.sb-flow-section {
+  border-top: 0;
+  background: #141922;
+}
+
+.sb-flow-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
+}
+
+.sb-flow-aside {
+  position: sticky;
+  top: 6rem;
+}
+
+.sb-flow-intro h2 {
+  color: #ffffff;
+  font-size: clamp(2.5rem, 4.8vw, 3.95rem);
+  line-height: 0.94;
+  letter-spacing: -0.08em;
+  font-weight: 900;
+}
+
+.sb-flow-intro h2::after {
+  content: "";
+  display: block;
+  width: 3.75rem;
+  height: 0.35rem;
+  margin-top: 1.6rem;
+  border-radius: 999px;
+  background: #ff6507;
+}
+
+.sb-flow-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  margin-top: 1.55rem;
+  padding: 0 1.6rem;
+  border-radius: 0.55rem;
+  background: #ff6507;
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 800;
+  transition: transform 150ms var(--ease-out), background-color 150ms var(--ease-out);
+}
+
+.sb-flow-cta:hover,
+.sb-flow-cta:focus-visible {
+  transform: translateY(-2px);
+  background: #ff7a29;
+}
+
+.sb-flow-track {
+  position: relative;
+  display: grid;
+  gap: 0;
+  padding-left: 0.25rem;
+}
+
+/* The rail runs through the centre of the step numbers, stopping at the last one. */
+.sb-flow-track::before {
+  content: "";
+  position: absolute;
+  top: 1.85rem;
+  bottom: 1.85rem;
+  left: calc(1.6rem - 1px);
+  width: 2px;
+  background: linear-gradient(180deg, #ff6507 0%, rgba(255, 101, 7, 0.18) 100%);
+}
+
+.sb-flow-step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.7rem minmax(0, 1fr);
+  gap: 1.35rem;
+  align-items: start;
+  padding: 1.15rem 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.sb-flow-step + .sb-flow-step {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.sb-flow-step-number {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.7rem;
+  height: 2.7rem;
+  border: 1px solid rgba(255, 101, 7, 0.55);
+  border-radius: 999px;
+  background: #141922;
+  color: #ff6507;
+  font-size: 1.05rem;
+  line-height: 1;
+  font-weight: 900;
+  transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+
+.sb-flow-step:hover .sb-flow-step-number {
+  background: #ff6507;
+  color: #ffffff;
+}
+
+.sb-flow-step-body {
+  padding-top: 0.5rem;
+}
+
+.sb-flow-step p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.sb-flow-step p a {
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+.sb-flow-step-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  color: #ff6507;
+  font-size: 0.96rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.sb-flow-step-link:hover,
+.sb-flow-step-link:focus-visible {
+  text-decoration: underline;
+}
+
+.sb-flow-step-link::after {
+  content: "\2192";
+  font-size: 1.05em;
+}
+
 .heading-spaced :is(h1, h2, h3, h4, h5, h6) {
   width: 100%;
   max-width: none;
   letter-spacing: 0.04em;
 }
 
-.heading-spaced .sb-campaign-intro h2 {
+.heading-spaced .sb-campaign-intro h2,
+.heading-spaced .sb-flow-intro h2 {
   letter-spacing: -0.08em;
 }
 
@@ -3456,6 +3611,14 @@ footer [aria-label="Footer navigation"] a {
 
   .sb-campaign-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sb-flow-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sb-flow-aside {
+    position: static;
   }
 
   .sb-case-study-row {
@@ -3651,20 +3814,55 @@ footer [aria-label="Footer navigation"] a {
     padding: 1.45rem;
   }
 
-  .sb-campaign-intro h2 {
+  .sb-campaign-intro h2,
+  .sb-flow-intro h2 {
     font-size: clamp(2.1rem, 11vw, 2.9rem);
+  }
+
+  .sb-flow-intro h2::after {
+    margin-top: 1.2rem;
   }
 
   .sb-partner-cta {
     width: min(100%, 14rem);
   }
 
-  .sb-campaign-cta {
+  .sb-campaign-cta,
+  .sb-flow-cta {
     width: min(100%, 12rem);
   }
 
   .sb-campaign-grid {
     grid-template-columns: 1fr;
+  }
+
+  .sb-flow-track {
+    padding-left: 0;
+  }
+
+  .sb-flow-track::before {
+    top: 1.5rem;
+    bottom: 1.5rem;
+    left: calc(1.15rem - 1px);
+  }
+
+  .sb-flow-step {
+    grid-template-columns: 2.3rem minmax(0, 1fr);
+    gap: 0.95rem;
+  }
+
+  .sb-flow-step-number {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 0.95rem;
+  }
+
+  .sb-flow-step-body {
+    padding-top: 0.3rem;
+  }
+
+  .sb-flow-step p {
+    font-size: 0.96rem;
   }
 
   .sb-case-studies {
