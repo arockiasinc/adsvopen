@@ -196,7 +196,7 @@
       </div>
 
       <div class="lb-territory-media overflow-hidden rounded-sm">
-        <img class="h-full w-full object-cover" src="{{ asset('images/own-territory-blocks.jpg') }}" alt="A hand placing a standout red figure atop a pyramid of identical wooden blocks, symbolizing owning your territory">
+        <img class="h-full w-full object-cover" src="{{ asset('images/claim-territory-map.jpg') }}" alt="Hands examining a map with a magnifying glass and marking a target location with a red flag pin">
       </div>
     </div>
   </section>
