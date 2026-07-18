@@ -135,13 +135,8 @@
         </ul>
       </div>
 
-      <div class="flex min-h-[220px] items-center justify-center overflow-hidden rounded-sm bg-accent p-6 sm:min-h-[260px]">
-        <div class="relative flex h-full w-full items-center justify-center">
-          <div class="absolute right-[18px] top-[18px] inline-grid h-[34px] w-[34px] place-items-center rounded-lg bg-white">
-            <img class="h-5 w-5" src="{{ asset('images/stars-icon.svg') }}" alt="">
-          </div>
-          <img class="w-full max-w-[270px]" src="{{ asset('images/faq-icon.svg') }}" alt="Illustration of one exclusive business per category locking out competitors in a location">
-        </div>
+      <div class="lb-territory-media overflow-hidden rounded-sm">
+        <img class="h-full w-full object-cover" src="{{ asset('images/own-territory-blocks.jpg') }}" alt="A hand placing a standout red figure atop a pyramid of identical wooden blocks, symbolizing owning your territory">
       </div>
     </div>
   </section>

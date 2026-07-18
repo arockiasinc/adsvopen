@@ -44,12 +44,6 @@
         </nav>
 
         <div class="site-header-actions">
-          <button class="site-search-button" type="button" aria-label="Search">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="11" cy="11" r="5.5" fill="none" stroke="currentColor" stroke-width="2.5"></circle>
-              <path d="M15.5 15.5L21 21" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
-            </svg>
-          </button>
           @auth
             @php
               $isAdminUser = auth()->user()->isAdmin();

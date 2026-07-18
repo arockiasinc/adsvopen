@@ -3239,38 +3239,62 @@ footer [aria-label="Footer navigation"] a {
 }
 
 .sb-campaign-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.85rem;
-  margin-top: 1.9rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 2.6rem;
+}
+
+/* Connector rail running behind the numbered badges. */
+.sb-campaign-grid::before {
+  content: "";
+  position: absolute;
+  top: calc(1.6rem - 1px);
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.22);
+  z-index: 0;
 }
 
 .sb-campaign-step {
-  min-height: 10.8rem;
-  padding: 1rem 1rem 1.15rem;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 0.35rem;
-  background: rgba(255, 255, 255, 0.06);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.35rem;
   color: rgba(255,255,255, 0.92);
 }
 
 .sb-campaign-step-number {
-  display: inline-block;
-  margin-bottom: 0.55rem;
-  color: #ff6507;
-  font-size: 2rem;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-bottom: 1.15rem;
+  border-radius: 50%;
+  background: #ff6507;
+  box-shadow: 0 0 0 6px #141922;
+  color: #ffffff;
+  font-size: 1.35rem;
   line-height: 1;
-  letter-spacing: -0.08em;
+  letter-spacing: -0.04em;
   font-weight: 900;
 }
 
 .sb-campaign-step p {
-  color: rgba(255,255,255, 0.9);
-  font-size: 0.96rem;
-  line-height: 1.52;
+  color: rgba(255,255,255, 0.88);
+  font-size: 0.92rem;
+  line-height: 1.5;
 }
 
-.sb-campaign-step a {
+.sb-campaign-step a,
+.sb-campaign-step-link {
   color: #ffffff;
   font-weight: 700;
   text-decoration: underline;
@@ -3278,17 +3302,23 @@ footer [aria-label="Footer navigation"] a {
   text-underline-offset: 0.18em;
 }
 
-.sb-campaign-step-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.95rem;
-  font-size: 0.96rem;
+/* ---------------------------------------------------------------------------
+   Leaderboard Ads — "Claim your territory" feature photo.
+   Real CSS (arbitrary Tailwind values are not compiled in this project).
+   --------------------------------------------------------------------------- */
+.lb-territory-media {
+  min-height: 300px;
 }
 
-.sb-campaign-step-link::after {
-  content: "\2192";
-  font-size: 1.05em;
+@media (min-width: 1024px) {
+  #exclusive > div,
+  #hyper-local > div {
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 500px);
+  }
+
+  .lb-territory-media {
+    min-height: 380px;
+  }
 }
 
 /* ---------------------------------------------------------------------------
@@ -3610,7 +3640,7 @@ footer [aria-label="Footer navigation"] a {
   }
 
   .sb-campaign-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .sb-flow-layout {
@@ -3832,8 +3862,38 @@ footer [aria-label="Footer navigation"] a {
     width: min(100%, 12rem);
   }
 
+  /* Stepper becomes a vertical rail on narrow screens. */
   .sb-campaign-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .sb-campaign-grid::before {
+    top: 1.6rem;
+    bottom: 1.6rem;
+    left: calc(1.6rem - 1px);
+    right: auto;
+    width: 2px;
+    height: auto;
+  }
+
+  .sb-campaign-step {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    gap: 1.1rem;
+    padding: 0;
+  }
+
+  .sb-campaign-step-number {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+  }
+
+  .sb-campaign-step p {
+    padding-top: 0.7rem;
+    font-size: 0.96rem;
   }
 
   .sb-flow-track {

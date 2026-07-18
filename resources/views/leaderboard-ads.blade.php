@@ -195,13 +195,8 @@
         </ul>
       </div>
 
-      <div class="flex min-h-[220px] items-center justify-center overflow-hidden rounded-sm bg-accent p-6 sm:min-h-[260px]">
-        <div class="relative flex h-full w-full items-center justify-center">
-          <div class="absolute right-[18px] top-[18px] inline-grid h-[34px] w-[34px] place-items-center rounded-lg bg-white">
-            <img class="h-5 w-5" src="{{ asset('images/stars-icon.svg') }}" alt="">
-          </div>
-          <img class="w-full max-w-[270px]" src="{{ asset('images/faq-icon.svg') }}" alt="Illustration of limited ad inventory reserved per location">
-        </div>
+      <div class="lb-territory-media overflow-hidden rounded-sm">
+        <img class="h-full w-full object-cover" src="{{ asset('images/own-territory-blocks.jpg') }}" alt="A hand placing a standout red figure atop a pyramid of identical wooden blocks, symbolizing owning your territory">
       </div>
     </div>
   </section>
@@ -242,26 +237,28 @@
       <div class="sb-campaign-panel">
         <div class="sb-campaign-intro">
           <h2>How to start your Leaderboard campaign</h2>
-          <a class="sb-campaign-cta" href="#top">Register</a>
         </div>
 
         <ol class="sb-campaign-grid" aria-label="Steps to start a Leaderboard Ads campaign">
           <li class="sb-campaign-step">
             <span class="sb-campaign-step-number">1</span>
-            <p>Select your target geographic tier&mdash;City, District, County, Region, Province, or Country-wide.</p>
+            <p><a class="sb-campaign-step-link" href="#top">Register</a> for your self-managed advertiser account.</p>
           </li>
           <li class="sb-campaign-step">
             <span class="sb-campaign-step-number">2</span>
-            <p>Upload your image assets for the Master Leaderboard and in-feed product banners.</p>
+            <p>Select your target geographic tier&mdash;City, District, County, Region, Province, or Country-wide.</p>
           </li>
           <li class="sb-campaign-step">
             <span class="sb-campaign-step-number">3</span>
-            <p>Once approved, watch your business take over the homepage through your self-managed dashboard.</p>
+            <p>Upload your image assets for the Master Leaderboard and in-feed product banners.</p>
           </li>
           <li class="sb-campaign-step">
             <span class="sb-campaign-step-number">4</span>
+            <p>Once approved, watch your business take over the homepage through your self-managed dashboard.</p>
+          </li>
+          <li class="sb-campaign-step">
+            <span class="sb-campaign-step-number">5</span>
             <p>Swap creatives, update offers, or change links an unlimited number of times at zero extra cost.</p>
-            <a class="sb-campaign-step-link" href="#top">Register</a>
           </li>
         </ol>
       </div>

@@ -116,18 +116,25 @@
   .sa-hidden{display:none !important}
 </style>
 
-<div class="sa-wrap">
-  <div class="sa-shell">
-
-    <div class="sa-intro">
-      <p class="sa-kicker">Start Advertising</p>
-      <h1 class="sa-title">Find the right way to advertise your brand</h1>
-      <div class="sa-lead">
-        <p>Our AI-driven platform helps you choose the best option available for your brand and your message to reach the target market &mdash; let it be local or coast-to-coast. Advertising with the VOpen Market is as simple as that, everything is automated.</p>
-        <p>Thousands of people visit our website from each province across Canada every day. Our platform will help you with the recommended placement of your message, brand, link or business on our website.</p>
-        <p>Answer a few quick questions to get custom recommendations for your business&rsquo;s advertising needs. <strong style="color:#fff">Advertisements with VOpen Market start from a minimum of one month commitment.</strong></p>
+  <section class="border-t border-black/10 py-16 md:py-[72px]" id="intro">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="mx-auto grid max-w-[820px] gap-5 text-center">
+        <div>
+          <span class="lb-chip">
+            <span class="lb-chip-dot" aria-hidden="true"></span>
+            Start Advertising
+          </span>
+        </div>
+        <h1 class="text-[clamp(2rem,4.3vw,3rem)] font-black leading-none tracking-[-0.05em] text-copy">Find the right way to advertise your brand</h1>
+        <p class="text-[0.98rem] leading-[1.7] text-muted">Our AI-driven platform helps you choose the best option available for your brand and your message to reach the target market &mdash; let it be local or coast-to-coast. Advertising with the VOpen Market is as simple as that, everything is automated.</p>
+        <p class="text-[0.98rem] leading-[1.7] text-muted">Thousands of people visit our website from each province across Canada every day. Our platform will help you with the recommended placement of your message, brand, link or business on our website.</p>
+        <p class="text-[0.98rem] leading-[1.7] text-muted">Answer a few quick questions to get custom recommendations for your business&rsquo;s advertising needs. <b>Advertisements with VOpen Market start from a minimum of one month commitment.</b></p>
       </div>
     </div>
+  </section>
+
+<div class="sa-wrap">
+  <div class="sa-shell">
 
     @if (!empty($recommendations))
       <div class="sa-note sa-note-good">
